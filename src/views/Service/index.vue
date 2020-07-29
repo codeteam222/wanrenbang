@@ -4,9 +4,9 @@
     <c-tab :tabs="tabs" :active.sync="tabActiveIndex">
       <component :is="currentComponent"></component>
     </c-tab>
-    <div class="add-message" v-if="tabActiveIndex !== 1">
+    <div class="add-message" v-if="tabActiveIndex !== 1" @click="openMessage">
       <img src="@/assets/img/edit-article.png" />
-      <div @click="openMessage">发帖</div>
+      <div>发帖</div>
     </div>
     <b-message ref="message"></b-message>
   </div>
@@ -32,7 +32,7 @@ export default {
       tabActiveIndex: 0,
       tabs: [
         {
-          label: "资源共享"
+          label: "每日福利"
         },
         {
           label: "卡片商城"
@@ -68,25 +68,33 @@ export default {
   position: fixed;
   right: 20px;
   bottom: 50px;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  font-size: 12px;
+  font-size: 10px;
   color: #2892ee;
   background-color: rgb(255, 193, 7);
   padding-top: 5px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
   text-align: center;
+  font-weight: 700;
+  line-height: 10px;
   img {
-    width: 20px;
+    width: 15px;
   }
 }
 /deep/ .c-tab {
   .tab-item {
     color: #999999;
   }
-  .tab-item.active {
+  .tab-0.active {
     color: #6d75f1;
+  }
+  .tab-1.active {
+    color: rgb(252, 140, 168);
+  }
+  .tab-2.active {
+    color: rgb(253, 179, 93);
   }
 }
 </style>

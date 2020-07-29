@@ -102,12 +102,12 @@ export default {
 
 <style lang="less" scoped>
 .state {
-  width: 60px;
-  height: 25px;
-  line-height: 25px;
+  width: 40px;
+  height: 15px;
+  line-height: 15px;
   text-align: center;
-  border-radius: 25px;
-  font-size: 12px;
+  border-radius: 15px;
+  font-size: 6px;
   color: #fff;
 }
 .state-0 {

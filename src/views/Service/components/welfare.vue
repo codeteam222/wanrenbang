@@ -268,7 +268,7 @@ export default {
   }
   .price {
     text-align: right;
-    margin-top: 8px;
+    margin-top: 2px;
     padding-right: 6px;
     img {
       width: 45px;

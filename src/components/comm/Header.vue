@@ -53,15 +53,15 @@ export default {
   justify-content: space-between;
   align-items: center;
   .menu-item {
-    font-size: 14px;
-    height: 50px;
-    line-height: 50px;
+    font-size: 8px;
+    height: 35px;
+    line-height: 35px;
     flex: 1;
     width: 33.3%;
     background-color: rgba(204, 204, 204, 1);
     color: #666666;
     &.active {
-      font-size: 20px;
+      font-size: 14px;
       font-weight: 600;
       color: #333333;
       .label {
@@ -70,7 +70,7 @@ export default {
         &::after {
           content: "";
           display: inline-block;
-          height: 15px;
+          height: 10px;
           width: 2px;
           position: absolute;
           top: 50%;

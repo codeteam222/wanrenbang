@@ -46,14 +46,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  font-size: 12px;
+  height: 30px;
+  font-size: 6px;
   background-color: rgb(242, 242, 242);
   color: rgb(182, 182, 182);
   .tab-item {
     width: 100px;
     &.active {
-      font-size: 16px;
+      font-size: 12px;
       color: rgb(109, 117, 241);
       font-weight: 600;
     }
