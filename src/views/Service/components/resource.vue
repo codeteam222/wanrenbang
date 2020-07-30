@@ -34,8 +34,7 @@ export default {
           avatar: require("@/assets/img/avatar.png"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
-          content:
-            "圣卡洛斯考虑好开发来",
+          content: "圣卡洛斯考虑好开发来",
           imgs: [
             require("@/assets/img/1-1.png"),
             require("@/assets/img/1-2.png"),
@@ -48,12 +47,11 @@ export default {
           avatar: require("@/assets/img/avatar1.png"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
-          content:
-            "圣卡洛斯考虑好开发来",
+          content: "圣卡洛斯考虑好开发来",
           imgs: [
-           require("@/assets/img/2-1.png"),
-           require("@/assets/img/2-2.png"),
-           require("@/assets/img/2-3.png")
+            require("@/assets/img/2-1.png"),
+            require("@/assets/img/2-2.png"),
+            require("@/assets/img/2-3.png")
           ],
           state: 1,
           sex: 1
@@ -62,8 +60,7 @@ export default {
           avatar: require("@/assets/img/avatar2.png"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
-          content:
-            "圣卡洛斯考虑好开发来",
+          content: "圣卡洛斯考虑好开发来",
           imgs: [
             require("@/assets/img/3-1.png"),
             require("@/assets/img/3-2.png"),
@@ -71,7 +68,7 @@ export default {
           ],
           state: 2,
           sex: 0
-        } 
+        }
       ],
       stateMap: {
         0: "关注",
@@ -102,12 +99,12 @@ export default {
 
 <style lang="less" scoped>
 .state {
-  width: 60px;
-  height: 25px;
-  line-height: 25px;
+  width: 40px;
+  height: 15px;
+  line-height: 15px;
   text-align: center;
-  border-radius: 25px;
-  font-size: 12px;
+  border-radius: 15px;
+  font-size: 8px;
   color: #fff;
 }
 .state-0 {

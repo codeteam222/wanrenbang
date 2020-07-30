@@ -47,14 +47,16 @@ export default {
   flex: 1;
 }
 .button {
-  width: 70px;
+  width: 50px;
   padding: 0;
-  height: 25px;
-  line-height: 25px;
+  height: 20px;
+  line-height: 22px;
+  font-size: 10px;
 }
 .name {
   text-align: left;
   font-weight: 700;
+  font-size: 10px;
 }
 .fans-0 {
   background-color: rgba(109, 117, 241, 1);
@@ -63,8 +65,8 @@ export default {
   background-color: rgba(252, 140, 168, 1);
 }
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   margin-right: 10px;
 }
