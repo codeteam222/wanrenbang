@@ -286,7 +286,7 @@ export default {
   .title {
     display: inline-block;
     width: 15px;
-    font-size: 10px;
+    font-size: 8px;
     background-color: rgba(0, 0, 0, 1);
     color: #fff;
     padding: 15px 5px;

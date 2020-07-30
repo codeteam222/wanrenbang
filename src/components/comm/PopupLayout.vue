@@ -50,7 +50,7 @@ export default {
   line-height: 40px;
   text-align: center;
   background-color: #e4e7ed;
-  font-size: 14px;
+  font-size: 12px;
   width: 100%;
   top: 0;
   left: 0;
@@ -63,6 +63,18 @@ export default {
 }
 .body {
   padding-top: 40px;
-  min-height: calc(100vh - 40px);
+  min-height: 100vh;
+}
+/deep/ .van-tabs {
+  /deep/ .van-tabs__wrap {
+    height: 30px;
+  }
+  .van-tabs__line {
+    height: 1px;
+    background-color: rgb(162, 162, 162);
+  }
+  .van-tab__text--ellipsis {
+    font-size: 10px;
+  }
 }
 </style>
