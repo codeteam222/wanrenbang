@@ -88,5 +88,11 @@ export default {
   .tab-item.active {
     color: #6d75f1;
   }
+  .imgs,.img-item{
+      height:4rem;
+  }
+   .img-item{
+     border-radius:4px;
+   }
 }
 </style>
