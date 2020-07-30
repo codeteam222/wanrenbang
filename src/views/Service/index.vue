@@ -96,5 +96,11 @@ export default {
   .tab-2.active {
     color: rgb(253, 179, 93);
   }
+   .imgs,.img-item{
+      height:4rem;
+  }
+   .img-item{
+     border-radius:4px;
+   }
 }
 </style>

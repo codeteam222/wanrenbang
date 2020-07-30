@@ -31,47 +31,47 @@ export default {
     return {
       commentList: [
         {
-          avatar: require("@/assets/img/avatar.jpg"),
+          avatar: require("@/assets/img/avatar.png"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
           content:
-            "流口水的价格卢卡斯离开股价拉升经过了解拉萨扩大供给卢卡斯就管理局阿斯利康大家过来卡时间就爱上了看结果徕卡时间管理卡是捷克两个加工零件撒旦立刻感觉阿拉山口就立刻傻瓜卢卡斯尽量靠近格蕾丝卡的价格",
+            "圣卡洛斯考虑好开发来",
           imgs: [
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg")
+            require("@/assets/img/1-1.png"),
+            require("@/assets/img/1-2.png"),
+            require("@/assets/img/1-3.png")
           ],
-          state: 0,
+          state: 2,
           sex: 0
         },
         {
-          avatar: require("@/assets/img/avatar.jpg"),
+          avatar: require("@/assets/img/avatar1.png"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
           content:
-            "流口水的价格卢卡斯离开股价拉升经过了解拉萨扩大供给卢卡斯就管理局阿斯利康大家过来卡时间就爱上了看结果徕卡时间管理卡是捷克两个加工零件撒旦立刻感觉阿拉山口就立刻傻瓜卢卡斯尽量靠近格蕾丝卡的价格",
+            "圣卡洛斯考虑好开发来",
           imgs: [
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg")
+           require("@/assets/img/2-1.png"),
+           require("@/assets/img/2-2.png"),
+           require("@/assets/img/2-3.png")
           ],
           state: 1,
           sex: 1
         },
         {
-          avatar: require("@/assets/img/avatar.jpg"),
+          avatar: require("@/assets/img/avatar2.png"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
           content:
-            "流口水的价格卢卡斯离开股价拉升经过了解拉萨扩大供给卢卡斯就管理局阿斯利康大家过来卡时间就爱上了看结果徕卡时间管理卡是捷克两个加工零件撒旦立刻感觉阿拉山口就立刻傻瓜卢卡斯尽量靠近格蕾丝卡的价格",
+            "圣卡洛斯考虑好开发来",
           imgs: [
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg")
+            require("@/assets/img/3-1.png"),
+            require("@/assets/img/3-2.png"),
+            require("@/assets/img/3-3.png")
           ],
           state: 2,
           sex: 0
-        }
+        } 
       ],
       stateMap: {
         0: "关注",
@@ -102,12 +102,12 @@ export default {
 
 <style lang="less" scoped>
 .state {
-  width: 40px;
-  height: 15px;
-  line-height: 15px;
+  width: 60px;
+  height: 25px;
+  line-height: 25px;
   text-align: center;
-  border-radius: 15px;
-  font-size: 6px;
+  border-radius: 25px;
+  font-size: 12px;
   color: #fff;
 }
 .state-0 {
