@@ -1,6 +1,11 @@
 <template>
   <div class="service-welfare">
     <div class="card">
+		<div class="sline-box">
+		<span style="color: #004427;padding:0 1px;">l</span>
+		<span style="color: #6D75F1;padding:0 1px;">l</span>
+		<span style="color: #FC8CA8;padding:0 1px;">l</span>
+		</div>
       <img class="price" src="@/assets/img/bridge-card_price.png" />
       <div class="title">
         <p>
@@ -16,14 +21,14 @@
     <div class="preferential-card">
       <div class="left">
         <p>
-          <span style="color:#F56D91;">l</span><span>福利卡优惠活动</span
+          <span style="color:#F56D91;">l</span><span style="color:#004427;font-weight:900;">福利卡优惠活动</span
           ><span style="color:#FFD000;">l</span>
         </p>
         <p class="desc">
           &lt;本活动福利卡仅售0.3元一张，可以先购买，然后在圆梦计划→幸运锦鲤页面售完以后再付钱，活动仅限于圆梦计划幸运锦鲤用户参与
           &gt;
         </p>
-        <p class="price">
+        <p class="price" style="padding:0;margin:0;">
           <img src="@/assets/img/bridge-card_price2.png" />
         </p>
       </div>
@@ -47,38 +52,38 @@
     </div>
     <van-popup
       v-model="buyPopupVisible"
-      position="bottom"
+      position="bottom" class="popup-box"
       :safe-area-inset-bottom="true"
       :close-on-click-overlay="false"
       round
     >
-      <div class="my-gold">我的金币：4321231</div>
+      <div class="my-gold">我的余额：4321231</div>
       <div class="title">
         <span style="color:#E91E63;">l</span><span>福利卡</span><span style="color:#169BD5;">l</span>
       </div>
-      <div class="stepper">购买<van-stepper v-model="buyNumber" />金币</div>
+      <div class="stepper">购买<van-stepper v-model="buyNumber" />张</div>
       <div class="prompt">&lt; {{ buyNumber }}张需要{{ totalPrice }}元 &gt;</div>
       <div class="actions">
-        <van-button type="default" size="small" @click="handleBuyPopup(false)">取消</van-button>
-        <van-button type="info" size="small" @click="buy" :loading="loading">确认购买</van-button>
+        <van-button type="default" class="abo-bnt" size="small" @click="handleBuyPopup(false)">取消</van-button>
+        <van-button type="info" class="commit-bnt"  size="small" @click="buy" :loading="loading">确认购买</van-button>
       </div>
     </van-popup>
     <van-popup
       v-model="payPopupVisible"
-      position="bottom"
+      position="bottom" class="popup-box"
       :safe-area-inset-bottom="true"
       :close-on-click-overlay="false"
       round
     >
-      <div class="my-gold">我的金币：4321231</div>
+      <div class="my-gold">我的余额：4321231</div>
       <div class="title">
         <span style="color:#F56D91;">&lt;</span><span> 支付3541元 </span
         ><span style="color:#FFD000;">&gt;</span>
       </div>
       <div class="prompt">该笔账单是您参与优惠活动购买3120张福利卡的费用</div>
       <div class="actions">
-        <van-button type="default" size="small" @click="handleyPay(false)">取消</van-button>
-        <van-button type="info" size="small" @click="buy" :loading="loading">确认支付</van-button>
+        <van-button class="abo-bnt" type="default" size="small" @click="handleyPay(false)">取消</van-button>
+        <van-button class="commit-bnt" type="info" size="small" @click="buy" :loading="loading">确认支付</van-button>
       </div>
     </van-popup>
   </div>
@@ -189,11 +194,27 @@ export default {
   padding: 10px;
   font-size: 14px;
 }
+.sline-box{
+	position:absolute;
+}
+.actions{
+	margin-bottom:50px;
+}
+.popup-box{
+	background-color:rgba(242, 242, 242, 1);
+}
+.commit-bnt,.abo-bnt{
+	border-radius:3px;
+}
+.abo-bnt{
+	background-color:rgba(204, 204, 204, 1);
+	color:#fff; 
+}
 .card {
   background-color: rgba(242, 242, 242, 1);
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.349019607843137);
   height: 150px;
-  border-radius: 20px;
+  border-radius: 6px; 
   position: relative;
   padding: 5px;
   .title {
@@ -218,11 +239,12 @@ export default {
   .price {
     position: absolute;
     right: 10px;
-    top: 10px;
     width: 70px;
+	margin-top:0!important;
   }
   .prompt {
     margin-top: 25px;
+	color:#004427;
   }
 }
 .buy {
@@ -322,8 +344,16 @@ export default {
     margin-bottom: 10px;
   }
   .van-stepper__input {
-    width: 120px;
+    width: 160px;
     color: #ff9900;
+	background:#fff;
+	height:32px;
+  }
+  .van-stepper__minus,.van-stepper__plus{
+	background-color:rgba(215, 215, 215, 1);
+	color:#000;
+	font-size:12px;
+	height:32px;
   }
   .prompt {
     font-size: 12px;

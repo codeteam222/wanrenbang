@@ -1,9 +1,9 @@
 <template>
   <div class="service-about">
-    <b-banner text="一切为了用户，一切依靠用户" bg-color="rgba(59, 172, 106, 0.8)"></b-banner>
-    <div class="about-item plan-detail" @click="handleOpenPopup('explain')">聚合联创计划说明</div>
+    <b-banner text="一切为了用户，一切依靠用户"  ></b-banner>
+    <div class="about-item plan-detail" @click="handleOpenPopup('explain')"><van-divider>聚合联创计划说明</van-divider></div> 
     <div class="about-item project-money" @click="handleOpenPopup('money')">
-      <div class="title">项目启动资金</div>
+      <div class="title">&lt;项目启动资金&gt;</div>
       <div class="money">￥132.132.00</div>
     </div>
     <div class="about-item project-center" @click="handleOpenPopup('project')">项目中心</div>
@@ -60,25 +60,26 @@ export default {
 }
 .plan-detail {
   width: 300px;
-  height: 100px;
-  line-height: 100px;
-  background-color: rgba(90, 185, 99, 0.8);
+  height: 80px;
+  line-height: 80px;
+  background-color:rgba(90, 185, 99, 1);
+  position:relative;
+  padding:0 30px;
   color: #fff;
-  font-weight: 700;
+  overflow:hidden;
 }
 .project-money {
   width: 230px;
-  height: 80px;
-  padding-top: 10px;
+  height: 60px;
   background-color: rgba(255, 224, 104, 0.8);
-  padding-top: 15px;
+  padding-top: 10px;
   .title {
     font-size: 12px;
   }
   .money {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
-    margin-top: 5px;
+    margin-top: 1px;
   }
 }
 .project-center {
@@ -87,5 +88,11 @@ export default {
   line-height: 41px;
   background-color: rgba(109, 117, 241, 1);
   color: #fff;
+}
+.van-divider{
+	position:relative;
+	color:#fff;
+	top:30px;
+	font-size:18px;
 }
 </style>

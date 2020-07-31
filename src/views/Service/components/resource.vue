@@ -1,6 +1,6 @@
 <template>
   <div class="service-resource">
-    <b-banner text="全心全意为用户服务" bg-color="rgba(59, 172, 106, 0.8)"></b-banner>
+    <b-banner text="全心全意为用户服务" ></b-banner>
     <b-search @change="handleSearch"></b-search>
     <c-feed :data="commentList" @load="load">
       <template v-slot="scope">
@@ -69,7 +69,7 @@ export default {
             require("@/assets/img/3-2.png"),
             require("@/assets/img/3-3.png")
           ],
-          state: 2,
+          state: 0,
           sex: 0
         } 
       ],
@@ -110,13 +110,13 @@ export default {
   font-size: 12px;
   color: #fff;
 }
-.state-0 {
-  background-color: #ec7259;
+.state-1{
+  background-color: #cccccc;
 }
-.state-1 {
-  background-color: #5ab963;
+.state-0 {
+  background-color: rgba(90, 185, 99, 1);
 }
 .state-2 {
-  background-color: rgba(255, 153, 0, 1);
+  background-color:rgba(255, 153, 0, 1);
 }
 </style>

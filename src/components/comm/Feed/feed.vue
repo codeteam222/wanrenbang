@@ -38,12 +38,16 @@
       </div>
       <div class="zan" @click="handleOperation('zan', data)">
         <img src="@/assets/img/zan.png" />{{ data.zanNum || 0 }}
-      </div>
+      </div> 
+	<div class="zan" @click="handleOperation('like', data)">
+	<img src="@/assets/img/like.png" />{{ data.like || 0 }}
+    </div>
     </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   props: {
     data: {

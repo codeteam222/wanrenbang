@@ -17,6 +17,7 @@ import {
   Sidebar,
   SidebarItem,
   Card,
+  Divider,
   Form as VantForm
 } from "vant";
 import fetch from "@/utils/fetch";
@@ -26,6 +27,7 @@ import "./assets/styles/public.less";
 import "vant/lib/index.css";
 import "amfe-flexible";
 
+Vue.use(Divider);
 Vue.use(Input);
 Vue.use(Checkbox);
 Vue.use(ElButton);

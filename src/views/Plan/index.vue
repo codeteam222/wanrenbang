@@ -14,6 +14,7 @@ import Tab from "@/components/comm/Tab";
 import Buy from "./components/buy";
 import KoiFish from "./components/koiFish";
 import Detail from "./components/detail";
+/* eslint-disable */
 export default {
   name: "PlanIndex",
   components: {
@@ -52,4 +53,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="less" scoped>
+	/deep/ .c-tab {
+	 
+	  .tab-item.active{
+	    color: #fc8eaa; 
+	  }
+	  .active_1{
+		  color: #6d75f1!important; 
+	  }
+	  .active_2{
+		  color:#fdb562!important;
+	  }
+	  
+	}
+</style>

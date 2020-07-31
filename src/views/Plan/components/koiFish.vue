@@ -20,11 +20,11 @@ export default {
     return {
       commentList: [
         {
-          avatar: require("@/assets/img/avatar.jpg"),
-          nickname: "哈哈哈哈",
+          avatar: require("@/assets/img/pavatar.jpg"),
+          nickname: "爱吃萝卜的兔子",
           createTime: "2020-10-28 18:11:22",
           content:
-            "流口水的价格卢卡斯离开股价拉升经过了解拉萨扩大供给卢卡斯就管理局阿斯利康大家过来卡时间就爱上了看结果徕卡时间管理卡是捷克两个加工零件撒旦立刻感觉阿拉山口就立刻傻瓜卢卡斯尽量靠近格蕾丝卡的价格",
+            "美滋滋，的时间里开发手机浪费框数据浪费三两句菲利克斯发金石可",
           links: [
             {
               text: "#第20200206期幸运锦鲤",
@@ -32,19 +32,19 @@ export default {
             }
           ],
           imgs: [
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg")
+            require("@/assets/img/pu.png"),
+            require("@/assets/img/pu.png"),
+            require("@/assets/img/pu.png")
           ],
           state: 0,
           sex: 0
         },
         {
-          avatar: require("@/assets/img/avatar.jpg"),
+          avatar: require("@/assets/img/pavatar.jpg"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
           content:
-            "流口水的价格卢卡斯离开股价拉升经过了解拉萨扩大供给卢卡斯就管理局阿斯利康大家过来卡时间就爱上了看结果徕卡时间管理卡是捷克两个加工零件撒旦立刻感觉阿拉山口就立刻傻瓜卢卡斯尽量靠近格蕾丝卡的价格",
+            "美滋滋，的时间里开发手机浪费框数据浪费三两句菲利克斯发金石可",
           links: [
             {
               text: "#第20200206期幸运锦鲤",
@@ -52,19 +52,19 @@ export default {
             }
           ],
           imgs: [
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg")
+            require("@/assets/img/pu.png"),
+            require("@/assets/img/pu.png"),
+            require("@/assets/img/pu.png")
           ],
           state: 1,
           sex: 1
         },
         {
-          avatar: require("@/assets/img/avatar.jpg"),
+          avatar: require("@/assets/img/pavatar.jpg"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
           content:
-            "流口水的价格卢卡斯离开股价拉升经过了解拉萨扩大供给卢卡斯就管理局阿斯利康大家过来卡时间就爱上了看结果徕卡时间管理卡是捷克两个加工零件撒旦立刻感觉阿拉山口就立刻傻瓜卢卡斯尽量靠近格蕾丝卡的价格",
+            "美滋滋，的时间里开发手机浪费框数据浪费三两句菲利克斯发金石可...",
           links: [
             {
               text: "#第20200206期幸运锦鲤",
@@ -72,17 +72,17 @@ export default {
             }
           ],
           imgs: [
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg"),
-            require("@/assets/img/avatar.jpg")
+            require("@/assets/img/pu.png"),
+            require("@/assets/img/pu.png"),
+            require("@/assets/img/pu.png")
           ],
           state: 2,
           sex: 0
         }
       ],
       stateMap: {
-        0: "赞成",
-        1: "已赞成",
+        0: "购买",
+        1: "已售完",
         2: "已圆梦"
       }
     };
@@ -115,10 +115,10 @@ export default {
 .state-0 {
   background-color: rgb(90, 185, 99);
 }
-.state-1 {
+/*.state-1 {
   background-color: #ec7259;
-}
-.state-2 {
+}*/
+.state-1{
   background-color: rgb(204, 204, 204);
 }
 </style>

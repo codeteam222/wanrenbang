@@ -4,7 +4,7 @@
     <c-tab :tabs="tabs" :active.sync="tabActiveIndex">
       <component :is="currentComponent"></component>
     </c-tab>
-    <div class="add-message" v-if="tabActiveIndex !== 1">
+    <div class="add-message" v-if="tabActiveIndex === 0">
       <img src="@/assets/img/edit-article.png" />
       <div @click="openMessage">发帖</div>
     </div>
@@ -19,7 +19,7 @@ import Bmessage from "@/components/business/message";
 import Resource from "./components/resource";
 import Welfare from "./components/welfare";
 import About from "./components/about";
-
+/* eslint-disable */
 export default {
   name: "ServiceIndex",
   components: {
@@ -32,10 +32,10 @@ export default {
       tabActiveIndex: 0,
       tabs: [
         {
-          label: "资源共享"
+          label: "每日福利"
         },
         {
-          label: "卡片商城"
+          label: "卡券商城"
         },
         {
           label: "聚合联创"
@@ -85,8 +85,14 @@ export default {
   .tab-item {
     color: #999999;
   }
-  .tab-item.active {
+  .tab-item.active{
     color: #6d75f1;
+  }
+  .active_1{
+	  color: #fc8eaa!important; 
+  }
+  .active_2{
+	  color:#fdb562!important;
   }
   .imgs,.img-item{
       height:4rem;
@@ -96,3 +102,4 @@ export default {
    }
 }
 </style>
+ 
