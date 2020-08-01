@@ -12,7 +12,7 @@
             <div class="time">{{ item.time }}</div>
           </div>
           <div class="zan" @click="handleOperation('zan', item)">
-            <img src="@/assets/img/zan.png" />{{ item.zanNum || 0 }}
+            <van-icon :name="item.isZan ? 'good-job' : 'good-job-o'" />{{ item.zanNum || 0 }}
           </div>
         </div>
         <div class="ceil comment-txt">{{ item.content }}</div>
@@ -43,11 +43,12 @@ export default {
   },
   methods: {
     handleOperation(type, item) {
-      if (type === "zan") {
-        if (item.isZan) return;
+      if (!item.isZan) {
         this.$set(item, "zanNum", item.zanNum ? item.zanNum + 1 : 1);
-        item.isZan = true;
+      } else {
+        this.$set(item, "zanNum", item.zanNum - 1);
       }
+      item.isZan = !item.isZan;
     },
     openReplys(item) {
       this.$emit("openReplys", item);
@@ -58,4 +59,11 @@ export default {
 
 <style lang="less" scoped>
 @import "~@/assets/styles/comment.less";
+.zan i {
+  vertical-align: middle;
+  font-size: 16px;
+  font-size: 16px;
+  margin-right: 3px;
+  margin-top: -3px;
+}
 </style>

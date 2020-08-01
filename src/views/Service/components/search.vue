@@ -65,7 +65,7 @@ export default {
 }
 /deep/ .van-tabs {
   .van-tabs__wrap {
-    height: 35px;
+    height: 25px;
   }
   .van-tab {
     color: #999999;

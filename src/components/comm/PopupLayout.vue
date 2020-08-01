@@ -63,6 +63,6 @@ export default {
 }
 .body {
   padding-top: 40px;
-  min-height: calc(100vh - 40px);
+  min-height: 100vh;
 }
 </style>

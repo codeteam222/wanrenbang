@@ -3,13 +3,16 @@
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <template v-for="(item, index) in data">
         <feed :key="index" :data="item" @detail="openDetail">
+          <template v-slot:content="{ data }">
+            <slot name="content" v-bind:data="data" :index="index"></slot>
+          </template>
           <template v-slot="{ data }">
             <slot v-bind:data="data" :index="index"></slot>
           </template>
         </feed>
       </template>
     </van-list>
-    <detail ref="commentDetail" :data="currentComment">
+    <detail ref="commentDetail" :data="currentComment" :type="type">
       <template v-slot="{ data }">
         <slot name="detailAction" v-bind:data="data"></slot>
       </template>
@@ -29,6 +32,9 @@ export default {
     data: {
       type: Array,
       default: () => []
+    },
+    type: {
+      type: String
     }
   },
   data() {

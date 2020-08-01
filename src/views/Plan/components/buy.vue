@@ -382,4 +382,7 @@ export default {
     margin: 0 10px;
   }
 }
+.actions {
+  margin-bottom: 15px;
+}
 </style>

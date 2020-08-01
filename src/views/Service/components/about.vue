@@ -1,7 +1,9 @@
 <template>
   <div class="service-about">
-    <b-banner text="一切为了用户，一切依靠用户"  ></b-banner>
-    <div class="about-item plan-detail" @click="handleOpenPopup('explain')"><van-divider>聚合联创计划说明</van-divider></div> 
+    <b-banner text="一切为了用户，一切依靠用户"></b-banner>
+    <div class="about-item plan-detail" @click="handleOpenPopup('explain')">
+      <van-divider>聚合联创计划说明</van-divider>
+    </div>
     <div class="about-item project-money" @click="handleOpenPopup('money')">
       <div class="title">&lt;项目启动资金&gt;</div>
       <div class="money">￥132.132.00</div>
@@ -62,11 +64,11 @@ export default {
   width: 300px;
   height: 80px;
   line-height: 80px;
-  background-color:rgba(90, 185, 99, 1);
-  position:relative;
-  padding:0 30px;
+  background-color: rgba(90, 185, 99, 1);
+  position: relative;
+  padding: 0 30px;
   color: #fff;
-  overflow:hidden;
+  overflow: hidden;
 }
 .project-money {
   width: 230px;
@@ -85,14 +87,16 @@ export default {
 .project-center {
   width: 150px;
   height: 40px;
-  line-height: 41px;
+  line-height: 40px;
   background-color: rgba(109, 117, 241, 1);
   color: #fff;
+  font-size: 14px;
 }
-.van-divider{
-	position:relative;
-	color:#fff;
-	top:30px;
-	font-size:18px;
+.van-divider {
+  position: relative;
+  color: #fff;
+  font-size: 18px;
+  margin: 0;
+  line-height: inherit;
 }
 </style>

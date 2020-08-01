@@ -6,11 +6,20 @@
     :close-on-click-overlay="false"
   >
     <c-popup-layout :title="detail.nickname" @back="visible = false">
-      <feed :data="data">
-        <template v-slot="{ data }">
-          <slot v-bind:data="data"></slot>
-        </template>
-      </feed>
+      <template v-if="type === 'koiFish'">
+        <koi-fish-detail :data="data">
+          <template v-slot="{ data }">
+            <slot v-bind:data="data"></slot>
+          </template>
+        </koi-fish-detail>
+      </template>
+      <template v-else>
+        <feed :data="data">
+          <template v-slot="{ data }">
+            <slot v-bind:data="data"></slot>
+          </template>
+        </feed>
+      </template>
       <comment :data="detail.comments" title="评论"></comment>
     </c-popup-layout>
   </van-popup>
@@ -19,16 +28,21 @@
 <script>
 import PopupLayout from "@/components/comm/PopupLayout";
 import Feed from "./feed";
+import koiFishDetail from "./koiFishDetail";
 import Comment from "./comment";
 export default {
   components: {
     "c-popup-layout": PopupLayout,
     feed: Feed,
-    comment: Comment
+    comment: Comment,
+    koiFishDetail
   },
   props: {
     data: {
       type: Object
+    },
+    type: {
+      type: String
     }
   },
   data() {

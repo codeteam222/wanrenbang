@@ -1,14 +1,14 @@
 <template>
   <div class="service-welfare">
     <div class="card">
-		<div class="sline-box">
-		<span style="color: #004427;padding:0 1px;">l</span>
-		<span style="color: #6D75F1;padding:0 1px;">l</span>
-		<span style="color: #FC8CA8;padding:0 1px;">l</span>
-		</div>
+      <div class="sline-box">
+        <span style="color: #004427;padding:0 1px;">l</span>
+        <span style="color: #6D75F1;padding:0 1px;">l</span>
+        <span style="color: #FC8CA8;padding:0 1px;">l</span>
+      </div>
       <img class="price" src="@/assets/img/bridge-card_price.png" />
       <div class="title">
-        <p>
+        <p class="txt">
           <span style="color: #F56D91">fú</span>
           <span style="color: #6D75F1">lì</span>
           <span style="color: #339933">kǎ</span>
@@ -21,7 +21,8 @@
     <div class="preferential-card">
       <div class="left">
         <p>
-          <span style="color:#F56D91;">l</span><span style="color:#004427;font-weight:900;">福利卡优惠活动</span
+          <span style="color:#F56D91;">l</span
+          ><span style="color:#004427;font-weight:900;">福利卡优惠活动</span
           ><span style="color:#FFD000;">l</span>
         </p>
         <p class="desc">
@@ -52,7 +53,8 @@
     </div>
     <van-popup
       v-model="buyPopupVisible"
-      position="bottom" class="popup-box"
+      position="bottom"
+      class="popup-box"
       :safe-area-inset-bottom="true"
       :close-on-click-overlay="false"
       round
@@ -61,16 +63,21 @@
       <div class="title">
         <span style="color:#E91E63;">l</span><span>福利卡</span><span style="color:#169BD5;">l</span>
       </div>
-      <div class="stepper">购买<van-stepper v-model="buyNumber" />张</div>
+      <div class="stepper">买<van-stepper v-model="buyNumber" />张</div>
       <div class="prompt">&lt; {{ buyNumber }}张需要{{ totalPrice }}元 &gt;</div>
       <div class="actions">
-        <van-button type="default" class="abo-bnt" size="small" @click="handleBuyPopup(false)">取消</van-button>
-        <van-button type="info" class="commit-bnt"  size="small" @click="buy" :loading="loading">确认购买</van-button>
+        <van-button type="default" class="abo-bnt" size="small" @click="handleBuyPopup(false)"
+          >取消</van-button
+        >
+        <van-button type="info" class="commit-bnt" size="small" @click="buy" :loading="loading"
+          >确认购买</van-button
+        >
       </div>
     </van-popup>
     <van-popup
       v-model="payPopupVisible"
-      position="bottom" class="popup-box"
+      position="bottom"
+      class="popup-box"
       :safe-area-inset-bottom="true"
       :close-on-click-overlay="false"
       round
@@ -83,7 +90,9 @@
       <div class="prompt">该笔账单是您参与优惠活动购买3120张福利卡的费用</div>
       <div class="actions">
         <van-button class="abo-bnt" type="default" size="small" @click="handleyPay(false)">取消</van-button>
-        <van-button class="commit-bnt" type="info" size="small" @click="buy" :loading="loading">确认支付</van-button>
+        <van-button class="commit-bnt" type="info" size="small" @click="buy" :loading="loading"
+          >确认支付</van-button
+        >
       </div>
     </van-popup>
   </div>
@@ -194,27 +203,30 @@ export default {
   padding: 10px;
   font-size: 14px;
 }
-.sline-box{
-	position:absolute;
+.sline-box {
+  position: absolute;
+  top: 7px;
+  left: 8px;
 }
-.actions{
-	margin-bottom:50px;
+.actions {
+  margin-bottom: 20px;
 }
-.popup-box{
-	background-color:rgba(242, 242, 242, 1);
+.popup-box {
+  background-color: rgba(242, 242, 242, 1);
 }
-.commit-bnt,.abo-bnt{
-	border-radius:3px;
+.commit-bnt,
+.abo-bnt {
+  border-radius: 3px;
 }
-.abo-bnt{
-	background-color:rgba(204, 204, 204, 1);
-	color:#fff; 
+.abo-bnt {
+  background-color: rgba(204, 204, 204, 1);
+  color: #fff;
 }
 .card {
   background-color: rgba(242, 242, 242, 1);
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.349019607843137);
   height: 150px;
-  border-radius: 6px; 
+  border-radius: 6px;
   position: relative;
   padding: 5px;
   .title {
@@ -240,17 +252,20 @@ export default {
     position: absolute;
     right: 10px;
     width: 70px;
-	margin-top:0!important;
+    margin-top: 0 !important;
   }
   .prompt {
     margin-top: 25px;
-	color:#004427;
+    color: #004427;
+  }
+  .txt {
+    font-weight: 700;
   }
 }
 .buy {
   width: 250px;
   height: 30px;
-  line-height: 30px;
+  line-height: 33px;
   margin: auto;
   background-color: rgba(109, 117, 241, 1);
   color: #ffd000;
@@ -271,6 +286,7 @@ export default {
     text-align: left;
     padding: 10px 0 0 10px;
     font-size: 12px;
+    position: relative;
     .desc {
       width: 90%;
       color: #336633;
@@ -289,9 +305,9 @@ export default {
     font-size: 12px;
   }
   .price {
-    text-align: right;
-    margin-top: 8px;
-    padding-right: 6px;
+    position: absolute;
+    right: 3px;
+    bottom: 0;
     img {
       width: 45px;
     }
@@ -313,7 +329,7 @@ export default {
     color: #fff;
     padding: 15px 5px;
     box-sizing: content-box;
-    border-radius: 20px;
+    border-radius: 10px;
     margin-right: 10px;
   }
   .message {
@@ -346,17 +362,18 @@ export default {
   .van-stepper__input {
     width: 160px;
     color: #ff9900;
-	background:#fff;
-	height:32px;
+    background: #fff;
+    height: 32px;
   }
-  .van-stepper__minus,.van-stepper__plus{
-	background-color:rgba(215, 215, 215, 1);
-	color:#000;
-	font-size:12px;
-	height:32px;
+  .van-stepper__minus,
+  .van-stepper__plus {
+    background-color: rgba(215, 215, 215, 1);
+    color: #000;
+    font-size: 12px;
+    height: 32px;
   }
   .prompt {
-    font-size: 12px;
+    font-size: 14px;
     color: #999;
     margin-bottom: 20px;
     text-align: center;

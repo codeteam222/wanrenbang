@@ -11,12 +11,18 @@
         rows="5"
         type="textarea"
         placeholder="和大家分享写什么呢"
-        maxlength="200"
+        maxlength="2000"
         show-word-limit
+        class="textarea"
       />
       <div class="upload">
         <van-uploader v-model="fileList" multiple :max-count="3" :after-read="afterRead" />
       </div>
+      <div class="rule">
+        <div class="desc"><van-icon name="info-o" />发帖规范</div>
+        <div class="stepper">需要福利卡解锁：<van-field v-model="buyNumber" />张</div>
+      </div>
+
       <van-button type="primary" @click="relese">发布</van-button>
     </c-popup-layout>
   </van-popup>
@@ -43,7 +49,8 @@ export default {
           status: "failed",
           message: "上传失败"
         }
-      ]
+      ],
+      buyNumber: 0
     };
   },
   computed: {
@@ -83,5 +90,54 @@ export default {
   line-height: 35px;
   margin-top: 30px;
   border-radius: 10px;
+}
+.rule {
+  text-align: left;
+  font-size: 12px;
+  padding: 0 12px;
+  // .stepper {
+  //   display: flex;
+  //   justify-content: flex-start;
+  //   align-items: center;
+  //   margin-bottom: 10px;
+  // }
+  .van-cell {
+    width: 100px;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .desc {
+    font-size: 8px;
+    margin-bottom: 7px;
+    .van-icon-info-o {
+      font-size: 10px;
+      vertical-align: middle;
+      margin-right: 3px;
+    }
+  }
+  .stepper {
+    font-weight: 700;
+  }
+  // .van-stepper__input{
+  //   width: 100px;
+  //   color: #000000;
+  //   background: #fff;
+  //   height: 32px;
+  //   border: 1px solid #f2f3f5;
+  //   margin: 0 2px;
+  //   text-align: center;
+  // }
+  .van-field__control {
+    width: 100px;
+    color: #000000;
+    background: #fff;
+    height: 32px;
+    border: 1px solid #f2f3f5;
+    margin-right: 5px;
+    text-align: center;
+    height: 30px;
+    font-weight: 500;
+  }
 }
 </style>

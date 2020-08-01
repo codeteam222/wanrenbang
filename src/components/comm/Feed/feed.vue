@@ -17,7 +17,9 @@
       </div>
     </div>
     <div class="feed-content" @click="openDetail(data)">
-      <div class="content">{{ data.content }}</div>
+      <slot name="content" v-bind:data="data">
+        <div class="content">{{ data.content }}</div>
+      </slot>
       <div class="links">
         <a v-for="(link, linkIndex) in data.links" :key="linkIndex" :href="link.url" target="_blank">{{
           link.text
@@ -31,17 +33,25 @@
     </div>
     <div class="feed-operation">
       <div class="share" @click="handleOperation('share', data)">
-        <img src="@/assets/img/share.png" />{{ data.shareNum || 0 }}
+        <!-- <img src="@/assets/img/share.png" />{{ data.shareNum || 0 }} -->
+        <i class="Hui-iconfont Hui-iconfont-share"></i>{{ data.shareNum || 0 }}
       </div>
       <div class="comment" @click="handleOperation('comment', data)">
-        <img src="@/assets/img/comment.png" />{{ data.commentNum || 0 }}
+        <i class="Hui-iconfont Hui-iconfont-comment"></i>{{ data.commentNum || 0 }}
+        <!-- <img src="@/assets/img/comment.png" />{{ data.commentNum || 0 }} -->
       </div>
       <div class="zan" @click="handleOperation('zan', data)">
-        <img src="@/assets/img/zan.png" />{{ data.zanNum || 0 }}
-      </div> 
-	<div class="zan" @click="handleOperation('like', data)">
-	<img src="@/assets/img/like.png" />{{ data.like || 0 }}
-    </div>
+        <van-icon :name="data.isZan ? 'good-job' : 'good-job-o'" />{{ data.zanNum || 0 }}
+        <!-- <img src="@/assets/img/zan.png" />{{ data.zanNum || 0 }} -->
+      </div>
+      <div class="like" @click="handleOperation('like', data)">
+        <i
+          class="Hui-iconfont"
+          :class="data.isLike ? 'Hui-iconfont-cang2-selected' : 'Hui-iconfont-cang2'"
+        ></i
+        >{{ data.lickNum || 0 }}
+        <!-- <img src="@/assets/img/like.png" />{{ data.like || 0 }} -->
+      </div>
     </div>
   </div>
 </template>
@@ -63,9 +73,19 @@ export default {
     },
     handleOperation(type, item) {
       if (type === "zan") {
-        if (item.isZan) return;
-        this.$set(item, "zanNum", item.zanNum ? item.zanNum + 1 : 1);
-        item.isZan = true;
+        if (!item.isZan) {
+          this.$set(item, "zanNum", item.zanNum ? item.zanNum + 1 : 1);
+        } else {
+          this.$set(item, "zanNum", item.zanNum - 1);
+        }
+        item.isZan = !item.isZan;
+      } else if (type === "like") {
+        if (!item.isLike) {
+          this.$set(item, "lickNum", item.lickNum ? item.lickNum + 1 : 1);
+        } else {
+          this.$set(item, "lickNum", item.lickNum - 1);
+        }
+        this.$set(item, "isLike", !item.isLike);
       }
     }
   }
