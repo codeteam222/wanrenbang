@@ -1,6 +1,5 @@
 <template>
   <div class="plan-koifish">
-    <div class="sell" @click="openSell"><label>出售</label><span>10</span></div>
     <c-feed :data="commentList" @load="load" :type="'koiFish'">
       <template v-slot:content="{ data }">
         <div class="content">
@@ -20,6 +19,10 @@
     </c-feed>
     <BBuyWelfareCard ref="buyWelfareCard" :price="current.price || 0" @success="buySuccess" />
     <BSell ref="sell" :cardNum="cardNum" @relese="relese" />
+    <div class="add-message" @click="openSell">
+      <img src="@/assets/img/edit-article.png" />
+      <div>出售</div>
+    </div>
   </div>
 </template>
 
@@ -283,6 +286,23 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.add-message {
+  position: fixed;
+  right: 20px;
+  bottom: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: #2892ee;
+  background-color: rgb(255, 193, 7);
+  padding-top: 5px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  img {
+    width: 20px;
+  }
+}
 .state {
   width: 60px;
   height: 25px;
@@ -319,6 +339,9 @@ export default {
     .surplus {
       color: #fc8ca8;
     }
+  }
+  .links a {
+    font-size: 14px;
   }
 }
 .sell {

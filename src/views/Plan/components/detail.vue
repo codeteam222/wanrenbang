@@ -31,6 +31,18 @@
         <li>10000026；</li>
         <li>10000026；</li>
         <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
+        <li>10000026；</li>
       </ul>
     </div>
     <div class="detail-item">
@@ -88,43 +100,43 @@ export default {
           avatar: require("@/assets/img/avatar.jpg"),
           nickname: "闭关修炼",
           goldNum: 10,
-          time: "2020年2月11 15：46：32"
+          time: "2月11 15：46：32"
         },
         {
           avatar: require("@/assets/img/avatar.jpg"),
           nickname: "闭关修炼",
           goldNum: 10,
-          time: "2020年2月11 15：46：32"
+          time: "2月11 15：46：32"
         },
         {
           avatar: require("@/assets/img/avatar.jpg"),
           nickname: "闭关修炼",
           goldNum: 10,
-          time: "2020年2月11 15：46：32"
+          time: "2月11 15：46：32"
         },
         {
           avatar: require("@/assets/img/avatar.jpg"),
           nickname: "闭关修炼",
           goldNum: 10,
-          time: "2020年2月11 15：46：32"
+          time: "2月11 15：46：32"
         },
         {
           avatar: require("@/assets/img/avatar.jpg"),
           nickname: "闭关修炼",
           goldNum: 10,
-          time: "2020年2月11 15：46：32"
+          time: "2月11 15：46：32"
         },
         {
           avatar: require("@/assets/img/avatar.jpg"),
           nickname: "闭关修炼",
           goldNum: 10,
-          time: "2020年2月11 15：46：32"
+          time: "2月11 15：46：32"
         },
         {
           avatar: require("@/assets/img/avatar.jpg"),
           nickname: "闭关修炼",
           goldNum: 10,
-          time: "2020年2月11 15：46：32"
+          time: "2月11 15：46：32"
         }
       ]
     };
@@ -179,7 +191,8 @@ export default {
   color: #5ab963;
 }
 .number-list {
-  overflow: hidden;
+  overflow-y: auto;
+  height: 58px;
   li {
     float: left;
   }
@@ -202,6 +215,7 @@ export default {
   border-bottom: 1px solid rgb(232, 232, 232);
   padding: 5px 0;
   font-size: 12px;
+  width: 270px;
   .user-info {
     display: flex;
     justify-content: flex-start;
