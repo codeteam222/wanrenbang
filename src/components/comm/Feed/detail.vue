@@ -1,9 +1,12 @@
 <template>
   <van-popup
+    class="popup-feed-detail"
     v-model="visible"
     position="right"
     :safe-area-inset-bottom="true"
     :close-on-click-overlay="false"
+    lock-scroll
+    get-container="body"
   >
     <c-popup-layout :title="detail.nickname" @back="visible = false">
       <template v-if="type === 'koiFish'">
@@ -62,6 +65,54 @@ export default {
         state: 0,
         sex: 1,
         comments: [
+          {
+            nickname: "闭关修炼",
+            avatar: require("@/assets/img/avatar.jpg"),
+            time: "2020-10-28 18:11:22",
+            zanNum: 22,
+            content: "拉萨经过了卡接受了可根据爱上了看过卡洛斯结果",
+            replys: [
+              {
+                nickname: "闭关修炼",
+                avatar: require("@/assets/img/avatar.jpg"),
+                time: "2020-10-28 18:11:22",
+                zanNum: 22,
+                content: "拉萨经过了卡接受了可根据爱上了看过卡洛斯结果"
+              }
+            ]
+          },
+          {
+            nickname: "闭关修炼",
+            avatar: require("@/assets/img/avatar.jpg"),
+            time: "2020-10-28 18:11:22",
+            zanNum: 22,
+            content: "拉萨经过了卡接受了可根据爱上了看过卡洛斯结果",
+            replys: [
+              {
+                nickname: "闭关修炼",
+                avatar: require("@/assets/img/avatar.jpg"),
+                time: "2020-10-28 18:11:22",
+                zanNum: 22,
+                content: "拉萨经过了卡接受了可根据爱上了看过卡洛斯结果"
+              }
+            ]
+          },
+          {
+            nickname: "闭关修炼",
+            avatar: require("@/assets/img/avatar.jpg"),
+            time: "2020-10-28 18:11:22",
+            zanNum: 22,
+            content: "拉萨经过了卡接受了可根据爱上了看过卡洛斯结果",
+            replys: [
+              {
+                nickname: "闭关修炼",
+                avatar: require("@/assets/img/avatar.jpg"),
+                time: "2020-10-28 18:11:22",
+                zanNum: 22,
+                content: "拉萨经过了卡接受了可根据爱上了看过卡洛斯结果"
+              }
+            ]
+          },
           {
             nickname: "闭关修炼",
             avatar: require("@/assets/img/avatar.jpg"),

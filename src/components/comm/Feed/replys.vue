@@ -1,9 +1,12 @@
 <template>
   <van-popup
     v-model="visible"
+    class="c-feed-replys"
     position="right"
     :safe-area-inset-bottom="true"
     :close-on-click-overlay="false"
+    lock-scroll
+    get-container="body"
   >
     <c-popup-layout title="查看回复" @back="visible = false">
       <comment-list class="main-comment" :data="mainComment"></comment-list>
@@ -40,15 +43,17 @@ export default {
 </script>
 <style lang="less" scoped>
 @import "~@/assets/styles/comment.less";
-/deep/ .main-comment {
-  border-bottom: 2px solid rgb(228, 228, 228);
-  padding-bottom: 0;
-  margin-bottom: 15px;
-  .content {
-    border-bottom: none;
-  }
-  .comment-item {
-    margin-bottom: 0;
+.c-feed-replys {
+  /deep/ .main-comment {
+    border-bottom: 2px solid rgb(228, 228, 228);
+    padding-bottom: 0;
+    margin-bottom: 15px;
+    .content {
+      border-bottom: none;
+    }
+    .comment-item {
+      margin-bottom: 0;
+    }
   }
 }
 </style>
