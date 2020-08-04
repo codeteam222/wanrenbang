@@ -18,7 +18,8 @@ import {
   SidebarItem,
   Card,
   Divider,
-  Form as VantForm
+  Form as VantForm,
+  Cell
 } from "vant";
 import fetch from "@/utils/fetch";
 import "./assets/styles/reset.less";
@@ -51,6 +52,7 @@ Vue.use(Card);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(VantForm);
+Vue.use(Cell);
 
 Vue.prototype.$fetch = fetch;
 Vue.config.productionTip = false;

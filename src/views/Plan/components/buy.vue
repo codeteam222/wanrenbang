@@ -6,16 +6,18 @@
         <div class="plan-state">正在进行中</div>
       </div>
       <div class="body">
+		<div style="width:80%;margin:0 auto;">
         <div class="bar-char">
-          <div class="bar-item bar-1"><div class="total">￥23435</div></div>
+          <div class="bar-item bar-1"><div class="total">23435人</div></div>
           <div class="bar-item bar-2">圆梦计划</div>
-          <div class="bar-item bar-3"><div class="total">12345人</div></div>
+          <div class="bar-item bar-3"><div class="total">￥12345</div></div>
         </div>
         <div class="bar-footer">
           <span class="people-num">当前参与人数</span>
           <span>|</span>
           <span class="gold-num">当前金币总数</span>
         </div>
+		</div>
         <div class="count-down">
           <div class="stext">
             <div class="open-draw open">开</div>
@@ -187,8 +189,8 @@
         <p>（每天最多可参与100个金币）</p>
       </div>
       <div class="actions">
-        <van-button type="default" size="small" @click="handleBuyPopup(false)">取消</van-button>
-        <van-button type="info" size="small" @click="buy" :loading="loading">确认参与</van-button>
+        <van-button class="abo-bnt" type="default" size="small" @click="handleBuyPopup(false)">取消</van-button>
+        <van-button type="info" class="commit-bnt" size="small" @click="buy" :loading="loading">确认参与</van-button>
       </div>
     </van-popup>
   </div>
@@ -284,8 +286,8 @@ export default {
     font-size: 16px;
   }
   .bar-item {
-    width: 31px;
-    height: 300px;
+    width: 22px;
+    height: 260px;
     color: #fff;
     position: relative;
     &.bar-1,
@@ -306,21 +308,21 @@ export default {
     &.bar-1 {
       background-color: rgb(226, 90, 83);
       color: rgb(226, 90, 83);
-      height: 200px;
+      height: 100px;
       &::before {
         background-color: rgb(255, 153, 0);
       }
     }
     &.bar-2 {
       background-color: rgb(109, 117, 241);
-      font-size: 16px;
-      line-height: 60px;
+      font-size: 12px;
+      line-height: 50px;
       padding-top: 40px;
     }
     &.bar-3 {
       background-color: rgb(253, 179, 93);
       color: rgb(253, 179, 93);
-      height: 250px;
+      height: 210px;
       &::before {
         background-color: rgb(90, 185, 99);
       }
@@ -329,12 +331,13 @@ export default {
 }
 .bar-footer {
   background-color: rgba(252, 140, 168, 1);
-  border-radius: 31px;
-  height: 31px;
-  line-height: 31px;
+  border-radius: 26px;
+  height: 26px;
+  line-height: 26px;
   display: flex;
   justify-content: space-between;
   color: rgb(152, 95, 109);
+  font-size:12px;
 }
 .people-num,
 .gold-num {
@@ -347,7 +350,7 @@ export default {
   padding-right: 13px;
 }
 .count-down {
-  margin-top: 40px;
+  margin-top: 20px;
   .text {
     letter-spacing: 81px;
     text-indent: 50px;
@@ -474,5 +477,13 @@ export default {
   span {
     margin: 0 10px;
   }
+}
+.commit-bnt,
+.abo-bnt {
+  border-radius: 3px;
+}
+.abo-bnt {
+  background-color: rgba(204, 204, 204, 1);
+  color: #fff;
 }
 </style>

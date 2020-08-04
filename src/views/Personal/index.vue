@@ -2,59 +2,49 @@
   <div class="personal-index">
     <c-menu :active="2"></c-menu>
     <div class="user-info">
-      <div class="left">
-        <div>
-          <img class="avatar" src="@/assets/img/avatar.jpg" alt="" />
-        </div>
-        <div class="name">啊哈哈哈</div>
-      </div>
-      <div class="right">
-        <b style="font-weight">账户余额</b>
-        <div class="money">
-          <span class="unit">￥</span>
-          <span>154,211.00</span>
-        </div>
-        <div class="operation">
-          <div class="btn recharge-btn" @click="recharge">充值</div>
-          <div class="btn withdraw-btn" @click="withdraw">提现</div>
+      <van-cell class="base-info" center is-link>
+        <template #title>
+          <img class="avatar" src="@/assets/img/default-avatar.png" />
+          <div>
+            <router-link to="/login" class="toLogin">登陆 / 注册</router-link>
+            <router-link to="/personal/safe" class="manager">账号管理</router-link>
+          </div>
+        </template>
+        <template #right-icon>
+          <van-icon name="arrow" />
+        </template>
+      </van-cell>
+      <div class="financial-details">
+        <div class="title">账户余额<span>账单明细</span></div>
+        <div class="money">￥132.132.00</div>
+        <div class="btn-group">
+          <span class="btn recharge" @click="recharge">充值</span>
+          <span class="btn withdraw" @click="withdraw">提现</span>
         </div>
       </div>
     </div>
-    <div class="main">
-      <div class="left">
-        <van-sidebar v-model="activeKey">
-          <van-sidebar-item title="粉丝" to="/personal/fans" />
-          <van-sidebar-item title="收藏/关注/动态" to="/personal/follow" />
-          <van-sidebar-item title="历史记录" to="/personal/history" />
-          <van-sidebar-item title="账户管理" to="/personal/safe" />
-          <van-sidebar-item title="项目中心" to="/personal/project" />
-          <van-sidebar-item title="消息中心" to="/personal/message" badge="99+" />
-          <van-sidebar-item title="用户协议" to="/personal/agreement" />
-          <van-sidebar-item title="在线客服" />
-          <van-sidebar-item title="退出登录" @click="loginOut" />
-        </van-sidebar>
-        <div class="glob-box">
-          <p class="name">--金币--</p>
-          <p class="num">1332个</p>
-          <p class="prompt">（注：账户金币于每晚21：00整准时清空归零，请及时使用！）</p>
+    <div class="box">
+      <div class="box-item user-operaions">
+        <div v-for="(item, index) in actions" :key="index" @click="handleClick(item)">
+          <img :src="item.img" />
+          <p>{{ item.label }}</p>
         </div>
       </div>
-      <div class="right">
-        <div class="message-list">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-            <div class="message-item" v-for="(message, index) in messageList" :key="index">
-              <div class="thumb">
-                <img class="avatar" :src="message.logo" alt="" />
-              </div>
-              <div class="message-info">
-                <p class="title">{{ message.msgTitle }}</p>
-                <p>
-                  {{ message.content }}
-                </p>
-                <p>{{ message.createTime }}</p>
-              </div>
-            </div>
-          </van-list>
+      <div class="menu-list">
+        <div
+          v-for="(menu, index) in menus"
+          :key="index"
+          class="menu-item box-item"
+          @click="handleClick(menu)"
+        >
+          <div class="left">
+            <img :src="menu.img" />
+            <label>{{ menu.label }}</label>
+            <span class="tip" v-if="menu.tip">{{ menu.tip }}</span>
+          </div>
+          <div class="right">
+            <van-icon name="arrow" />
+          </div>
         </div>
       </div>
     </div>
@@ -82,7 +72,56 @@ export default {
         size: 10
       },
       loading: false,
-      finished: false
+      finished: false,
+      menus: [
+        {
+          label: "圆梦记录",
+          name: "PersonalHistory",
+          img: require("@/assets/img/dream.png")
+        },
+        {
+          label: "消息通知",
+          name: "PersonalMessage",
+          img: require("@/assets/img/message.png"),
+          tip: 3
+        },
+        {
+          label: "项目中心",
+          name: "PersonalProject",
+          img: require("@/assets/img/project.png")
+        },
+        {
+          label: "用户协议",
+          name: "PersonalAgreement",
+          img: require("@/assets/img/xieyi.png")
+        },
+        {
+          label: "退出登录",
+          img: require("@/assets/img/loginout.png")
+        }
+      ],
+      actions: [
+        {
+          label: "粉丝",
+          name: "PersonalFans",
+          img: require("@/assets/img/fans.png")
+        },
+        {
+          label: "关注",
+          name: "PersonalFollow",
+          img: require("@/assets/img/follow.png")
+        },
+        {
+          label: "收藏",
+          name: "PersonalCollection",
+          img: require("@/assets/img/collection.png")
+        },
+        {
+          label: "动态",
+          name: "PersonalBehavior",
+          img: require("@/assets/img/behavior.png")
+        }
+      ]
     };
   },
   created() {
@@ -120,6 +159,11 @@ export default {
     },
     withdraw() {
       this.$refs.withdraw.open();
+    },
+    handleClick(item) {
+      if (item.name) {
+        this.$router.push({ name: item.name });
+      }
     }
   }
 };
@@ -131,137 +175,152 @@ export default {
 }
 .main,
 .user-info {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-  .left {
-    width: 120px;
-    border-right: 1px solid rgb(224, 224, 224);
-  }
-  .right {
-    flex: 1;
-    margin-left: 1px;
-  }
-}
-.user-info {
-  background-color: rgba(242, 242, 242, 1);
+  background-color: rgba(228, 228, 228, 1);
+  padding: 0 10px;
   padding-bottom: 5px;
-  .left {
-    position: relative;
-    padding-top: 25px;
-    &::before {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 80px;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 0;
-      background-color: rgba(0, 0, 0, 0.1);
+  height: 135px;
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  .toLogin {
+    font-weight: 700;
+    color: #333333;
+    display: block;
+    width: 100px;
+  }
+  .manager {
+    font-size: 12px;
+    text-decoration: underline;
+    color: #666;
+  }
+  .van-cell {
+    background-color: transparent;
+  }
+  .base-info {
+    .van-cell__title {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: left;
     }
-  }
-  .right {
-    padding-top: 10px;
-  }
-}
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-.name {
-  font-weight: 700;
-  font-size: 12px;
-}
-.money {
-  font-size: 20px;
-  font-weight: 700;
-  color: #ff9900;
-  margin-bottom: 10px;
-  margin-top: 5px;
-  .unit {
-    font-size: 14px;
-  }
-}
-.btn {
-  width: 80px;
-  height: 25px;
-  line-height: 25px;
-  border-radius: 5px;
-  margin: 10px;
-  font-size: 12px;
-  display: inline-block;
-  color: #fff;
-}
-.recharge-btn {
-  background-color: rgb(109, 117, 241);
-}
-.withdraw-btn {
-  background-color: rgb(245, 109, 145);
-}
-.van-sidebar {
-  width: 100%;
-  &-item {
-    padding-left: 10px;
-    padding-right: 13px;
-  }
-}
-.message-list {
-  height: 657px;
-  overflow-y: auto;
-}
-.message-item {
-  display: flex;
-  justify-items: flex-start;
-  padding: 20px 0px;
-  background-color: #f7f8fa;
-  border-bottom: 1px solid rgb(224, 224, 224);
-  .thumb {
-    width: 55px;
-    height: 55px;
-    img {
-      width: 40px;
-      height: auto;
-    }
-  }
-  .message-info {
-    flex: 1;
-    text-align: left;
-    padding-left: 10px;
-    p {
-      margin-bottom: 10px;
-      font-size: 12px;
-      color: #666666;
-    }
-    .title {
+    .van-icon-arrow {
+      color: #333;
       font-weight: 700;
-      font-size: 14px;
+    }
+  }
+  .financial-details {
+    height: 90px;
+    background-color: rgba(242, 242, 242, 1);
+    box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.349019607843137);
+    border-radius: 10px;
+    width: 285px;
+    margin: auto;
+    margin-top: 10px;
+    padding: 13px 10px;
+    .title {
+      font-size: 12px;
+      position: relative;
+      font-weight: 700;
+      color: #333333;
+      span {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: 400;
+        color: #003b22;
+        font-size: 10px;
+        padding: 12px 0 12px 12px;
+      }
+    }
+    .money {
+      color: #ff9900;
+      font-weight: 700;
+      margin-top: 8px;
+      font-size: 20px;
+    }
+    .btn {
+      width: 100px;
+      color: #fff;
+      display: inline-block;
+      margin: 0;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 0;
+      margin-top: 10px;
+      &.recharge {
+        background-color: rgb(109, 117, 241);
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-right: 1px solid #fff;
+      }
+      &.withdraw {
+        background-color: rgb(252, 140, 168);
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
     }
   }
 }
-.van-sidebar-item--select,
-.van-sidebar-item--select:active {
-  background-color: #f7f8fa;
-}
-.van-sidebar-item--select::before {
-  display: none;
-}
-.van-sidebar-item {
-  border-bottom: 1px solid rgb(231, 231, 231);
-}
-.glob-box {
-  padding: 10px 0;
-  background-color: #f7f8fa;
-  font-size: 12px;
-  p {
-    margin: 5px 0;
+.box {
+  padding: 0 5px;
+  margin-top: 70px;
+  .box-item {
+    background-color: rgba(242, 242, 242, 1);
+    border-radius: 8px;
   }
-  .prompt {
-    font-size: 10px;
+}
+.user-operaions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 18px 20px;
+  font-size: 10px;
+  margin-bottom: 20px;
+  img {
+    width: 15px;
+    margin: 0 10px;
   }
-  .num {
-    font-size: 16px;
-    color: #ff9900;
+}
+.menu-list {
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    padding: 0 8px;
+    font-weight: 700;
+    color: #333;
+    font-size: 12px;
+    img {
+      width: 18px;
+      vertical-align: middle;
+      margin-top: -2px;
+      margin-right: 5px;
+    }
+    .right {
+      padding: 10px;
+      padding-right: 0;
+    }
+    .van-icon-arrow {
+      font-weight: 700;
+      font-size: 10px;
+    }
+    .tip {
+      display: inline-block;
+      font-size: 8px;
+      background-color: rgb(252, 140, 168);
+      border-radius: 50%;
+      width: 13px;
+      height: 13px;
+      line-height: 13px;
+      vertical-align: top;
+      margin-left: 3px;
+      color: #fff;
+    }
   }
 }
 </style>
