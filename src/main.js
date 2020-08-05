@@ -24,9 +24,9 @@ import {
 import fetch from "@/utils/fetch";
 import "./assets/styles/reset.less";
 import "element-ui/lib/theme-chalk/index.css";
-import "./assets/styles/public.less";
 import "vant/lib/index.css";
 import "./assets/font/iconfont.css";
+import "./assets/styles/public.less";
 import "amfe-flexible";
 
 Vue.use(Divider);

@@ -1,15 +1,15 @@
 <template>
   <div class="b-withdraw">
-    <van-popup v-model="visible" position="bottom" round>
+    <van-popup v-model="visible" position="bottom" round class="popup-box">
       <div class="box">
         <div class="money">账户余额：43,211元</div>
         <div class="title">
           <span style="color:#E91E63;">l</span>提现<span style="color:#169BD5;">l</span>
         </div>
         <c-form :data="data" :form="form" :rules="rules" label-width="100px">
-          <template #after>
+          <!-- <template #after>
             <p>提现将收取30%服务费用于发展平台以便于更好地服务用户（本次提现服务费为30元，实际到账：70元）</p>
-          </template>
+          </template> -->
         </c-form>
       </div>
     </van-popup>
@@ -92,19 +92,19 @@ export default {
 
 <style lang="less" scoped>
 .box {
-  font-size: 14px;
+  font-size: 12px;
   padding: 10px;
 }
 .money {
   text-align: left;
 }
 .title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
-/deep/ .van-field__label {
-  width: 100px;
+/deep/ .el-form-item {
+  margin-bottom: 10px;
 }
 /deep/ .el-button {
   width: 100px;
@@ -120,5 +120,21 @@ export default {
 }
 /deep/ .el-input {
   width: 200px;
+  .el-input__inner {
+    height: 30px;
+    border-radius: 0;
+  }
+}
+/deep/ .el-button {
+  width: 100px;
+  margin: 10px;
+  line-height: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 0;
+}
+/deep/ .el-button--default {
+  background-color: rgb(204, 204, 204);
+  color: #fff;
 }
 </style>
