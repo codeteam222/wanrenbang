@@ -32,24 +32,29 @@
       </div>
     </div>
     <div class="feed-operation">
-      <div class="share" @click="handleOperation('share', data)">
+      <div v-if="actions.indexOf('share') !== -1" class="share" @click="handleOperation('share', data)">
         <!-- <img src="@/assets/img/share.png" />{{ data.shareNum || 0 }} -->
         <i class="Hui-iconfont Hui-iconfont-share"></i>{{ data.shareNum || 0 }}
       </div>
-      <div class="comment" @click="handleOperation('comment', data)">
+      <div v-if="actions.indexOf('comment') !== -1" class="comment" @click="handleOperation('comment', data)">
         <i class="Hui-iconfont Hui-iconfont-comment"></i>{{ data.commentNum || 0 }}
         <!-- <img src="@/assets/img/comment.png" />{{ data.commentNum || 0 }} -->
       </div>
-      <div class="zan" @click="handleOperation('zan', data)">
+      <div v-if="actions.indexOf('zan') !== -1" class="zan" @click="handleOperation('zan', data)">
         <van-icon :name="data.isZan ? 'good-job' : 'good-job-o'" />{{ data.zanNum || 0 }}
         <!-- <img src="@/assets/img/zan.png" />{{ data.zanNum || 0 }} -->
       </div>
-      <div class="like" @click="handleOperation('like', data)">
+      <div
+        v-if="actions.indexOf('like') !== -1"
+        class="like"
+        @click="handleOperation('like', data)"
+        :class="{ 'is-string': typeof data.likeNum !== 'number' }"
+      >
         <i
           class="Hui-iconfont"
           :class="data.isLike ? 'Hui-iconfont-cang2-selected' : 'Hui-iconfont-cang2'"
         ></i
-        >{{ data.lickNum || 0 }}
+        >{{ data.likeNum || 0 }}
         <!-- <img src="@/assets/img/like.png" />{{ data.like || 0 }} -->
       </div>
     </div>
@@ -65,6 +70,10 @@ export default {
       default: () => {
         return {};
       }
+    },
+    actions: {
+      type: Array,
+      default: () => ["share", "comment", "zan", "like"]
     }
   },
   methods: {
@@ -81,9 +90,9 @@ export default {
         item.isZan = !item.isZan;
       } else if (type === "like") {
         if (!item.isLike) {
-          this.$set(item, "lickNum", item.lickNum ? item.lickNum + 1 : 1);
+          typeof item.likeNum === "number" && this.$set(item, "likeNum", item.likeNum ? item.likeNum + 1 : 1);
         } else {
-          this.$set(item, "lickNum", item.lickNum - 1);
+          typeof item.likeNum === "number" && this.$set(item, "likeNum", item.likeNum - 1);
         }
         this.$set(item, "isLike", !item.isLike);
       }

@@ -64,6 +64,17 @@
           ></el-option>
         </el-select>
       </template>
+      <template v-if="formItem.type === 'avatar'">
+        <van-uploader
+          ref="avatar"
+          v-model="fileList"
+          :max-count="1"
+          :preview-full-image="false"
+          @delete="deleteImg"
+        >
+          <div class="avatar-mask">点击更换头像</div>
+        </van-uploader>
+      </template>
       <!-- 操作 -->
       <template v-if="formItem.type === 'action'">
         <div class="btn-group" :style="{ 'text-align': formItem.position || 'center' }">
@@ -121,7 +132,8 @@ export default {
   data() {
     return {
       avatar: "",
-      countryCodeList: []
+      countryCodeList: [],
+      fileList: []
     };
   },
   watch: {
@@ -201,6 +213,10 @@ export default {
       const refForm = this.$refs.form;
       refForm.clearValidate();
       refForm.resetFields();
+    },
+    deleteImg() {
+      console.log(this.$refs.avatar);
+      this.$refs.avatar[0].chooseFile();
     },
     /**
      * 寻找指定form规则
@@ -287,6 +303,30 @@ export default {
 .form-item__action {
   /deep/ .el-form-item__content {
     margin-left: 0 !important;
+  }
+}
+.form-item__avatar {
+  margin-bottom: 10px;
+}
+/deep/ .van-uploader {
+  margin-left: 28px;
+  .avatar-mask,
+  .van-uploader__preview,
+  .van-uploader__preview-image {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+  }
+  .van-image__img {
+    width: 100%;
+    height: 100%;
+  }
+  .van-uploader__preview-delete {
+    right: 10px;
+    top: 4px;
   }
 }
 </style>

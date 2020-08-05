@@ -6,18 +6,18 @@
         <div class="plan-state">正在进行中</div>
       </div>
       <div class="body">
-		<div style="width:80%;margin:0 auto;">
-        <div class="bar-char">
-          <div class="bar-item bar-1"><div class="total">23435人</div></div>
-          <div class="bar-item bar-2">圆梦计划</div>
-          <div class="bar-item bar-3"><div class="total">￥12345</div></div>
+        <div class="char">
+          <div class="bar-char">
+            <div class="bar-item bar-1"><div class="total">23435人</div></div>
+            <div class="bar-item bar-2">圆梦计划</div>
+            <div class="bar-item bar-3"><div class="total">￥12345</div></div>
+          </div>
+          <div class="bar-footer">
+            <span class="people-num">当前参与人数</span>
+            <span>|</span>
+            <span class="gold-num">当前金币总数</span>
+          </div>
         </div>
-        <div class="bar-footer">
-          <span class="people-num">当前参与人数</span>
-          <span>|</span>
-          <span class="gold-num">当前金币总数</span>
-        </div>
-		</div>
         <div class="count-down">
           <div class="stext">
             <div class="open-draw open">开</div>
@@ -50,30 +50,24 @@
             <span style="color:#2892EE;">l</span>
             第一步：购买福利卡，系统免费赠送金币
           </div>
-          <p><span>（购买1张福利卡，系统免费赠送1个金币，购买100张，系统免费</span></p>
-          <p><span>赠送100个金币，以此类推，购买N张，系统赠送N个金币）</span></p>
+          <p>
+            （购买1张福利卡，系统免费赠送1个金币，购买100张，系统免费赠送100个金币，以此类推，购买N张，系统赠送N个金币）
+          </p>
         </div>
         <div class="rule-item">
           <div>
             <span style="color:#5AB963;">l</span>
             第二步：参与圆梦计划获取幸运号码
           </div>
-          <p><span>（用系统赠送的金币参与圆梦计划，参与1个金币获取1个幸运号码，</span></p>
-          <p><span>每天最多可获取100个幸运号码）</span></p>
+          <p>（用系统赠送的金币参与圆梦计划，参与1个金币获取1个幸运号码，每天最多可获取100个幸运号码）</p>
         </div>
         <div class="rule-item">
           <div>
             <span style="color:#E91E63;">l</span>
             第三步：中奖成为幸运锦鲤，享受特权
           </div>
-          <p><span>（每天20：50分准时开奖，开出的幸运号码，和你获得的其中一个</span></p>
-          <p><span>幸运号码一样，那么你就是本期的幸运锦鲤，幸运锦鲤可以在卡卷</span></p>
-          <p><span>商城以0.3元每张的价格购买本期圆梦计划中奖所得金币相等数量</span></p>
-          <p><span>的福利卡，并在幸运锦鲤页面以每张1元的价格出售。出售所得的钱</span></p>
-          <p><span>直接存入账户余额，随时提现！（前期购买福利卡的费用，可等售完</span></p>
-          <p><span>之后再付钱）</span></p>
           <p>
-            <span><br /></span>
+            （每天20：50分准时开奖，开出的幸运号码，和你获得的其中一个幸运号码一样，那么你就是本期的幸运锦鲤，幸运锦鲤可以在卡卷商城以0.3元每张的价格购买本期圆梦计划中奖所得金币相等数量的福利卡，并在幸运锦鲤页面以每张1元的价格出售。出售所得的钱直接存入账户余额，随时提现！（前期购买福利卡的费用，可等售完之后再付钱）
           </p>
         </div>
         <div class="rule-item">
@@ -98,9 +92,9 @@
             <span style="color:#2892EE;">l</span>
             数值B=重庆时时彩每天固定第55期开奖号码
           </div>
-          <p><span>（如：2019年5月3号，重庆时时彩第55期开奖号码为：37485</span></p>
-          <p><span>那么数值B=37485，如果时时彩数据因为特殊情况未开出，</span></p>
-          <p><span>那么数值B取值为00000；）</span></p>
+          <p>
+            （如：2019年5月3号，重庆时时彩第55期开奖号码为：37485，那么数值B=37485，如果时时彩数据因为特殊情况未开出，那么数值B取值为00000；）
+          </p>
         </div>
         <div class="rule-item">
           <div>
@@ -119,11 +113,8 @@
         </div>
         <div class="rule-item">
           <div>
-            <p>
-              <span style="color:#2892EE;">l</span>
-              <span>例：2017-11-28期总参与人数为：846545人，重庆时时彩</span>
-            </p>
-            <p><span>20171128055期开奖号码：11232；</span></p>
+            <span style="color:#2892EE;">l</span>
+            例：2017-11-28期总参与人数为：846545人，重庆时时彩20171128055期开奖号码：11232；
           </div>
         </div>
         <div class="rule-item">
@@ -189,8 +180,12 @@
         <p>（每天最多可参与100个金币）</p>
       </div>
       <div class="actions">
-        <van-button class="abo-bnt" type="default" size="small" @click="handleBuyPopup(false)">取消</van-button>
-        <van-button type="info" class="commit-bnt" size="small" @click="buy" :loading="loading">确认参与</van-button>
+        <van-button class="abo-bnt" type="default" size="small" @click="handleBuyPopup(false)"
+          >取消</van-button
+        >
+        <van-button type="info" class="commit-bnt" size="small" @click="buy" :loading="loading"
+          >确认参与</van-button
+        >
       </div>
     </van-popup>
   </div>
@@ -329,6 +324,10 @@ export default {
     }
   }
 }
+.char {
+  width: 300px;
+  margin: auto;
+}
 .bar-footer {
   background-color: rgba(252, 140, 168, 1);
   border-radius: 26px;
@@ -337,17 +336,17 @@ export default {
   display: flex;
   justify-content: space-between;
   color: rgb(152, 95, 109);
-  font-size:12px;
+  font-size: 12px;
 }
 .people-num,
 .gold-num {
   color: #fff;
 }
 .people-num {
-  padding-left: 13px;
+  padding-left: 20px;
 }
 .gold-num {
-  padding-right: 13px;
+  padding-right: 20px;
 }
 .count-down {
   margin-top: 20px;

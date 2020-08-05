@@ -2,6 +2,11 @@
   <div class="personal-safe">
     <c-popup-layout title="账号安全" @back="$router.push({ name: 'Personal' })">
       <div class="form-box">
+        <div class="form-content">
+          <c-form :data="baseInfo" :form="baseInfoForm" label-width="100px"></c-form>
+        </div>
+      </div>
+      <div class="form-box">
         <div class="form-title"><span style="color:#E91E63;">l</span>登录密码</div>
         <div class="form-content">
           <c-form :data="loginPwd" :form="loginPwdForm" :rules="loginPwdRules" label-width="100px"></c-form>
@@ -33,6 +38,31 @@ export default {
   },
   data() {
     return {
+      baseInfo: {
+        avatar: "",
+        nickname: ""
+      },
+      baseInfoForm: [
+        {
+          type: "avatar",
+          prop: "avatar"
+        },
+        {
+          type: "input",
+          label: "修改昵称:",
+          prop: "nickname"
+        },
+        {
+          type: "action",
+          data: [
+            {
+              text: "确认修改",
+              type: "primary",
+              handler: this.handleBaseInfo
+            }
+          ]
+        }
+      ],
       loginPwd: {
         password: "",
         newPassword: "",
@@ -180,6 +210,9 @@ export default {
     },
     validateCardId(rule, value, callback) {
       value !== this.bankcard.cardId ? callback(new Error()) : callback();
+    },
+    handleBaseInfo(valid) {
+      console.log(valid);
     }
   }
 };

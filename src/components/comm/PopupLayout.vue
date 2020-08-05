@@ -65,4 +65,20 @@ export default {
   padding-top: 40px;
   min-height: 100vh;
 }
+/deep/ .van-tabs {
+  .van-tabs__wrap {
+    height: 25px;
+  }
+  .van-tab {
+    color: #999999;
+    font-size: 14px;
+  }
+  .van-tabs__line {
+    background-color: #000;
+    height: 1px;
+  }
+  [class*="van-hairline"]::after {
+    border: none;
+  }
+}
 </style>

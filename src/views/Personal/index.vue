@@ -11,7 +11,7 @@
           </div>
         </template>
         <template #right-icon>
-          <van-icon name="arrow" />
+          <van-icon name="arrow" @click="handleClick({ name: 'PersonalFollow' })" />
         </template>
       </van-cell>
       <div class="financial-details">
@@ -113,12 +113,12 @@ export default {
         },
         {
           label: "收藏",
-          name: "PersonalCollection",
+          name: "PersonalFollow",
           img: require("@/assets/img/collection.png")
         },
         {
           label: "动态",
-          name: "PersonalBehavior",
+          name: "PersonalFollow",
           img: require("@/assets/img/behavior.png")
         }
       ]
@@ -263,6 +263,11 @@ export default {
         border-bottom-right-radius: 15px;
       }
     }
+  }
+  .van-icon-arrow {
+    display: inline-block;
+    padding: 20px;
+    padding-right: 0;
   }
 }
 .box {
