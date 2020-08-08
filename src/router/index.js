@@ -12,6 +12,7 @@ const PersonalSafe = () => import("@/views/Personal/safe.vue");
 const PersonalProject = () => import("@/views/Personal/project.vue");
 const PersonalMessage = () => import("@/views/Personal/message.vue");
 const PersonalAgreement = () => import("@/views/Personal/agreement.vue");
+const PersonalFund = () => import("@/views/Personal/fund.vue");
 Vue.use(VueRouter);
 
 const routes = [
@@ -45,6 +46,11 @@ const routes = [
     path: "/personal/follow",
     component: PersonalFollow,
     name: "PersonalFollow"
+  },
+  {
+    path: "/personal/fund",
+    component: PersonalFund,
+    name: "PersonalFund"
   },
   {
     path: "/personal/history",

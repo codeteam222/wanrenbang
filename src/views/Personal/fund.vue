@@ -1,25 +1,25 @@
 <template>
-  <div class="wrapper personal-history">
-    <b-history ref="history"></b-history>
+  <div class="wrapper personal-fund">
+    <b-fund ref="history"></b-fund>
   </div>
 </template>
 
 <script>
-import Bhistory from "@/components/business/history";
+import Bfund from "@/components/business/fund";
 export default {
   components: {
-    "b-history": Bhistory
+    "b-fund": Bfund
   },
   data() {
     return {
       tabs: [
         {
-          title: "历史参与记录",
-          name: "join"
+          title: "充值记录",
+          name: "recharge"
         },
         {
-          title: "历史幸运锦鲤",
-          name: "koiFish"
+          title: "提现记录",
+          name: "withdraw"
         }
       ]
     };
@@ -28,8 +28,8 @@ export default {
     this.$refs.history.open({
       tabs: this.tabs,
       duration: "0",
-      title: "历史记录",
-      type: "join",
+      title: "充值记录",
+      type: "recharge",
       back: () => this.$router.push({ name: "Personal" })
     });
   }
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="less">
-.personal-history {
+.personal-fund {
   font-size: 14px;
   text-align: left;
 }

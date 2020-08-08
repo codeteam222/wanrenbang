@@ -11,11 +11,11 @@
           </div>
         </template>
         <template #right-icon>
-          <van-icon name="arrow" @click="handleClick({ name: 'PersonalFollow' })" />
+          <van-icon name="arrow" @click="handleClick({ name: 'PersonalSafe' })" />
         </template>
       </van-cell>
       <div class="financial-details">
-        <div class="title">账户余额<span>账单明细</span></div>
+        <div class="title">账户余额<span @click="handleClick({ name: 'PersonalFund' })">账单明细</span></div>
         <div class="money">￥132.132.00</div>
         <div class="btn-group">
           <span class="btn recharge" @click="recharge">充值</span>
@@ -47,7 +47,13 @@
           </div>
         </div>
       </div>
+      <div class="gold-box box-item">
+        <div class="title">-- 金币 --</div>
+        <div class="number">13213</div>
+      </div>
+      <div class="desc">（注：账户金币于每晚21：00整准时清空，请及时使用）</div>
     </div>
+
     <b-recharge ref="recharge"></b-recharge>
     <b-withdraw ref="withdraw"></b-withdraw>
   </div>
@@ -124,33 +130,8 @@ export default {
       ]
     };
   },
-  created() {
-    this.getMessageList();
-  },
+  created() {},
   methods: {
-    getMessageList(params = this.params) {
-      this.loading = true;
-      this.$fetch
-        .get("/appMessage/findAllAppMessage", {
-          ...params,
-          token: this.token
-        })
-        .then(({ data }) => {
-          this.finished = data.length < this.params.size;
-          this.messageList = data;
-          this.loading = false;
-        })
-        .catch(({ msg }) => {
-          this.$notify({ type: "warning", message: msg });
-          this.loading = false;
-          this.finished = true;
-        });
-    },
-    onLoad() {
-      this.getMessageList({
-        start: this.params.start + 1
-      });
-    },
     loginOut() {
       this.$router.push({ name: "Login" });
     },
@@ -179,6 +160,7 @@ export default {
   padding: 0 10px;
   padding-bottom: 5px;
   height: 135px;
+  margin-bottom: 80px;
   .avatar {
     width: 60px;
     height: 60px;
@@ -248,7 +230,7 @@ export default {
       display: inline-block;
       margin: 0;
       height: 28px;
-      line-height: 28px;
+      line-height: 30px;
       border-radius: 0;
       margin-top: 10px;
       &.recharge {
@@ -270,8 +252,11 @@ export default {
     padding-right: 0;
   }
 }
+.btn-group {
+  margin-top: 3px;
+}
 .box {
-  padding: 0 5px;
+  padding: 0 5px 40px 5px;
   margin-top: 70px;
   .box-item {
     background-color: rgba(242, 242, 242, 1);
@@ -327,5 +312,23 @@ export default {
       color: #fff;
     }
   }
+}
+.gold-box {
+  padding: 10px 0 15px 0;
+  .title {
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .number {
+    color: #ff9900;
+    font-weight: 700;
+    font-size: 22px;
+    margin-top: 5px;
+  }
+}
+.desc {
+  font-size: 10px;
+  color: #003b22;
+  margin-top: 5px;
 }
 </style>

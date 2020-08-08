@@ -151,4 +151,7 @@ export default {
   text-indent: 5px;
   color: #fff;
 }
+.links a {
+  font-size: 14px;
+}
 </style>

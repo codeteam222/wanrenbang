@@ -54,6 +54,7 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
+  z-index: 888;
   .van-icon {
     position: absolute;
     left: 5px;
@@ -66,12 +67,19 @@ export default {
   min-height: 100vh;
 }
 /deep/ .van-tabs {
+  margin-bottom: 5px;
   .van-tabs__wrap {
-    height: 25px;
+    height: 26px;
   }
   .van-tab {
     color: #999999;
     font-size: 14px;
+  }
+  .van-tab--active {
+    .van-tab__text {
+      color: #000;
+      font-weight: 700;
+    }
   }
   .van-tabs__line {
     background-color: #000;

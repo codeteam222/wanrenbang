@@ -238,4 +238,7 @@ export default {
     color: #ff9900;
   }
 }
+.luck-number {
+  margin-top: 20px;
+}
 </style>

@@ -7,20 +7,20 @@
     :duration="duration"
   >
     <c-popup-layout :title="title" @back="back" :tabs="tabs" @change="tabChange">
-      <c-Join-history v-if="type === 'join'"></c-Join-history>
-      <c-koifish-history v-else-if="type === 'koiFish'"></c-koifish-history>
+      <c-recharge-history v-if="type === 'recharge'"></c-recharge-history>
+      <C-Withdraw-history v-else-if="type === 'withdraw'"></C-Withdraw-history>
     </c-popup-layout>
   </van-popup>
 </template>
 
 <script>
-import JoinHistory from "./JoinHistory";
-import KoifishHistory from "./KoifishHistory";
+import Recharge from "./Recharge";
+import Withdraw from "./Withdraw";
 import PopupLayout from "@/components/comm/PopupLayout";
 export default {
   components: {
-    "c-Join-history": JoinHistory,
-    "c-koifish-history": KoifishHistory,
+    "c-recharge-history": Recharge,
+    "C-Withdraw-history": Withdraw,
     "c-popup-layout": PopupLayout
   },
   data() {
@@ -36,8 +36,8 @@ export default {
   computed: {
     title() {
       const map = {
-        join: "历史参与记录",
-        koiFish: "历史幸运锦鲤"
+        recharge: "充值记录",
+        withdraw: "提现记录"
       };
       return this.fiedTitle || map[this.type];
     }
@@ -72,5 +72,12 @@ export default {
 <style lang="less">
 .van-popup--right {
   width: 100%;
+}
+</style>
+<style lang="less" scoped>
+/deep/ .van-tabs {
+  .van-tabs__line {
+    width: 60px !important;
+  }
 }
 </style>

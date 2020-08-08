@@ -258,6 +258,7 @@ export default {
   }
 }
 .plan-id {
+  color: #000;
   font-size: 16px;
   font-weight: 600;
 }
