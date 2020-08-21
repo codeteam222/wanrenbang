@@ -1,6 +1,7 @@
 <template>
   <div class="service-resource">
-    <b-banner text="全心全意为用户服务" ></b-banner>
+    <b-banner text="全心全意为用户服务"></b-banner>
+    <b-menu></b-menu>
     <b-search @change="handleSearch"></b-search>
     <c-feed :data="commentList" @load="load">
       <template v-slot="scope">
@@ -21,11 +22,13 @@
 import Feed from "@/components/comm/Feed/index";
 import BBanner from "./banner";
 import BSearch from "./search";
+import BMenu from "./menu";
 export default {
   components: {
     "c-feed": Feed,
     "b-banner": BBanner,
-    "b-search": BSearch
+    "b-search": BSearch,
+    "b-menu": BMenu
   },
   data() {
     return {
@@ -34,8 +37,7 @@ export default {
           avatar: require("@/assets/img/avatar.png"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
-          content:
-            "圣卡洛斯考虑好开发来",
+          content: "圣卡洛斯考虑好开发来",
           imgs: [
             require("@/assets/img/1-1.png"),
             require("@/assets/img/1-2.png"),
@@ -48,12 +50,11 @@ export default {
           avatar: require("@/assets/img/avatar1.png"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
-          content:
-            "圣卡洛斯考虑好开发来",
+          content: "圣卡洛斯考虑好开发来",
           imgs: [
-           require("@/assets/img/2-1.png"),
-           require("@/assets/img/2-2.png"),
-           require("@/assets/img/2-3.png")
+            require("@/assets/img/2-1.png"),
+            require("@/assets/img/2-2.png"),
+            require("@/assets/img/2-3.png")
           ],
           state: 1,
           sex: 1
@@ -62,8 +63,7 @@ export default {
           avatar: require("@/assets/img/avatar2.png"),
           nickname: "哈哈哈哈",
           createTime: "2020-10-28 18:11:22",
-          content:
-            "圣卡洛斯考虑好开发来",
+          content: "圣卡洛斯考虑好开发来",
           imgs: [
             require("@/assets/img/3-1.png"),
             require("@/assets/img/3-2.png"),
@@ -71,7 +71,7 @@ export default {
           ],
           state: 0,
           sex: 0
-        } 
+        }
       ],
       stateMap: {
         0: "关注",
@@ -110,13 +110,13 @@ export default {
   font-size: 12px;
   color: #fff;
 }
-.state-1{
+.state-1 {
   background-color: #cccccc;
 }
 .state-0 {
   background-color: rgba(90, 185, 99, 1);
 }
 .state-2 {
-  background-color:rgba(255, 153, 0, 1);
+  background-color: rgba(255, 153, 0, 1);
 }
 </style>

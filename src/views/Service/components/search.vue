@@ -8,7 +8,7 @@
           <van-tab title="关注" name="follow"></van-tab>
         </van-tabs>
       </div>
-      <van-icon class="search-icon" name="search" color="#CCCCCC" size="16px" @click="handleSearchVisible" />
+      <!-- <van-icon class="search-icon" name="search" color="#CCCCCC" size="16px" @click="handleSearchVisible" /> -->
     </div>
     <b-search ref="search"></b-search>
   </div>
