@@ -10,15 +10,15 @@
       </div>
       <!-- <van-icon class="search-icon" name="search" color="#CCCCCC" size="16px" @click="handleSearchVisible" /> -->
     </div>
-    <b-search ref="search"></b-search>
+    <!-- <b-search ref="search"></b-search> -->
   </div>
 </template>
 
 <script>
-import BSearch from "@/components/business/search";
+// import BSearch from "@/components/business/search";
 export default {
   components: {
-    "b-search": BSearch
+    // "b-search": BSearch
   },
   data() {
     return {
@@ -68,7 +68,7 @@ export default {
     height: 25px;
   }
   .van-tab {
-    color: #999999;
+    // color: #999999;
     font-size: 14px;
   }
   .van-tab--active {
