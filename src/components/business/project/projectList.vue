@@ -63,6 +63,7 @@ export default {
   font-size: 14px;
   .left {
     position: relative;
+    padding-right: 10px;
     &::before {
       content: "";
       position: absolute;
@@ -72,7 +73,7 @@ export default {
       background-color: #ccc;
       right: -5px;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-50%) scaleX(0.5);
     }
   }
   &-info {
@@ -80,6 +81,8 @@ export default {
     text-align: left;
     .title {
       font-weight: 700;
+      color: #000;
+      margin-bottom: 10px;
     }
     .ratio {
       color: #f56d91;
@@ -95,14 +98,19 @@ export default {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    margin-right: -15px;
     img {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
     }
     .btn {
-      width: 100%;
       margin-top: 10px;
+      /deep/ .button {
+        width: 80px;
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
   }
 }

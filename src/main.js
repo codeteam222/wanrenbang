@@ -19,7 +19,8 @@ import {
   Card,
   Divider,
   Form as VantForm,
-  Cell
+  Cell,
+  Picker
 } from "vant";
 import fetch from "@/utils/fetch";
 import "./assets/styles/reset.less";
@@ -53,6 +54,7 @@ Vue.use(Select);
 Vue.use(Option);
 Vue.use(VantForm);
 Vue.use(Cell);
+Vue.use(Picker);
 
 Vue.prototype.$fetch = fetch;
 Vue.config.productionTip = false;

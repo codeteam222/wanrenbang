@@ -13,6 +13,7 @@ const PersonalProject = () => import("@/views/Personal/project.vue");
 const PersonalMessage = () => import("@/views/Personal/message.vue");
 const PersonalAgreement = () => import("@/views/Personal/agreement.vue");
 const PersonalFund = () => import("@/views/Personal/fund.vue");
+const OtherPage = () => import("@/views/other/index.vue");
 Vue.use(VueRouter);
 
 const routes = [
@@ -76,6 +77,11 @@ const routes = [
     path: "/personal/agreement",
     component: PersonalAgreement,
     name: "PersonalAgreement"
+  },
+  {
+    path: "/other",
+    component: OtherPage,
+    name: "OtherPage"
   }
   // {
   //   path: '/about',

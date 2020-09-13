@@ -7,9 +7,12 @@
     </project-list>
     <van-popup
       v-model="popupVisible"
+      class=" popup-box"
       position="bottom"
       :safe-area-inset-bottom="true"
       :close-on-click-overlay="false"
+      lock-scroll
+      get-container="body"
       round
     >
       <div class="popup-body">
@@ -143,6 +146,7 @@ export default {
 .popup-body {
   padding: 10px;
   font-size: 14px;
+  text-align: center;
   .my-money {
     text-align: left;
     margin-bottom: 10px;
@@ -155,8 +159,8 @@ export default {
   .message {
     text-align: left;
     padding-left: 70px;
-    color: #ccc;
-    margin-bottom: 10px;
+    margin: 15px 0;
+    font-size: 12px;
     span {
       margin-left: 10px;
     }
@@ -165,14 +169,29 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 12px;
   }
   .computed {
     margin-bottom: 20px;
     color: #ccc;
+    margin-top: 10px;
+    font-size: 12px;
   }
-  /deep/ .van-stepper__input {
-    width: 120px;
-    color: #000;
+  /deep/ .van-stepper {
+    margin: 0 5px;
+    .van-stepper__input {
+      width: 120px;
+      color: #ff9900;
+      background-color: #fff;
+    }
+    button {
+      background-color: rgba(215, 215, 215, 1);
+      border-radius: 0;
+      font-size: 12px;
+      &::before {
+        color: #000 !important;
+      }
+    }
   }
   .prompt {
     font-size: 12px;
@@ -184,6 +203,10 @@ export default {
   .van-button {
     width: 100px;
     margin: 0 10px;
+  }
+  .van-button--default {
+    background-color: #cccccc;
+    color: #fff;
   }
 }
 </style>

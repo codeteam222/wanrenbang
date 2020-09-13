@@ -6,10 +6,13 @@
       </template>
     </project-list>
     <van-popup
+      class="popup-box"
       v-model="popupVisible"
       position="bottom"
       :safe-area-inset-bottom="true"
       :close-on-click-overlay="false"
+      lock-scroll
+      get-container="body"
       round
     >
       <div class="popup-body">
@@ -17,8 +20,8 @@
           <span style="color:#E91E63;">l</span>{{ currentData.name }}<span style="color:#169BD5;">l</span>
         </div>
         <div class="my-ratio">(我占股{{ currentData.ratio }}%)</div>
-        <div class="field">出售<van-field v-model="sellNumber" />%股份</div>
-        <div class="field">价值<van-field v-model="sellPrice" />RMB</div>
+        <div class="field">出售<van-field v-model="sellNumber" @change="sellNumberChange" />股份</div>
+        <div class="field">价值<van-field v-model="sellPrice" /><label>RMB</label></div>
         <div class="actions">
           <van-button type="default" size="small" @click="closeBuyPopup">取消</van-button>
           <van-button type="info" size="small" @click="action" :loading="actionLoading">确认出售</van-button>
@@ -108,6 +111,10 @@ export default {
         this.$set(this.currentData, "ratio", accSubtr(this.currentData.ratio, this.sellNumber));
         this.closeBuyPopup();
       }, 500);
+    },
+    sellNumberChange(value) {
+      console.log(value);
+      this.sellNumber = this.sellNumber.split("%")[0] + "%";
     }
   }
 };
@@ -138,6 +145,7 @@ export default {
 .popup-body {
   padding: 20px 0;
   font-size: 14px;
+  text-align: center;
   .name {
     font-weight: 700;
     font-size: 16px;
@@ -152,6 +160,9 @@ export default {
     justify-content: center;
     align-items: center;
     margin: 10px;
+    label {
+      color: #ff9900;
+    }
   }
   /deep/ .van-field {
     width: 160px;
@@ -169,6 +180,10 @@ export default {
   .van-button {
     width: 100px;
     margin: 10px 10px 0 10px;
+  }
+  .van-button--default {
+    background-color: #cccccc;
+    color: #fff;
   }
 }
 </style>

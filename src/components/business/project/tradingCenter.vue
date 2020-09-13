@@ -30,10 +30,13 @@
       </div>
     </van-list>
     <van-popup
+      class="popup-box"
       v-model="buyPopupVisible"
       position="bottom"
       :safe-area-inset-bottom="true"
       :close-on-click-overlay="false"
+      lock-scroll
+      get-container="body"
       round
     >
       <div class="popup-body">
@@ -165,7 +168,7 @@ export default {
       background-color: #ccc;
       right: 0px;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-50%) scaleX(0.5);
     }
   }
   &-action {
@@ -197,9 +200,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    padding-right: 40px;
     img {
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
     }
   }
@@ -210,6 +216,7 @@ export default {
   font-size: 12px;
 }
 .popup-body {
+  text-align: center;
   padding: 20px 0;
   .price {
     color: #ff9900;
@@ -218,6 +225,10 @@ export default {
   .van-button {
     width: 100px;
     margin: 0 10px;
+  }
+  .van-button--default {
+    background-color: #cccccc;
+    color: #fff;
   }
 }
 </style>

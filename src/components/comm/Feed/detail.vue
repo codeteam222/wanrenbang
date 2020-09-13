@@ -16,6 +16,13 @@
           </template>
         </koi-fish-detail>
       </template>
+      <template v-if="type === 'lock'">
+        <lock-detail :data="data">
+          <template v-slot="{ data }">
+            <slot v-bind:data="data"></slot>
+          </template>
+        </lock-detail>
+      </template>
       <template v-else>
         <feed :data="data">
           <template v-slot="{ data }">
@@ -32,13 +39,15 @@
 import PopupLayout from "@/components/comm/PopupLayout";
 import Feed from "./feed";
 import koiFishDetail from "./koiFishDetail";
+import lockDetail from "./lockDetail";
 import Comment from "./comment";
 export default {
   components: {
     "c-popup-layout": PopupLayout,
     feed: Feed,
     comment: Comment,
-    koiFishDetail
+    koiFishDetail,
+    lockDetail
   },
   props: {
     data: {

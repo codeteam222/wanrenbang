@@ -7,21 +7,23 @@
         </template>
       </el-input>
     </div>
-    <div class="menu-list">
-      <div v-for="(item, index) in menu" :key="index" class="menu-item">
+    <div class="menu-list" v-if="!isOnlySearch">
+      <div v-for="(item, index) in menu" :key="index" class="menu-item" @click="toPage(item)">
         <div class="img"><img :src="item.img" alt="" srcset="" /></div>
         <div class="label">{{ item.label }}</div>
       </div>
     </div>
-    <b-search ref="search"></b-search>
+    <!-- <b-search ref="search"></b-search> -->
   </div>
 </template>
 
 <script>
-import BSearch from "@/components/business/search";
 export default {
-  components: {
-    "b-search": BSearch
+  props: {
+    isOnlySearch: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -29,50 +31,63 @@ export default {
       menu: [
         {
           label: "生活服务",
-          img: require("@/assets/img/shenghuo.png")
+          img: require("@/assets/img/shenghuo.png"),
+          type: 0
         },
         {
           label: "生活娱乐",
-          img: require("@/assets/img/yule.png")
+          img: require("@/assets/img/yule.png"),
+          type: 1
         },
         {
           label: "教育培训",
-          img: require("@/assets/img/jiaoyu.png")
+          img: require("@/assets/img/jiaoyu.png"),
+          type: 2
         },
         {
           label: "教育培训",
-          img: require("@/assets/img/tejia.png")
+          img: require("@/assets/img/tejia.png"),
+          type: 3
         },
         {
           label: "美食",
-          img: require("@/assets/img/meishi.png")
+          img: require("@/assets/img/meishi.png"),
+          type: 4
         },
         {
           label: "汽车",
-          img: require("@/assets/img/qiche.png")
+          img: require("@/assets/img/qiche.png"),
+          type: 5
         },
         {
           label: "商业代办",
-          img: require("@/assets/img/daiban.png")
+          img: require("@/assets/img/daiban.png"),
+          type: 6
         },
         {
           label: "金融服务",
-          img: require("@/assets/img/jinrong.png")
+          img: require("@/assets/img/jinrong.png"),
+          type: 7
         },
         {
           label: "农副产品",
-          img: require("@/assets/img/nongfu.png")
+          img: require("@/assets/img/nongfu.png"),
+          type: 8
         },
         {
           label: "个人分享",
-          img: require("@/assets/img/fenxiang.png")
+          img: require("@/assets/img/fenxiang.png"),
+          type: 9
         }
       ]
     };
   },
   methods: {
     handleSearchVisible() {
-      this.$refs.search.open();
+      // this.$refs.search.open();
+    },
+    toPage(item) {
+      this.$router.push({ name: "OtherPage", query: { type: item.type } });
     }
   }
 };
@@ -125,7 +140,8 @@ export default {
       line-height: 33px;
     }
     .el-input__suffix {
-      top: 8px;
+      display: flex;
+      align-items: center;
       right: 10px;
     }
   }
