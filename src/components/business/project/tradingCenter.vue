@@ -166,7 +166,7 @@ export default {
       width: 1px;
       height: 80%;
       background-color: #ccc;
-      right: 0px;
+      right: 10px;
       top: 50%;
       transform: translateY(-50%) scaleX(0.5);
     }
@@ -218,9 +218,16 @@ export default {
 .popup-body {
   text-align: center;
   padding: 20px 0;
+  .name {
+    font-size: 14px;
+    font-weight: 700;
+  }
   .price {
     color: #ff9900;
     margin: 10px 0 20px 0;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 50px;
   }
   .van-button {
     width: 100px;
