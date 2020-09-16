@@ -86,8 +86,7 @@ export default {
 }
 .project-center {
   width: 150px;
-  height: 40px;
-  line-height: 40px;
+  padding: 10px 0;
   background-color: rgba(109, 117, 241, 1);
   color: #fff;
   font-size: 14px;

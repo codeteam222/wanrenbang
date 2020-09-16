@@ -16,7 +16,7 @@
           </template>
         </koi-fish-detail>
       </template>
-      <template v-if="type === 'lock'">
+      <template v-else-if="type === 'lock'">
         <lock-detail :data="data">
           <template v-slot="{ data }">
             <slot v-bind:data="data"></slot>

@@ -1,12 +1,5 @@
 <template>
   <div class="c-menu">
-    <div class="search">
-      <el-input v-model="searchValue" placeholder="搜索">
-        <template #suffix>
-          <i class="el-icon-search" @click="handleSearchVisible"></i>
-        </template>
-      </el-input>
-    </div>
     <div class="menu-list" v-if="!isOnlySearch">
       <div v-for="(item, index) in menu" :key="index" class="menu-item" @click="toPage(item)">
         <div class="img"><img :src="item.img" alt="" srcset="" /></div>
@@ -27,7 +20,6 @@ export default {
   },
   data() {
     return {
-      searchValue: "",
       menu: [
         {
           label: "生活服务",
@@ -45,7 +37,7 @@ export default {
           type: 2
         },
         {
-          label: "教育培训",
+          label: "特价商品",
           img: require("@/assets/img/tejia.png"),
           type: 3
         },
@@ -83,9 +75,6 @@ export default {
     };
   },
   methods: {
-    handleSearchVisible() {
-      // this.$refs.search.open();
-    },
     toPage(item) {
       this.$router.push({ name: "OtherPage", query: { type: item.type } });
     }
@@ -97,7 +86,6 @@ export default {
 .c-menu {
   border-bottom: 3px solid rgba(242, 242, 242, 1);
   margin-bottom: 10px;
-  margin-top: -30px;
   padding-bottom: 5px;
 }
 .menu-list {
@@ -106,44 +94,13 @@ export default {
   align-items: center;
   flex-wrap: wrap;
   font-size: 10px;
+  height: 105px;
 }
 .menu-item {
   width: 75px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   .img img {
     width: 25px;
-  }
-}
-.search {
-  width: 250px;
-  margin: auto;
-  margin-bottom: 10px;
-  /deep/ .el-input {
-    .el-input__inner {
-      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.349019607843137);
-      border: 3px solid rgba(255, 208, 0, 1);
-      border-radius: 30px;
-      padding: 0 5px;
-      position: relative;
-      background-color: #fff;
-      text-align: center;
-      color: #333333;
-      padding: 0 10px;
-      font-size: 12px;
-      line-height: 33px;
-      height: 33px;
-      &::-webkit-input-placeholder {
-        color: #333333;
-      }
-    }
-    .el-input__icon {
-      line-height: 33px;
-    }
-    .el-input__suffix {
-      display: flex;
-      align-items: center;
-      right: 10px;
-    }
   }
 }
 </style>

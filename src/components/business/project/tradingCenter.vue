@@ -219,7 +219,7 @@ export default {
   text-align: center;
   padding: 20px 0;
   .name {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
   }
   .price {

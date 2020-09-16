@@ -165,9 +165,10 @@ export default {
     }
   }
   /deep/ .van-field {
-    width: 160px;
+    width: 190px;
     color: #000;
     padding: 0 5px;
+    background-color: #f2f2f2;
     .van-field__body {
       border: 1px solid #ccc;
     }
@@ -175,6 +176,7 @@ export default {
       padding: 0 5px;
       text-align: center;
       color: #ff9900;
+      background-color: #fff;
     }
   }
   .van-button {

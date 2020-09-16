@@ -232,7 +232,10 @@ export default {
 
 <style lang="less" scoped>
 .section {
-  padding: 20px 20px;
+  padding: 15px 20px;
+}
+.section-1 .section-title {
+  margin-bottom: 15px;
 }
 .section-2 .section-title {
   font-size: 16px;
@@ -263,14 +266,14 @@ export default {
   font-weight: 600;
 }
 .plan-state {
-  font-size: 12px;
+  font-size: 10px;
   color: #999;
 }
 .bar-char {
   display: flex;
   justify-content: space-around;
   padding: 0 10px;
-  margin-top: 25px;
+  margin-top: 10px;
   align-items: flex-end;
   .total {
     position: absolute;

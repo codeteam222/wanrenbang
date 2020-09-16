@@ -180,7 +180,7 @@ export default {
   /deep/ .van-stepper {
     margin: 0 5px;
     .van-stepper__input {
-      width: 120px;
+      width: 150px;
       color: #ff9900;
       background-color: #fff;
     }

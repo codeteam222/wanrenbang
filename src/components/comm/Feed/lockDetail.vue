@@ -32,13 +32,13 @@
       </div>
       <div class="lock-content">
         <div v-if="!isUnlock">
-          <div class="desc">———— 以下内容需要支付<i>3</i>个福利卡解锁 ————</div>
+          <div class="desc"><label>————</label> 以下内容需要支付<i>3</i>个福利卡解锁 <label>————</label></div>
           <div class="unlock-btn">
             <div class="button button-buy" @click="unlock">解锁</div>
           </div>
         </div>
         <div v-else>
-          <div class="desc">———— 已解锁内容 ————</div>
+          <div class="desc"><label>————</label> 已解锁内容 <label>————</label></div>
           <div class="feed-content" @click="openDetail(data)">
             <div class="content">{{ data.content }}</div>
             <div class="imgs">
@@ -138,8 +138,13 @@ export default {
     text-align: center;
     font-size: 14px;
     font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 10px;
     i {
       color: #fc8ca8;
+    }
+    label {
+      color: #6d75f1;
     }
   }
   .unlock-btn {

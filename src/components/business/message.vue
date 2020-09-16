@@ -34,34 +34,36 @@
         <van-uploader v-model="fileList2" multiple :max-count="3" :after-read="afterRead" />
       </div>
       <div class="rule">
-        <div class="desc"><van-icon name="info-o" />发帖规范</div>
         <div class="stepper" @click="openSelect">
           发布到：<span class="platform"
             ><label for="">{{ target }}</label
             ><van-icon name="arrow-down"
           /></span>
         </div>
+        <div class="desc" @click="openRule"><van-icon name="info-o" />发帖规范</div>
       </div>
       <van-button type="primary" @click="relese">发布</van-button>
     </c-popup-layout>
     <van-popup get-container="body" class="picker" v-model="selectVisible" round position="bottom">
       <van-picker title="发布到" show-toolbar :columns="selectData" @confirm="onConfirm" @cancel="onCancel" />
     </van-popup>
+    <Rule ref="rule"></Rule>
   </van-popup>
 </template>
-
 <script>
 import PopupLayout from "@/components/comm/PopupLayout";
+import Rule from "./rule";
 export default {
   components: {
-    "c-popup-layout": PopupLayout
+    "c-popup-layout": PopupLayout,
+    Rule
   },
   data() {
     return {
       visible: false,
       message: "",
       message2: "",
-      target: "",
+      target: "个人分享",
       fileList: [
         {
           url: "https://img.yzcdn.cn/vant/leaf.jpg",
@@ -129,6 +131,9 @@ export default {
     },
     openSelect() {
       this.selectVisible = true;
+    },
+    openRule() {
+      this.$refs.rule.open();
     }
   }
 };
@@ -154,6 +159,9 @@ export default {
   text-align: left;
   font-size: 12px;
   padding: 0 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   // .stepper {
   //   display: flex;
   //   justify-content: flex-start;
@@ -167,12 +175,15 @@ export default {
     vertical-align: middle;
   }
   .desc {
-    font-size: 8px;
-    margin-bottom: 7px;
+    font-size: 10px;
+    color: #333333;
+    height: 20px;
+    line-height: 20px;
     .van-icon-info-o {
       font-size: 10px;
       vertical-align: middle;
       margin-right: 3px;
+      margin-top: -1px;
     }
   }
   .stepper {

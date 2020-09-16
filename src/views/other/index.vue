@@ -2,7 +2,6 @@
   <div class="other-page">
     <c-popup-layout :title="title" @back="$router.push({ name: 'Service' })">
       <b-banner text="全心全意为用户服务"></b-banner>
-      <b-menu is-only-search></b-menu>
       <b-search @change="handleSearch"></b-search>
       <Feed :data="commentList" @load="load">
         <template v-slot="scope">
@@ -24,14 +23,12 @@
 import PopupLayout from "@/components/comm/PopupLayout";
 import Feed from "@/components/comm/Feed/index";
 import BBanner from "@/views/Service/components/banner";
-import BMenu from "@/views/Service/components/menu";
 import BSearch from "@/views/Service/components/search";
 export default {
   components: {
     Feed,
     "c-popup-layout": PopupLayout,
     "b-banner": BBanner,
-    "b-menu": BMenu,
     "b-search": BSearch
   },
   data() {
