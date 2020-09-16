@@ -1,6 +1,6 @@
 <template>
   <div class="service-about">
-    <b-banner text="一切为了用户，一切依靠用户"></b-banner>
+    <b-banner text="一切为了用户，一切依靠用户" :show-search="false"></b-banner>
     <div class="about-item plan-detail" @click="handleOpenPopup('explain')">
       <van-divider>聚合联创计划说明</van-divider>
     </div>

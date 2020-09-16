@@ -6,18 +6,11 @@
         <div class="label">{{ item.label }}</div>
       </div>
     </div>
-    <!-- <b-search ref="search"></b-search> -->
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    isOnlySearch: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       menu: [

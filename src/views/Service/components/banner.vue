@@ -4,7 +4,7 @@
       <!-- <img src="@/assets/img/logo.png" alt="" /> -->
       <!-- <div class="text">{{ text }}</div> -->
     </div>
-    <div class="search">
+    <div class="search" v-if="showSearch">
       <el-input v-model="searchValue" placeholder="搜索">
         <template #suffix>
           <i class="el-icon-search" @click="handleSearchVisible"></i>
@@ -25,6 +25,10 @@ export default {
     },
     bgColor: {
       type: String
+    },
+    showSearch: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
