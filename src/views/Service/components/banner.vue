@@ -1,7 +1,7 @@
 <template>
   <div class="banner-box">
     <div class="banner" :style="{ 'background-color': bgColor }">
-      <!-- <img src="@/assets/img/logo.png" alt="" /> -->
+      <img :src="src" alt="" />
       <!-- <div class="text">{{ text }}</div> -->
     </div>
     <div class="search" v-if="showSearch">
@@ -29,6 +29,9 @@ export default {
     showSearch: {
       type: Boolean,
       default: true
+    },
+    src: {
+      type: String
     }
   },
   data() {
@@ -52,13 +55,13 @@ export default {
 .banner {
   border-radius: 5px;
   height: 150px;
-  padding: 12px;
-  background-image: url("~@/assets/img/banner.png");
+  // background-image: url("~@/assets/img/banner.png");
   background-size: 100% 150px;
   background-repeat: no-repeat;
-}
-img {
-  width: 90px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 .text {
   color: #fff;

@@ -1,7 +1,7 @@
 <template>
   <div class="service-resource">
-    <b-banner text="全心全意为用户服务"></b-banner>
-    <b-menu></b-menu>
+    <b-banner text="全心全意为用户服务" :src="banner"></b-banner>
+    <b-menu :data="category"></b-menu>
     <b-search @change="handleSearch"></b-search>
     <c-feed :data="commentList" @load="load">
       <template v-slot="scope">
@@ -30,56 +30,26 @@ export default {
     "b-search": BSearch,
     "b-menu": BMenu
   },
+  props: {
+    banner: {
+      type: String,
+      default: ""
+    },
+    category: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
-      commentList: [
-        {
-          avatar: require("@/assets/img/avatar.png"),
-          nickname: "哈哈哈哈",
-          createTime: "2020-10-28 18:11:22",
-          content: "圣卡洛斯考虑好开发来",
-          imgs: [
-            require("@/assets/img/1-1.png"),
-            require("@/assets/img/1-2.png"),
-            require("@/assets/img/1-3.png")
-          ],
-          state: 2,
-          sex: 0,
-          type: "normal"
-        },
-        {
-          avatar: require("@/assets/img/avatar1.png"),
-          nickname: "哈哈哈哈",
-          createTime: "2020-10-28 18:11:22",
-          content: "圣卡洛斯考虑好开发来",
-          imgs: [
-            require("@/assets/img/2-1.png"),
-            require("@/assets/img/2-2.png"),
-            require("@/assets/img/2-3.png")
-          ],
-          state: 1,
-          sex: 1,
-          type: "lock"
-        },
-        {
-          avatar: require("@/assets/img/avatar2.png"),
-          nickname: "哈哈哈哈",
-          createTime: "2020-10-28 18:11:22",
-          content: "圣卡洛斯考虑好开发来",
-          imgs: [
-            require("@/assets/img/3-1.png"),
-            require("@/assets/img/3-2.png"),
-            require("@/assets/img/3-3.png")
-          ],
-          state: 0,
-          sex: 0,
-          type: "lock"
-        }
-      ],
+      commentList: [],
       stateMap: {
         0: "关注",
         1: "已关注",
         2: "广告"
+      },
+      params: {
+        p: 1
       }
     };
   },
@@ -92,9 +62,24 @@ export default {
       }
     },
     load(done) {
-      const copy = [].concat(this.commentList);
-      this.commentList = this.commentList.concat(copy);
-      done();
+      const currentPage = this.params.p;
+      const p = currentPage === 1 ? 1 : currentPage;
+      +1;
+      this.$fetch
+        .form("/Home/Api/article", {
+          ...this.params,
+          p
+        })
+        .then(({ data }) => {
+          const { article_data, totalpages } = data;
+          this.commentList = this.commentList.concat(article_data);
+          if (totalpages === p) {
+            done(true);
+          }
+        })
+        .catch(() => {
+          done(true);
+        });
     },
     handleSearch(d) {
       console.log(d);

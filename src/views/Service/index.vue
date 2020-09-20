@@ -2,7 +2,7 @@
   <div class="servie-wrapper">
     <c-menu :active="0"></c-menu>
     <c-tab :tabs="tabs" :active.sync="tabActiveIndex">
-      <component :is="currentComponent"></component>
+      <component :is="currentComponent" :category="category" :banner="banner"></component>
     </c-tab>
     <div class="add-message" v-if="tabActiveIndex === 0">
       <img src="@/assets/img/edit-article.png" />
@@ -40,8 +40,13 @@ export default {
         {
           label: "聚合联创"
         }
-      ]
+      ],
+      category: [],
+      banner: ""
     };
+  },
+  created() {
+    this.getCategory();
   },
   computed: {
     currentComponent() {
@@ -56,6 +61,12 @@ export default {
     }
   },
   methods: {
+    getCategory() {
+      this.$fetch.form("/Home/Api/index").then(({ data }) => {
+        this.category = data.article_cls;
+        this.banner = data.banner_data[0].shulf_src;
+      });
+    },
     openMessage() {
       this.$refs.message.open();
     }
@@ -85,21 +96,21 @@ export default {
   .tab-item {
     color: #999999;
   }
-  .tab-item.active{
+  .tab-item.active {
     color: #6d75f1;
   }
-  .active_1{
-	  color: #fc8eaa!important; 
+  .active_1 {
+    color: #fc8eaa !important;
   }
-  .active_2{
-	  color:#fdb562!important;
+  .active_2 {
+    color: #fdb562 !important;
   }
-  .imgs,.img-item{
-      height:4rem;
+  .imgs,
+  .img-item {
+    height: 4rem;
   }
-   .img-item{
-     border-radius:4px;
-   }
+  .img-item {
+    border-radius: 4px;
+  }
 }
 </style>
- 

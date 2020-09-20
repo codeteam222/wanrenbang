@@ -1,6 +1,6 @@
 <template>
   <div class="other-page">
-    <c-popup-layout :title="title" @back="$router.push({ name: 'Service' })">
+    <c-popup-layout :title="$route.query.title" @back="$router.push({ name: 'Service' })">
       <b-banner text="全心全意为用户服务"></b-banner>
       <b-search @change="handleSearch"></b-search>
       <Feed :data="commentList" @load="load">

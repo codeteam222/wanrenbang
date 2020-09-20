@@ -4,10 +4,11 @@
     position="right"
     :safe-area-inset-bottom="true"
     :close-on-click-overlay="false"
+    get-container="body"
   >
-    <c-popup-layout title="分享资源" @back="visible = false">
+    <c-popup-layout title="分享资源" @back="close">
       <van-field
-        v-model="message"
+        v-model="form.content"
         rows="5"
         type="textarea"
         placeholder="和大家分享写什么呢"
@@ -19,10 +20,10 @@
         <van-uploader v-model="fileList" multiple :max-count="3" :after-read="afterRead" />
       </div>
       <div class="rule rule-1">
-        <div class="stepper">以下内容需要：<van-field v-model="buyNumber" />张福利卡解锁</div>
+        <div class="stepper">以下内容需要：<van-field v-model="form.coin" />张福利卡解锁</div>
       </div>
       <van-field
-        v-model="message2"
+        v-model="form.sec_content"
         rows="5"
         type="textarea"
         placeholder="和大家分享写什么呢"
@@ -31,7 +32,7 @@
         class="textarea"
       />
       <div class="upload">
-        <van-uploader v-model="fileList2" multiple :max-count="3" :after-read="afterRead" />
+        <van-uploader v-model="lockFileList" :max-count="3" :after-read="lockAfterRead" />
       </div>
       <div class="rule">
         <div class="stepper" @click="openSelect">
@@ -42,10 +43,17 @@
         </div>
         <div class="desc" @click="openRule"><van-icon name="info-o" />发帖规范</div>
       </div>
-      <van-button type="primary" @click="relese">发布</van-button>
+      <div class="btn-box"><van-button type="primary" @click="relese">发布</van-button></div>
     </c-popup-layout>
     <van-popup get-container="body" class="picker" v-model="selectVisible" round position="bottom">
-      <van-picker title="发布到" show-toolbar :columns="selectData" @confirm="onConfirm" @cancel="onCancel" />
+      <van-picker
+        title="发布到"
+        show-toolbar
+        value-key="cls_name"
+        :columns="selectData"
+        @confirm="onConfirm"
+        @cancel="onCancel"
+      />
     </van-popup>
     <Rule ref="rule"></Rule>
   </van-popup>
@@ -61,34 +69,17 @@ export default {
   data() {
     return {
       visible: false,
-      message: "",
-      message2: "",
-      target: "个人分享",
-      fileList: [
-        {
-          url: "https://img.yzcdn.cn/vant/leaf.jpg",
-          status: "uploading",
-          message: "上传中..."
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/tree.jpg",
-          status: "failed",
-          message: "上传失败"
-        }
-      ],
-      fileList2: [
-        {
-          url: "https://img.yzcdn.cn/vant/leaf.jpg",
-          status: "uploading",
-          message: "上传中..."
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/tree.jpg",
-          status: "failed",
-          message: "上传失败"
-        }
-      ],
-      buyNumber: 0,
+      form: {
+        content: "",
+        n_img: "",
+        coin: 0,
+        c_id: "",
+        sec_img: "",
+        sec_content: ""
+      },
+      target: "",
+      fileList: [],
+      lockFileList: [],
       selectData: [
         "生活服务",
         "休闲娱乐",
@@ -109,21 +100,71 @@ export default {
       return this.$store.state.token;
     }
   },
+  created() {
+    this.getCategory();
+  },
   methods: {
     open() {
       this.visible = true;
     },
     close() {
+      this.onCancel();
       this.visible = false;
+      this.form = {
+        content: "",
+        n_img: "",
+        coin: "",
+        c_id: "",
+        sec_img: "",
+        sec_content: ""
+      };
+      this.target = "";
+      this.fileList = [];
+      this.lockFileList = [];
     },
-    afterRead(file) {
-      console.log(file);
+    afterRead({ file }, { index }) {
+      this.uploadImg(this.fileList, file, index);
+    },
+    lockAfterRead({ file }, { index }) {
+      this.uploadImg(this.lockFileList, file, index);
+    },
+    uploadImg(list, file, index) {
+      list.splice(index, 1);
+      this.$set(list, index, {});
+      let formData = new FormData();
+      formData.append("file", file);
+      this.$fetch
+        .post("/Home/Create/upload_ajax_img", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        })
+        .then(({ data }) => {
+          list.splice(index, 1, {
+            url: data.src,
+            id: data.image_id
+          });
+        })
+        .catch(() => {
+          list.splice(index, 1, {
+            status: "failed",
+            message: "上传失败"
+          });
+        });
     },
     relese() {
-      this.$emit("release");
+      this.$fetch
+        .form("/Home/Create/pub_add/mcode/ape5ed661dabd73f", {
+          ...this.form,
+          n_img: this.fileList.map(item => item.id).join(","),
+          sec_img: this.lockFileList.map(item => item.id).join(",")
+        })
+        .then(() => {
+          this.$notify({ type: "success", message: "发布成功" });
+          this.onCancel();
+        });
     },
-    onConfirm(value) {
-      this.target = value;
+    onConfirm(value, index) {
+      this.form.c_id = this.selectData[index].c_id;
+      this.target = this.selectData[index].cls_name;
       this.onCancel();
     },
     onCancel() {
@@ -134,6 +175,17 @@ export default {
     },
     openRule() {
       this.$refs.rule.open();
+    },
+    getCategory() {
+      this.$fetch.get("/Home/List/index/mcode/ape5ed70984a5af9").then(({ data }) => {
+        this.selectData = data.table_data;
+        this.selectData.forEach(item => {
+          if (item.cls_name === "个人分享") {
+            this.target = item.cls_name;
+            this.form.c_id = item.c_id;
+          }
+        });
+      });
     }
   }
 };
@@ -154,6 +206,10 @@ export default {
   line-height: 35px;
   margin-top: 30px;
   border-radius: 10px;
+}
+.btn-box {
+  text-align: center;
+  padding-bottom: 30px;
 }
 .rule {
   text-align: left;

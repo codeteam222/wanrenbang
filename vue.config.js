@@ -15,7 +15,7 @@ module.exports = {
   devServer: {
     proxy: {
       "/api": {
-        target: "http://47.114.151.253:8088/",
+        target: "http://ljtest11.liuziqian.top",
         ws: false,
         changeOrigin: true,
         pathRewrite: {

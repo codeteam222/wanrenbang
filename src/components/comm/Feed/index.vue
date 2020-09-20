@@ -38,7 +38,7 @@ export default {
     },
     actions: {
       type: Array,
-      default: () => ["share", "comment", "zan", "like"]
+      default: () => ["share", "comment", "like", "collect"]
     }
   },
   data() {

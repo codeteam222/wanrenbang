@@ -57,7 +57,7 @@ export default {
       loginColumn: [
         {
           type: "input",
-          prop: "username",
+          prop: "phone",
           placeholder: "手机号"
         },
         {
@@ -80,7 +80,7 @@ export default {
         }
       ],
       loginRules: {
-        username: [
+        phone: [
           { required: true, message: "手机号不能为空", trigger: "blur" },
           {
             validator: this.validatePhone,
@@ -91,21 +91,21 @@ export default {
         password: [{ required: true, message: "密码不能为空", trigger: "blur" }]
       },
       registerData: {
-        nickname: "",
         username: "",
+        phone: "",
         password: "",
-        password2: ""
+        com_password: ""
         // referralCode: ""
       },
       registerColumn: [
         {
           type: "input",
-          prop: "nickname",
+          prop: "username",
           placeholder: "昵称"
         },
         {
           type: "input",
-          prop: "username",
+          prop: "phone",
           placeholder: "手机号"
         },
         {
@@ -115,7 +115,7 @@ export default {
         },
         {
           type: "password",
-          prop: "password2",
+          prop: "com_password",
           placeholder: "确认密码"
         },
         // {
@@ -138,8 +138,8 @@ export default {
         }
       ],
       registerRules: {
-        nickname: [{ required: true, message: "昵称不能为空", trigger: "blur" }],
-        username: [
+        username: [{ required: true, message: "昵称不能为空", trigger: "blur" }],
+        phone: [
           { required: true, message: "手机号不能为空", trigger: "blur" },
           {
             validator: this.validatePhone,
@@ -148,7 +148,7 @@ export default {
           }
         ],
         password: [{ required: true, message: "密码不能为空", trigger: "blur" }],
-        password2: [{ validator: this.validatePwd, message: "两次密码不一致", trigger: "blur" }]
+        com_password: [{ validator: this.validatePwd, message: "两次密码不一致", trigger: "blur" }]
       },
       checked: false
     };
@@ -182,11 +182,11 @@ export default {
     },
     toLogin(data) {
       this.$fetch
-        .get("/appUser/login", data)
-        .then(({ msg }) => {
+        .form("/home/login/login", data)
+        .then(({ data }) => {
           this.$notify({ type: "success", message: "登录成功" });
           this.$store.dispatch("SaveInfo", {
-            token: msg
+            token: data.apiAuth
           });
           this.$store.commit("UPDATE_LOADING", false);
           this.$router.push({ name: "Plan" });
@@ -197,22 +197,13 @@ export default {
         });
     },
     toRegister(data) {
+      /*  */
       this.$fetch
-        .post("/appUser/findAppUserByNameOrId", {
-          username: data.username
-        })
+        .form("/home/login/reg", data)
         .then(() => {
-          this.$fetch
-            .get("/appUser/addAppUser", data)
-            .then(() => {
-              this.$notify({ type: "success", message: "注册成功" });
-              this.switchType("login");
-              this.$store.commit("UPDATE_LOADING", false);
-            })
-            .catch(({ msg }) => {
-              this.$notify({ type: "warning", message: msg });
-              this.$store.commit("UPDATE_LOADING", false);
-            });
+          this.$notify({ type: "success", message: "注册成功" });
+          this.switchType("login");
+          this.$store.commit("UPDATE_LOADING", false);
         })
         .catch(({ msg }) => {
           this.$notify({ type: "warning", message: msg });
