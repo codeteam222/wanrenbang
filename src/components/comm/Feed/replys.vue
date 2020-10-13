@@ -8,9 +8,9 @@
     lock-scroll
     get-container="body"
   >
-    <c-popup-layout title="查看回复" @back="visible = false">
-      <comment-list class="main-comment" :data="mainComment"></comment-list>
-      <comment-list :data="data.replys" title="全部回复"></comment-list>
+    <c-popup-layout title="查看回复" @back="back">
+      <comment-list class="main-comment" :data="mainComment" no-load></comment-list>
+      <comment-list :data="replays" title="全部回复" @load="getReplays" :isFinshed="isFinshed"></comment-list>
     </c-popup-layout>
   </van-popup>
 </template>
@@ -27,16 +27,53 @@ export default {
     return {
       visible: false,
       data: {},
-      mainComment: []
+      params: {
+        p: 1
+      },
+      replays: [],
+      mainComment: [],
+      isFinshed: false,
+      loading: false
     };
   },
   methods: {
+    back() {
+      this.visible = false;
+      this.mainComment = [];
+      this.replays = [];
+    },
     open(config) {
       this.visible = true;
       this.data = config.data;
       const mainComment = JSON.parse(JSON.stringify(config.data));
-      delete mainComment.replys;
       this.mainComment = [mainComment];
+      this.getReplays();
+    },
+    getReplays() {
+      if (this.loading) return;
+      const currentPage = this.params.p;
+      const p = currentPage === 1 ? 1 : currentPage + 1;
+      this.loading = true;
+      this.$fetch
+        .get("/Home/List/index/mcode/ape5f8554787a907", {
+          cpid: this.data.cpid,
+          n_id: this.data.n_id,
+          ...this.params,
+          p
+        })
+        .then(({ data }) => {
+          const { table_data, totalpages } = data;
+          this.replays = this.replays.concat(table_data);
+          this.loading = false;
+          if (totalpages === p) {
+            this.isFinshed = true;
+          } else {
+            this.params.p++;
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     }
   }
 };

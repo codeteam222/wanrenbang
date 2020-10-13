@@ -3,7 +3,7 @@
     <b-banner text="全心全意为用户服务" :src="banner"></b-banner>
     <b-menu :data="category"></b-menu>
     <b-search @change="handleSearch"></b-search>
-    <c-feed :data="commentList" @load="load">
+    <c-feed ref="feed" :data="commentList" @load="load">
       <template v-slot="scope">
         <div :class="['state', 'state-' + scope.data.state]" @click="handlerAction(scope.data)">
           {{ stateMap[scope.data.state] }}
@@ -82,7 +82,26 @@ export default {
         });
     },
     handleSearch(d) {
-      console.log(d);
+      if (d.type === "hot") {
+        this.params = {
+          p: 1,
+          order_field: "like",
+          order_type: 1
+        };
+      } else if (d.type === "follow") {
+        this.params = {
+          p: 1,
+          collect: 1
+        };
+      } else if (d.type === "new") {
+        this.params = {
+          p: 1,
+          order_field: "add_time",
+          order_type: 1
+        };
+      }
+      this.commentList = [];
+      this.$refs.feed.reset();
     }
   }
 };

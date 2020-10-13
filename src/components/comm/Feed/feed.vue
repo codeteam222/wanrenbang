@@ -15,11 +15,11 @@
         <slot v-bind:data="data"></slot>
       </div>
     </div>
-    <div class="feed-content" @click="openDetail(data)">
+    <div class="feed-content">
       <slot name="content" v-bind:data="data">
-        <div class="content">{{ data.content }}</div>
+        <div class="content" @click="openDetail(data)">{{ data.content }}</div>
       </slot>
-      <div class="links">
+      <div class="links" v-if="Array.isArray(data.links) && data.links.length">
         <a v-for="(link, linkIndex) in data.links" :key="linkIndex" :href="link.url" target="_blank">{{
           link.text
         }}</a>
@@ -84,9 +84,24 @@ export default {
     };
   },
   methods: {
+    getDetail(id) {
+      return new Promise((resolve, reject) => {
+        this.$fetch
+          .get(" /Home/Details/invit/mcode/ape5ed661dabd73f", {
+            n_id: id
+          })
+          .then(({ data }) => {
+            resolve(data.details);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      });
+    },
     openDetail(d) {
-      console.log(d);
-      this.$emit("detail", d);
+      this.getDetail(d.n_id).then(data => {
+        this.$emit("detail", data);
+      });
     },
     handleOperation(type, item) {
       if (type === "like") {
@@ -103,6 +118,10 @@ export default {
           typeof item.collect === "number" && this.$set(item, "collect", item.collect - 1);
         }
         this.$set(item, "is_collect", !item.is_collect);
+      } else if (type === "comment") {
+        this.getDetail(type.n_id).then(data => {
+          this.$emit("detail", data);
+        });
       }
     },
     unlock() {

@@ -14,13 +14,23 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      "/api": {
+      // "/api": {
+      //   target: "http://ljtest11.liuziqian.top",
+      //   ws: false,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     "/api": "/"
+      //   }
+      // },
+      "/Uploads": {
         target: "http://ljtest11.liuziqian.top",
         ws: false,
-        changeOrigin: true,
-        pathRewrite: {
-          "/api": "/"
-        }
+        changeOrigin: true
+      },
+      "/Home": {
+        target: "http://ljtest11.liuziqian.top",
+        ws: false,
+        changeOrigin: true
       }
     }
   }

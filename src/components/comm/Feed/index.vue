@@ -12,7 +12,12 @@
         </feed>
       </template>
     </van-list>
-    <detail ref="commentDetail" :data="currentComment" :type="type || currentComment.type">
+    <detail
+      ref="commentDetail"
+      :data="currentComment"
+      :type="type || currentComment.type"
+      @close="closeDetail"
+    >
       <template v-slot="{ data }">
         <slot name="detailAction" v-bind:data="data"></slot>
       </template>
@@ -49,6 +54,10 @@ export default {
     };
   },
   methods: {
+    reset() {
+      this.finished = false;
+      this.onLoad();
+    },
     onLoad() {
       this.loading = true;
       this.$emit("load", this.done);
@@ -60,6 +69,9 @@ export default {
     openDetail(info) {
       this.currentComment = info;
       this.$refs.commentDetail.open();
+    },
+    closeDetail() {
+      this.currentComment = {};
     }
   }
 };

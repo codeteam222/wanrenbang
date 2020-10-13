@@ -4,7 +4,7 @@ import { session } from "./util";
 import router from "../router";
 import store from "../store";
 import { Notify } from "vant";
-const baseURL = "/api";
+const baseURL = "";
 const instance = axios.create({
   baseURL,
   timeout: 6000

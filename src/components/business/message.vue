@@ -80,18 +80,7 @@ export default {
       target: "",
       fileList: [],
       lockFileList: [],
-      selectData: [
-        "生活服务",
-        "休闲娱乐",
-        "教育培训",
-        "特价商品",
-        "美食",
-        "汽车",
-        "商业代办",
-        "金融服务",
-        "农副产品",
-        "个人分享"
-      ],
+      selectData: [],
       selectVisible: false
     };
   },
