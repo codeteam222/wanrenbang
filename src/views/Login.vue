@@ -182,9 +182,8 @@ export default {
     },
     toLogin(data) {
       this.$fetch
-        .form("/home/login/login", data)
+        .form("/Home/login/login", data)
         .then(({ data }) => {
-          this.$notify({ type: "success", message: "登录成功" });
           this.$store.dispatch("SaveInfo", {
             token: data.apiAuth
           });

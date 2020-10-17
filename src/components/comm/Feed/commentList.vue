@@ -11,13 +11,16 @@
             <div class="nickname">{{ item.username }}</div>
             <div class="time">{{ item.add_time }}</div>
           </div>
-          <div class="zan" @click="handleOperation('zan', item)">
-            <van-icon :name="item.is_like ? 'good-job' : 'good-job-o'" />{{ item.like_num || 0 }}
+          <div>
+            <div class="zan" @click="handleOperation('zan', item)">
+              <van-icon :name="item.is_like ? 'good-job' : 'good-job-o'" />{{ item.like_num || 0 }}
+            </div>
           </div>
+
           <!--  -->
         </div>
-        <div class="ceil comment-txt">{{ item.content }}</div>
-        <div v-if="item.times > 0" class="ceil reply-num" @click="openReplys(item)">
+        <div class="ceil comment-txt">{{ item.scontent }}</div>
+        <div v-if="!noReplay" class="ceil reply-num" @click="openReplys(item)">
           查看{{ item.times }}条回复>
         </div>
       </div>
@@ -48,6 +51,10 @@ export default {
     noLoad: {
       type: Boolean,
       default: false
+    },
+    noReplay: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -55,12 +62,21 @@ export default {
       this.$emit("load");
     },
     handleOperation(type, item) {
-      if (!item.isZan) {
-        this.$set(item, "zanNum", item.zanNum ? item.zanNum + 1 : 1);
-      } else {
-        this.$set(item, "zanNum", item.zanNum - 1);
+      if (type === "zan") {
+        this.$fetch
+          .form("/Home/Create/pub_add/mcode/ape5f8a911d29574", {
+            cid: item.cid
+          })
+          .then(({ code }) => {
+            const value = parseInt(item.like_num);
+            if (code === -2) {
+              this.$set(item, "like_num", value - 1);
+            } else {
+              this.$set(item, "like_num", value + 1);
+            }
+            this.$set(item, `is_like`, !item.is_like);
+          });
       }
-      item.isZan = !item.isZan;
     },
     openReplys(item) {
       this.$emit("openReplys", item);
@@ -81,8 +97,9 @@ export default {
 .load-box {
   font-size: 14px;
   text-align: center;
+  padding-bottom: 10px;
   span {
-    padding: 15px;
+    padding: 25px;
   }
 }
 </style>

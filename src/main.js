@@ -23,6 +23,7 @@ import {
   Picker
 } from "vant";
 import fetch from "@/utils/fetch";
+import emitter from "@/utils/emitter";
 import "./assets/styles/reset.less";
 import "element-ui/lib/theme-chalk/index.css";
 import "vant/lib/index.css";
@@ -59,6 +60,8 @@ Vue.use(Picker);
 Vue.prototype.$fetch = fetch;
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
+Vue.prototype.broadcast = emitter.methods.broadcast;
+Vue.prototype.dispatch = emitter.methods.dispatch;
 new Vue({
   router,
   store,

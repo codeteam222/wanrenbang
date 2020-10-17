@@ -1,14 +1,16 @@
 <template>
   <div class="b-follow">
-    <ul class="follow">
-      <li v-for="(user, index) in data" :key="index" class="follow-item">
-        <img class="avatar" :src="user.avatar" />
-        <div class="ceil name">{{ user.name }}</div>
-        <div class="button" :class="['follow-' + user.state]" @click="follow(user)">
-          {{ user.state === 1 ? "已关注" : "关注" }}
-        </div>
-      </li>
-    </ul>
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getData">
+      <ul class="follow">
+        <li v-for="(user, index) in data" :key="index" class="follow-item">
+          <img class="avatar" :src="user.head_img_src" />
+          <div class="ceil name">{{ user.username }}</div>
+          <div class="button" :class="['follow-' + user.is_conc]" @click="follow(user)">
+            {{ user.is_conc === 1 ? "已关注" : "关注" }}
+          </div>
+        </li>
+      </ul>
+    </van-list>
   </div>
 </template>
 
@@ -16,23 +18,50 @@
 export default {
   data() {
     return {
-      data: [
-        {
-          avatar: require("@/assets/img/avatar.jpg"),
-          name: "爱吃萝卜的兔子",
-          state: 0
-        },
-        {
-          avatar: require("@/assets/img/avatar.jpg"),
-          name: "爱吃萝卜的兔子2",
-          state: 1
-        }
-      ]
+      data: [],
+      params: {
+        p: 1
+      },
+      finished: false,
+      loading: false
     };
   },
+  created() {
+    this.getData();
+  },
   methods: {
+    getData() {
+      if (this.loading) return;
+      const currentPage = this.params.p;
+      const p = currentPage === 1 ? 1 : currentPage + 1;
+      this.loading = true;
+      this.$fetch
+        .get("/Home/List/index/mcode/ape5f8a7eae02dda.html", {
+          ...this.params,
+          p
+        })
+        .then(({ data }) => {
+          this.data = data.table_data;
+          if (data.totalpages === this.params.p) {
+            this.finished = true;
+          }
+          this.params.p = p;
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    },
     follow(item) {
-      this.$set(item, "state", item.state === 1 ? 0 : 1);
+      this.$fetch
+        .form("/Home/Create/pub_add/mcode/ape5f86f3bdec677", {
+          mid: item.uid,
+          log_type: 2
+        })
+        .then(({ code }) => {
+          const value = code === -2 ? 0 : 1;
+          this.$set(item, `is_conc`, value);
+        });
     }
   }
 };

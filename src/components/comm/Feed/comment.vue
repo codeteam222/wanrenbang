@@ -34,7 +34,8 @@ export default {
       data: [],
       params: {
         p: 1,
-        n_id: this.id
+        n_id: this.id,
+        cpid: 0
       },
       loading: false,
       isFinshed: false
@@ -70,9 +71,8 @@ export default {
           this.loading = false;
           if (totalpages === p) {
             this.isFinshed = true;
-          } else {
-            this.params.p++;
           }
+          this.params.p++;
         })
         .catch(() => {
           this.loading = false;
@@ -85,7 +85,14 @@ export default {
         item.isZan = true;
       }
     },
+    reset() {
+      this.data = [];
+      this.params.p = 1;
+      this.getComment();
+    },
     openReplys(item) {
+      console.log(this.$refs.replys.sendSuccess);
+      this.dispatch("CFeedDetail", "replays", [item.cid, this.$refs.replys.sendSuccess]);
       this.$refs.replys.open({ data: item });
     }
   }

@@ -4,15 +4,25 @@
     <b-menu :data="category"></b-menu>
     <b-search @change="handleSearch"></b-search>
     <c-feed ref="feed" :data="commentList" @load="load">
-      <template v-slot="scope">
-        <div :class="['state', 'state-' + scope.data.state]" @click="handlerAction(scope.data)">
-          {{ stateMap[scope.data.state] }}
+      <template v-slot="{ data }">
+        <div
+          v-if="data.v_type === '0' && data.is_conc !== 2"
+          :class="['state', 'state-' + data.is_conc]"
+          @click="handlerAction(data)"
+        >
+          {{ stateMap[data.is_conc] }}
         </div>
+        <div v-if="data.v_type === '1'" class="state state-2">广告</div>
       </template>
-      <template v-slot:detailAction="scope">
-        <div :class="['state', 'state-' + scope.data.state]" @click="handlerAction(scope.data)">
-          {{ stateMap[scope.data.state] }}
+      <template v-slot:detailAction="{ data }">
+        <div
+          v-if="data.v_type === '0' && data.is_conc !== 2"
+          :class="['state', 'state-' + data.is_conc]"
+          @click="handlerAction(data)"
+        >
+          {{ stateMap[data.is_conc] }}
         </div>
+        <div v-if="data.v_type === '1'" class="state state-2">广告</div>
       </template>
     </c-feed>
   </div>
@@ -45,37 +55,42 @@ export default {
       commentList: [],
       stateMap: {
         0: "关注",
-        1: "已关注",
-        2: "广告"
+        1: "已关注"
       },
       params: {
         p: 1
-      }
+      } /*  */
     };
   },
   methods: {
     handlerAction(data) {
-      if (data.state === 0) {
-        this.$set(data, "state", 1);
-      } else if (data.state === 1) {
-        this.$set(data, "state", 0);
-      }
+      this.$fetch
+        .form("/Home/Create/pub_add/mcode/ape5f86f3bdec677", {
+          mid: data.uid,
+          log_type: 2
+        })
+        .then(({ code }) => {
+          this.$set(data, "is_conc", code === -2 ? 0 : 1);
+        });
     },
     load(done) {
       const currentPage = this.params.p;
-      const p = currentPage === 1 ? 1 : currentPage;
-      +1;
+      const p = currentPage === 1 ? 1 : currentPage + 1;
+      if (p === 1) {
+        this.commentList = [];
+      }
       this.$fetch
-        .form("/Home/Api/article", {
+        .get("/Home/Api/article", {
           ...this.params,
           p
         })
         .then(({ data }) => {
           const { article_data, totalpages } = data;
           this.commentList = this.commentList.concat(article_data);
-          if (totalpages === p) {
+          if (totalpages === p || !totalpages) {
             done(true);
           }
+          this.params.p = p;
         })
         .catch(() => {
           done(true);
@@ -85,13 +100,13 @@ export default {
       if (d.type === "hot") {
         this.params = {
           p: 1,
-          order_field: "like",
+          order_field: "like_num",
           order_type: 1
         };
       } else if (d.type === "follow") {
         this.params = {
           p: 1,
-          collect: 1
+          is_conc: 1
         };
       } else if (d.type === "new") {
         this.params = {

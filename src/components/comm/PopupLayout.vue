@@ -44,6 +44,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.c-layout-popup {
+  height: 100vh;
+}
 .header {
   position: fixed;
   height: 40px;
@@ -63,6 +66,8 @@ export default {
   }
 }
 .body {
+  height: calc(100vh -40px);
+  overflow-y: auto;
   padding-top: 40px;
   min-height: 100vh;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="personal-follow">
     <c-popup-layout title="我的粉丝" @back="$router.push({ name: 'Personal' })">
-      <b-fans :data="fansList"></b-fans>
+      <b-fans></b-fans>
     </c-popup-layout>
   </div>
 </template>
@@ -13,27 +13,6 @@ export default {
   components: {
     "c-popup-layout": PopupLayout,
     "b-fans": BFans
-  },
-  data() {
-    return {
-      fansList: [
-        {
-          avatar: require("@/assets/img/avatar.jpg"),
-          name: "爱吃萝卜的兔子",
-          state: 0
-        },
-        {
-          avatar: require("@/assets/img/avatar.jpg"),
-          name: "爱吃萝卜的兔子2",
-          state: 1
-        }
-      ]
-    };
-  },
-  methods: {
-    follow(item) {
-      this.$set(item, "state", item.state === 1 ? 0 : 1);
-    }
   }
 };
 </script>

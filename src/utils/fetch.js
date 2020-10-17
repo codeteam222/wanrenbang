@@ -29,6 +29,8 @@ instance.interceptors.response.use(
     switch (data.code) {
       case 1:
         return Promise.resolve(data);
+      case -2:
+        return Promise.resolve(data);
       case -1:
         store.dispatch("ClearInfo");
         router.push("Login");

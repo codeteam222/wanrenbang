@@ -1,18 +1,27 @@
 <template>
-  <van-popup
-    v-model="visible"
-    class="c-feed-replys"
-    position="right"
-    :safe-area-inset-bottom="true"
-    :close-on-click-overlay="false"
-    lock-scroll
-    get-container="body"
-  >
-    <c-popup-layout title="查看回复" @back="back">
-      <comment-list class="main-comment" :data="mainComment" no-load></comment-list>
-      <comment-list :data="replays" title="全部回复" @load="getReplays" :isFinshed="isFinshed"></comment-list>
-    </c-popup-layout>
-  </van-popup>
+  <div class="c-comment-replay">
+    <van-popup
+      v-model="visible"
+      class="c-feed-replys"
+      position="right"
+      :safe-area-inset-bottom="true"
+      :close-on-click-overlay="false"
+      lock-scroll
+      get-container="body"
+    >
+      <c-popup-layout title="查看回复" @back="back">
+        <comment-list class="main-comment" :data="mainComment" no-load no-replay></comment-list>
+        <comment-list
+          ref="comment"
+          :data="replays"
+          title="全部回复"
+          @load="getReplays"
+          :isFinshed="isFinshed"
+          no-replay
+        ></comment-list>
+      </c-popup-layout>
+    </van-popup>
+  </div>
 </template>
 
 <script>
@@ -38,6 +47,7 @@ export default {
   },
   methods: {
     back() {
+      this.dispatch("CFeedDetail", "changeCommentVisible", true);
       this.visible = false;
       this.mainComment = [];
       this.replays = [];
@@ -53,11 +63,13 @@ export default {
       if (this.loading) return;
       const currentPage = this.params.p;
       const p = currentPage === 1 ? 1 : currentPage + 1;
+      if (p === 1) {
+        this.replays = [];
+      }
       this.loading = true;
       this.$fetch
         .get("/Home/List/index/mcode/ape5f8554787a907", {
-          cpid: this.data.cpid,
-          n_id: this.data.n_id,
+          cpid: this.data.cid,
           ...this.params,
           p
         })
@@ -68,12 +80,17 @@ export default {
           if (totalpages === p) {
             this.isFinshed = true;
           } else {
-            this.params.p++;
+            this.params.p = p;
           }
         })
         .catch(() => {
           this.loading = false;
         });
+    },
+    sendSuccess() {
+      this.params.p = 1;
+      this.getReplays();
+      this.data.times += 1;
     }
   }
 };

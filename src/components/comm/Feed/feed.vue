@@ -39,21 +39,21 @@
         <i class="Hui-iconfont Hui-iconfont-comment"></i>{{ data.commt || 0 }}
         <!-- <img src="@/assets/img/comment.png" />{{ data.commt || 0 }} -->
       </div>
-      <div v-if="actions.indexOf('like') !== -1" class="zan" @click="handleOperation('like', data)">
-        <van-icon :name="data.is_like ? 'good-job' : 'good-job-o'" />{{ data.like || 0 }}
+      <div v-if="actions.indexOf('like') !== -1" class="zan" @click="handleOperation(0, data)">
+        <van-icon :name="data.is_like ? 'good-job' : 'good-job-o'" />{{ data.like_num || 0 }}
         <!-- <img src="@/assets/img/zan.png" />{{ data.zanNum || 0 }} -->
       </div>
       <div
         v-if="actions.indexOf('collect') !== -1"
         class="like"
-        @click="handleOperation('collect', data)"
+        @click="handleOperation(1, data)"
         :class="{ 'is-string': typeof data.collect !== 'number' }"
       >
         <i
           class="Hui-iconfont"
           :class="data.is_collect ? 'Hui-iconfont-cang2-selected' : 'Hui-iconfont-cang2'"
         ></i
-        >{{ data.collect || 0 }}
+        >{{ data.collect_num || 0 }}
         <!-- <img src="@/assets/img/like.png" />{{ data.like || 0 }} -->
       </div>
     </div>
@@ -104,26 +104,33 @@ export default {
       });
     },
     handleOperation(type, item) {
-      if (type === "like") {
-        if (!item.is_like) {
-          this.$set(item, "like", item.like ? item.like + 1 : 1);
-        } else {
-          this.$set(item, "like", item.like - 1);
-        }
-        item.is_like = !item.is_like;
-      } else if (type === "collect") {
-        if (!item.is_collect) {
-          typeof item.collect === "number" && this.$set(item, "collect", item.collect ? item.collect + 1 : 1);
-        } else {
-          typeof item.collect === "number" && this.$set(item, "collect", item.collect - 1);
-        }
-        this.$set(item, "is_collect", !item.is_collect);
+      if (typeof type === "number") {
+        const map = {
+          0: "like",
+          1: "collect"
+        };
+        this.$fetch
+          .form("/Home/Create/pub_add/mcode/ape5f86f3bdec677", {
+            n_id: item.n_id,
+            log_type: type
+          })
+          .then(({ code }) => {
+            const value = parseInt(item[map[type] + "_num"]);
+            if (code === -2) {
+              this.$set(item, map[type] + "_num", value - 1);
+            } else {
+              this.$set(item, map[type] + "_num", value + 1);
+            }
+            this.$set(item, `is_${map[type]}`, !item[`is_${map[type]}`]);
+            this.$emit("action", type, item);
+          });
       } else if (type === "comment") {
         this.getDetail(type.n_id).then(data => {
           this.$emit("detail", data);
         });
       }
     },
+
     unlock() {
       this.isUnlock = true;
     }

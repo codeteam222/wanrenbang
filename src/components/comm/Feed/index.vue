@@ -2,7 +2,7 @@
   <div class="c-feed feed-wrapper">
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <template v-for="(item, index) in data">
-        <feed :key="index" :data="item" :actions="actions" :type="type" @detail="openDetail">
+        <feed :key="index" :data="item" :actions="actions" @action="action" :type="type" @detail="openDetail">
           <template v-slot:content="{ data }">
             <slot name="content" v-bind:data="data" :index="index"></slot>
           </template>
@@ -72,6 +72,9 @@ export default {
     },
     closeDetail() {
       this.currentComment = {};
+    },
+    action(type, item) {
+      this.$emit("action", type, item);
     }
   }
 };
