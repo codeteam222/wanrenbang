@@ -172,6 +172,10 @@ export default {
       if (valid) {
         switch (this.type) {
           case "login":
+            if (!this.checked) {
+              this.$notify({ type: "danger", message: "请查看用户协议并勾选同意" });
+              return;
+            }
             this.toLogin(data);
             break;
           case "register":
@@ -185,7 +189,8 @@ export default {
         .form("/Home/login/login", data)
         .then(({ data }) => {
           this.$store.dispatch("SaveInfo", {
-            token: data.apiAuth
+            token: data.apiAuth,
+            userInfo: data.user_info
           });
           this.$store.commit("UPDATE_LOADING", false);
           this.$router.push({ name: "Plan" });

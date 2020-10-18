@@ -4,9 +4,11 @@
     <div class="user-info">
       <van-cell class="base-info" center is-link>
         <template #title>
-          <img class="avatar" src="@/assets/img/default-avatar.png" />
+          <img v-if="userInfo.head_img" class="avatar" :src="userInfo.head_img" />
+          <img v-else class="avatar" src="@/assets/img/default-avatar.png" />
           <div>
-            <router-link to="/login" class="toLogin">登陆 / 注册</router-link>
+            <div class="username" v-if="userInfo">{{ userInfo.username }}</div>
+            <router-link v-else to="/login" class="toLogin">登陆 / 注册</router-link>
             <router-link to="/personal/safe" class="manager">账号管理</router-link>
           </div>
         </template>
@@ -16,7 +18,7 @@
       </van-cell>
       <div class="financial-details">
         <div class="title">账户余额<span @click="handleClick({ name: 'PersonalFund' })">账单明细</span></div>
-        <div class="money">￥132.132.00</div>
+        <div class="money">￥{{ userInfo.money || 0 }}</div>
         <div class="btn-group">
           <span class="btn recharge" @click="recharge">充值</span>
           <span class="btn withdraw" @click="withdraw">提现</span>
@@ -49,7 +51,7 @@
       </div>
       <div class="gold-box box-item">
         <div class="title">-- 金币 --</div>
-        <div class="number">13213</div>
+        <div class="number">{{ userInfo.coin || 0 }}</div>
       </div>
       <div class="desc">（注：账户金币于每晚21：00整准时清空，请及时使用）</div>
     </div>
@@ -103,7 +105,8 @@ export default {
         },
         {
           label: "退出登录",
-          img: require("@/assets/img/loginout.png")
+          img: require("@/assets/img/loginout.png"),
+          clickEvent: this.loginOut
         }
       ],
       actions: [
@@ -130,9 +133,15 @@ export default {
       ]
     };
   },
+  computed: {
+    userInfo() {
+      return this.$store.state.userInfo;
+    }
+  },
   created() {},
   methods: {
     loginOut() {
+      this.$store.dispatch("ClearInfo");
       this.$router.push({ name: "Login" });
     },
     recharge() {
@@ -144,6 +153,8 @@ export default {
     handleClick(item) {
       if (item.name) {
         this.$router.push({ name: item.name });
+      } else {
+        item.clickEvent();
       }
     }
   }
@@ -250,6 +261,10 @@ export default {
     display: inline-block;
     padding: 20px;
     padding-right: 0;
+  }
+  .username {
+    font-weight: 700;
+    color: #333333;
   }
 }
 .btn-group {

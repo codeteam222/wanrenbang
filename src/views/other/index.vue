@@ -1,18 +1,28 @@
 <template>
   <div class="other-page">
-    <c-popup-layout :title="$route.query.title" @back="$router.push({ name: 'Service' })">
-      <b-banner text="全心全意为用户服务"></b-banner>
+    <c-popup-layout :title="title" @back="$router.push({ name: 'Service' })">
+      <b-banner text="全心全意为用户服务" :src="banner"></b-banner>
       <b-search @change="handleSearch"></b-search>
-      <Feed :data="commentList" @load="load">
-        <template v-slot="scope">
-          <div :class="['state', 'state-' + scope.data.state]" @click="handlerAction(scope.data)">
-            {{ stateMap[scope.data.state] }}
+      <Feed ref="feed" :data="commentList" @load="load">
+        <template v-slot="{ data }">
+          <div
+            v-if="data.v_type === '0' && data.is_conc !== 2"
+            :class="['state', 'state-' + data.is_conc]"
+            @click="handlerAction(data)"
+          >
+            {{ stateMap[data.is_conc] }}
           </div>
+          <div v-if="data.v_type === '1'" class="state state-2">广告</div>
         </template>
-        <template v-slot:detailAction="scope">
-          <div :class="['state', 'state-' + scope.data.state]" @click="handlerAction(scope.data)">
-            {{ stateMap[scope.data.state] }}
+        <template v-slot:detailAction="{ data }">
+          <div
+            v-if="data.v_type === '0' && data.is_conc !== 2"
+            :class="['state', 'state-' + data.is_conc]"
+            @click="handlerAction(data)"
+          >
+            {{ stateMap[data.is_conc] }}
           </div>
+          <div v-if="data.v_type === '1'" class="state state-2">广告</div>
         </template>
       </Feed>
     </c-popup-layout>
@@ -33,75 +43,43 @@ export default {
   },
   data() {
     return {
-      commentList: [
-        {
-          avatar: require("@/assets/img/avatar.png"),
-          nickname: "哈哈哈哈",
-          createTime: "2020-10-28 18:11:22",
-          content: "圣卡洛斯考虑好开发来",
-          imgs: [
-            require("@/assets/img/1-1.png"),
-            require("@/assets/img/1-2.png"),
-            require("@/assets/img/1-3.png")
-          ],
-          state: 2,
-          sex: 0,
-          type: "normal"
-        },
-        {
-          avatar: require("@/assets/img/avatar1.png"),
-          nickname: "哈哈哈哈",
-          createTime: "2020-10-28 18:11:22",
-          content: "圣卡洛斯考虑好开发来",
-          imgs: [
-            require("@/assets/img/2-1.png"),
-            require("@/assets/img/2-2.png"),
-            require("@/assets/img/2-3.png")
-          ],
-          state: 1,
-          sex: 1,
-          type: "lock"
-        },
-        {
-          avatar: require("@/assets/img/avatar2.png"),
-          nickname: "哈哈哈哈",
-          createTime: "2020-10-28 18:11:22",
-          content: "圣卡洛斯考虑好开发来",
-          imgs: [
-            require("@/assets/img/3-1.png"),
-            require("@/assets/img/3-2.png"),
-            require("@/assets/img/3-3.png")
-          ],
-          state: 0,
-          sex: 0,
-          type: "lock"
-        }
-      ],
+      commentList: [],
       stateMap: {
         0: "关注",
-        1: "已关注",
-        2: "广告"
-      }
+        1: "已关注"
+      },
+      params: {
+        p: 1
+      },
+      banner: ""
     };
   },
   computed: {
     title() {
       const map = {
-        0: "生活服务",
-        1: "生活娱乐",
-        2: "教育培训",
-        3: "教育培训",
-        4: "美食",
-        5: "汽车",
-        6: "商业代办",
-        7: "金融服务",
-        8: "农副产品",
-        9: "个人分享"
+        5: "生活服务",
+        6: "生活娱乐",
+        7: "教育培训",
+        8: "教育培训",
+        9: "美食",
+        10: "汽车",
+        11: "商业代办",
+        12: "金融服务",
+        13: "农副产品",
+        14: "个人分享"
       };
       return map[this.$route.query.type];
     }
   },
+  created() {
+    this.getCategory();
+  },
   methods: {
+    getCategory() {
+      this.$fetch.form("/Home/Api/index").then(({ data }) => {
+        this.banner = data.banner_data[0].shulf_src;
+      });
+    },
     handlerAction(data) {
       if (data.state === 0) {
         this.$set(data, "state", 1);
@@ -110,12 +88,50 @@ export default {
       }
     },
     load(done) {
-      const copy = [].concat(this.commentList);
-      this.commentList = this.commentList.concat(copy);
-      done();
+      const currentPage = this.params.p;
+      const p = currentPage === 1 ? 1 : currentPage + 1;
+      if (p === 1) {
+        this.commentList = [];
+      }
+      this.$fetch
+        .get("/Home/Api/article", {
+          ...this.params,
+          c_id: this.$route.query.type,
+          p
+        })
+        .then(({ data }) => {
+          const { article_data, totalpages } = data;
+          this.commentList = this.commentList.concat(article_data);
+          if (totalpages === p || !totalpages) {
+            done(true);
+          }
+          this.params.p = p;
+        })
+        .catch(() => {
+          done(true);
+        });
     },
     handleSearch(d) {
-      console.log(d);
+      if (d.type === "hot") {
+        this.params = {
+          p: 1,
+          order_field: "like_num",
+          order_type: 1
+        };
+      } else if (d.type === "follow") {
+        this.params = {
+          p: 1,
+          is_conc: 1
+        };
+      } else if (d.type === "new") {
+        this.params = {
+          p: 1,
+          order_field: "add_time",
+          order_type: 1
+        };
+      }
+      this.commentList = [];
+      this.$refs.feed.reset();
     }
   }
 };

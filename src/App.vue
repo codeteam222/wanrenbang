@@ -7,13 +7,23 @@
     <router-view />
   </div>
 </template>
-
+<script>
+import { session } from "@/utils/util";
+export default {
+  created() {
+    this.$store.dispatch("UpdateInfo", {
+      token: session.get("token"),
+      userInfo: session.get("userInfo")
+    });
+  }
+};
+</script>
 <style lang="scss">
 #app {
   /*font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;*/
-  font-family:'Arial Normal', 'Arial'; 
+  font-family: "Arial Normal", "Arial";
   text-align: center;
   color: #2c3e50;
 }

@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loading: false,
-    token: null
+    token: null,
+    userInfo: null
   },
   mutations: {
     /**
@@ -21,22 +22,35 @@ export default new Vuex.Store({
     },
     SET_TOKEN: (state, token) => {
       state.token = token;
+    },
+    SET_USERINFO: (state, info) => {
+      state.userInfo = info;
     }
   },
   actions: {
-    SaveInfo({ commit }, { token = null }) {
+    SaveInfo({ commit }, { token = null, userInfo = null }) {
       // console.log(token);
       commit("SET_TOKEN", token);
+      commit("SET_USERINFO", userInfo);
       session.set("token", token);
+      session.set("userInfo", userInfo);
     },
     ClearInfo({ commit }) {
       // 清空缓存
       commit("SET_TOKEN", null);
+      commit("SET_USERINFO", null);
       session.remove("token");
+      session.remove("userInfo");
     },
-    GetInfo({ commit }) {
-      if (session.get("token")) {
-        commit("SET_TOKEN", session.get("token"));
+    UpdateInfo({ commit, state }, { token = null, userInfo = {} }) {
+      if (token) {
+        commit("SET_TOKEN", token);
+        session.set("token", token);
+      }
+      if (Object.keys(userInfo).length) {
+        const newData = Object.assign({}, state.userInfo, userInfo);
+        commit("SET_USERINFO", newData);
+        session.set("userInfo", newData);
       }
     }
   },

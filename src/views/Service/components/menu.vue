@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     toPage(item) {
-      this.$router.push({ name: "OtherPage", query: { type: item.c_id, title: item.cls_name } });
+      this.$router.push({ name: "OtherPage", query: { type: item.c_id } });
     }
   }
 };
