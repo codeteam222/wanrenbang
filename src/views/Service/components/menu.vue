@@ -40,7 +40,7 @@ export default {
   height: 105px;
 }
 .menu-item {
-  width: 75px;
+  width: 20%;
   margin-bottom: 15px;
   .img img {
     width: 25px;
