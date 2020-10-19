@@ -5,17 +5,17 @@
         <div class="project-item-info left">
           <div class="title">
             <span style="color:#E91E63;">l</span>
-            <span style="color:#5AB963;">l</span>{{ item.name }}<span style="color:#FF9900;">l</span>
+            <span style="color:#5AB963;">l</span>{{ item.pr_name }}<span style="color:#FF9900;">l</span>
             <span style="color:#169BD5;">l</span>&nbsp;
-            <span class="ratio">(我占股{{ item.ratio }}%)</span>
+            <span class="ratio" v-if="item.prop">(我占股{{ item.prop || 0 }}%)</span>
           </div>
           <div class="desc">
-            {{ item.desc }}
+            {{ item.pr_content }}
           </div>
         </div>
         <div class="project-item-action">
           <div>
-            <img :src="item.logo" alt="" />
+            <img :src="item.head_img_src" alt="" />
             <div class="btn">
               <slot name="action" v-bind:data="item" v-bind:index="index"></slot>
             </div>

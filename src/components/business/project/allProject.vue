@@ -1,6 +1,6 @@
 <template>
   <div class="b--procejt">
-    <project-list :data="data" @load="onLoad">
+    <project-list :data="data" @load="getData">
       <template v-slot:action="{ data, index }">
         <div class="button" @click="openBuyPopup(data, index)">入股</div>
       </template>
@@ -46,33 +46,15 @@ export default {
   },
   data() {
     return {
-      data: [
-        {
-          name: "文化复兴项目1",
-          ratio: "0.0007",
-          desc:
-            "大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个",
-          logo: require("@/assets/img/avatar.jpg")
-        },
-        {
-          name: "文化复兴项目2",
-          ratio: "0.0007",
-          desc:
-            "大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个",
-          logo: require("@/assets/img/avatar.jpg")
-        },
-        {
-          name: "文化复兴项目3",
-          ratio: "0.0007",
-          desc: "大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个",
-          logo: require("@/assets/img/avatar.jpg")
-        }
-      ],
+      data: [],
       popupVisible: false,
       currentData: {},
       currentIndex: -1,
       buyNumber: 1,
-      accMul: accMul
+      accMul: accMul,
+      params: {
+        p: 0
+      }
     };
   },
   computed: {
@@ -81,18 +63,28 @@ export default {
     }
   },
   created() {
-    this.getData();
+    // this.getData();
   },
   methods: {
-    getData(params, done) {
-      if (done) {
-        const copy = [].concat(this.data);
-        this.data = this.data.concat(copy);
-        done();
+    getData(done) {
+      const currentPage = this.params.p;
+      const p = currentPage === 0 ? 1 : currentPage + 1;
+      if (p === 1) {
+        this.data = [];
       }
-    },
-    onLoad(done) {
-      this.getData(this.params, done);
+      this.$fetch
+        .get("/Home/List/index/mcode/ape5f8d94799fb8c.html", {
+          ...this.params,
+          p
+        })
+        .then(({ data }) => {
+          this.data = this.data.concat(data.table_data);
+          this.params.p = p;
+          done(data.totalpages === this.params.p);
+        })
+        .catch(() => {
+          done(true);
+        });
     },
     openBuyPopup(d, i) {
       this.popupVisible = true;

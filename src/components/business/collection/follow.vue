@@ -20,7 +20,7 @@ export default {
     return {
       data: [],
       params: {
-        p: 1
+        p: 0
       },
       finished: false,
       loading: false
@@ -33,7 +33,10 @@ export default {
     getData() {
       if (this.loading) return;
       const currentPage = this.params.p;
-      const p = currentPage === 1 ? 1 : currentPage + 1;
+      const p = currentPage === 0 ? 1 : currentPage + 1;
+      if (p === 1) {
+        this.data = [];
+      }
       this.loading = true;
       this.$fetch
         .get("/Home/List/index/mcode/ape5f8a7eae02dda.html", {
@@ -41,14 +44,13 @@ export default {
           p
         })
         .then(({ data }) => {
-          this.data = data.table_data;
-          if (data.totalpages === this.params.p) {
-            this.finished = true;
-          }
+          this.data = this.data.concat(data.table_data);
+          this.finished = data.totalpages === this.params.p;
           this.params.p = p;
           this.loading = false;
         })
         .catch(() => {
+          this.finished = true;
           this.loading = false;
         });
     },

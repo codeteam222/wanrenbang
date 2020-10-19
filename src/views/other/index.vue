@@ -49,7 +49,7 @@ export default {
         1: "已关注"
       },
       params: {
-        p: 1
+        p: 0
       },
       banner: ""
     };
@@ -89,7 +89,7 @@ export default {
     },
     load(done) {
       const currentPage = this.params.p;
-      const p = currentPage === 1 ? 1 : currentPage + 1;
+      const p = currentPage === 0 ? 1 : currentPage + 1;
       if (p === 1) {
         this.commentList = [];
       }
@@ -102,9 +102,7 @@ export default {
         .then(({ data }) => {
           const { article_data, totalpages } = data;
           this.commentList = this.commentList.concat(article_data);
-          if (totalpages === p || !totalpages) {
-            done(true);
-          }
+          done(totalpages === p);
           this.params.p = p;
         })
         .catch(() => {
@@ -114,18 +112,18 @@ export default {
     handleSearch(d) {
       if (d.type === "hot") {
         this.params = {
-          p: 1,
+          p: 0,
           order_field: "like_num",
           order_type: 1
         };
       } else if (d.type === "follow") {
         this.params = {
-          p: 1,
+          p: 0,
           is_conc: 1
         };
       } else if (d.type === "new") {
         this.params = {
-          p: 1,
+          p: 0,
           order_field: "add_time",
           order_type: 1
         };

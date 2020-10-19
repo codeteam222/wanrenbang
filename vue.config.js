@@ -31,6 +31,11 @@ module.exports = {
         target: "http://ljtest11.liuziqian.top",
         ws: false,
         changeOrigin: true
+      },
+      "/Admin": {
+        target: "http://ljtest11.liuziqian.top",
+        ws: false,
+        changeOrigin: true
       }
     }
   }

@@ -1,17 +1,17 @@
 <template>
   <div class="personal-message">
     <c-popup-layout title="消息通知" @back="$router.push({ name: 'Personal' })">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getData">
         <div class="message-item" v-for="(message, index) in data" :key="index">
           <div class="thumb">
-            <img class="avatar" :src="message.logo" alt="" />
+            <img class="avatar" src="@/assets/img/message.png" alt="" />
           </div>
           <div class="message-info">
-            <p class="title">{{ message.msgTitle }}</p>
+            <p class="title">{{ message.mg_content }}</p>
             <p>
-              {{ message.content }}
+              {{ message.mg_title }}
             </p>
-            <p>{{ message.createTime }}</p>
+            <p>{{ message.add_time }}</p>
           </div>
         </div>
       </van-list>
@@ -29,44 +29,34 @@ export default {
     return {
       data: [],
       params: {
-        start: 0,
-        size: 10
+        p: 0
       },
       loading: false,
       finished: false
     };
   },
-  computed: {
-    token() {
-      return this.$store.state.token;
-    }
-  },
-  created() {
-    this.getData();
-  },
   methods: {
-    getData(params = this.params) {
-      this.loading = true;
+    getData() {
+      const currentPage = this.params.p;
+      const p = currentPage === 0 ? 1 : currentPage + 1;
+      if (p === 1) {
+        this.data = [];
+      }
       this.$fetch
-        .get("/appMessage/findAllAppMessage", {
-          ...params,
-          token: this.token
+        .get("/Home/List/index/mcode/ape5f8d628a20a90.html", {
+          ...this.params,
+          p
         })
         .then(({ data }) => {
-          this.finished = data.length < this.params.size;
-          this.data = data;
+          this.data = this.data.concat(data.table_data);
+          this.params.p = p;
           this.loading = false;
+          this.finished = data.totalpages === this.params.p;
         })
-        .catch(({ msg }) => {
-          this.$notify({ type: "warning", message: msg });
-          this.loading = false;
+        .catch(() => {
           this.finished = true;
+          this.loading = false;
         });
-    },
-    onLoad() {
-      this.getData({
-        start: this.params.start + 1
-      });
     }
   }
 };

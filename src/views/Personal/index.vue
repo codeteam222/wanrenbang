@@ -7,7 +7,7 @@
           <img v-if="userInfo.head_img" class="avatar" :src="userInfo.head_img" />
           <img v-else class="avatar" src="@/assets/img/default-avatar.png" />
           <div>
-            <div class="username" v-if="userInfo">{{ userInfo.username }}</div>
+            <div class="username" v-if="token">{{ userInfo.username || "" }}</div>
             <router-link v-else to="/login" class="toLogin">登陆 / 注册</router-link>
             <router-link to="/personal/safe" class="manager">账号管理</router-link>
           </div>
@@ -135,7 +135,10 @@ export default {
   },
   computed: {
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo || {};
+    },
+    token() {
+      return this.$store.state.token;
     }
   },
   created() {},
