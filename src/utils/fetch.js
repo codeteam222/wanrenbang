@@ -33,8 +33,8 @@ instance.interceptors.response.use(
         return Promise.resolve(data);
       case -1:
         store.dispatch("ClearInfo");
-        router.push("Login");
-        break;
+        router.push({ name: "Login" });
+        return Promise.reject({ ...data, msg: data.msg });
       default:
         Notify({ type: "danger", message: data.msg || "网络错误" });
         return Promise.reject({ ...data, msg: data.msg });

@@ -1,5 +1,12 @@
 <template>
-  <el-form ref="form" :model="data" :rules="rules" :label-width="labelWidth" :class="classs">
+  <el-form
+    ref="form"
+    :model="data"
+    :rules="rules"
+    :label-width="labelWidth"
+    :class="classs"
+    :label-position="labelPosition"
+  >
     <el-form-item
       v-for="(formItem, index) in form"
       :key="index"
@@ -25,10 +32,16 @@
           :type="formItem.type === 'input' ? 'text' : formItem.type"
           :placeholder="formItem.placeholder"
           autocomplete="new-password"
+          @input="formItem.input"
         >
           <template v-if="formItem.unit" #suffix>
             {{ formItem.unit }}
           </template>
+        </el-input>
+      </template>
+      <!-- 文本域 -->
+      <template v-if="formItem.type === 'textarea'">
+        <el-input v-model="data[formItem.prop]" type="textarea" :placeholder="formItem.placeholder" :rows="5">
         </el-input>
       </template>
       <!-- 单选框 -->
@@ -71,8 +84,9 @@
           :max-count="1"
           :preview-full-image="false"
           @delete="deleteImg"
+          :after-read="formItem.upload"
         >
-          <div class="avatar-mask">点击更换头像</div>
+          <div class="avatar-mask">{{ formItem.placeholder || "点击更换头像" }}</div>
         </van-uploader>
       </template>
       <!-- 操作 -->
@@ -127,6 +141,10 @@ export default {
     },
     classs: {
       type: String
+    },
+    labelPosition: {
+      type: String,
+      default: "right"
     }
   },
   data() {
@@ -142,6 +160,9 @@ export default {
     }
   },
   methods: {
+    a(value) {
+      console.log(value);
+    },
     reset() {
       this.$nextTick(() => {
         if (this.$refs.gt) {
@@ -231,6 +252,18 @@ export default {
           };
         }
       }
+    },
+    updateField(index, data, type) {
+      if (type === "del") {
+        this.fileList.splice(index, 1);
+      } else {
+        this.$set(this.fileList, index, data);
+      }
+      this.form.forEach(item => {
+        if (item.type === "avatar") {
+          this.data[item.prop] = [].concat(this.fileList);
+        }
+      });
     }
   }
 };

@@ -2,15 +2,19 @@
   <div class="plan-buy">
     <div class="section section-1">
       <div class="section-title title">
-        <div class="plan-id">《12345678》</div>
-        <div class="plan-state">正在进行中</div>
+        <div class="plan-id">《{{ detail.rw_num || "暂未开始" }}》</div>
+        <div v-show="detail.end_time > 0" class="plan-state">正在进行中</div>
       </div>
       <div class="body">
         <div class="char">
           <div class="bar-char">
-            <div class="bar-item bar-1"><div class="total">23435人</div></div>
+            <div class="bar-item bar-1" :class="{ none: !detail.people_num || detail.people_num == 0 }">
+              <div class="total">{{ detail.people_num }}人</div>
+            </div>
             <div class="bar-item bar-2">圆梦计划</div>
-            <div class="bar-item bar-3"><div class="total">￥12345</div></div>
+            <div class="bar-item bar-3" :class="{ none: !detail.coin_count || detail.coin_count == 0 }">
+              <div class="total">￥{{ detail.coin_count }}</div>
+            </div>
           </div>
           <div class="bar-footer">
             <span class="people-num">当前参与人数</span>
@@ -23,14 +27,17 @@
             <div class="open-draw open">开</div>
             <div class="open-draw draw">奖</div>
           </div>
-          <c-countdown :remainTime="87000" @end="countDownEnd"></c-countdown>
+          <c-countdown
+            :remainTime="detail.end_time ? detail.end_time / 1000 : 0"
+            @end="countDownEnd"
+          ></c-countdown>
           <div class="dtext">
             <div class="count-down-time down">倒</div>
             <div class="count-down-time count">计</div>
             <div class="count-down-time time">时</div>
           </div>
         </div>
-        <div class="button button-buy" @click="handleBuyPopup">立即参与</div>
+        <div class="button button-buy" @click="handleBuyPopup(true)">立即参与</div>
       </div>
     </div>
     <div class="section section-2">
@@ -164,7 +171,7 @@
       :close-on-click-overlay="false"
       round
     >
-      <div class="my-gold">我的金币：4321231</div>
+      <div class="my-gold">我的金币：{{ userInfo.coin }}</div>
       <div class="title">
         <span style="color:#E91E63;">l</span>
         圆梦计划
@@ -199,16 +206,30 @@ export default {
   },
   data() {
     return {
+      detail: {},
       buyPopupVisible: false,
-      buyNumber: 1
+      buyNumber: 1,
+      maxPeople: 0,
+      maxMoney: 0
     };
   },
   computed: {
     loading() {
       return this.$store.state.loading;
+    },
+    userInfo() {
+      return this.$store.state.userInfo;
     }
   },
+  created() {
+    this.getDetail();
+  },
   methods: {
+    getDetail() {
+      this.$fetch.get("/Home/Api/draw_info").then(({ data }) => {
+        this.detail = data;
+      });
+    },
     countDownEnd() {
       console.log("倒计时结束");
     },
@@ -222,9 +243,19 @@ export default {
     buy() {
       if (this.loading) return;
       this.$store.commit("UPDATE_LOADING", true);
-      setTimeout(() => {
-        this.$store.commit("UPDATE_LOADING", false);
-      }, 500);
+      this.$fetch
+        .form("/Home/Api/draw_log", {
+          rw_id: this.detail.rw_id,
+          num_count: this.buyNumber
+        })
+        .then(() => {
+          this.$store.dispatch("GetUserInfo");
+          this.getDetail();
+          this.buyPopupVisible = false;
+        })
+        .catch(() => {
+          this.$store.commit("UPDATE_LOADING", false);
+        });
     }
   }
 };
@@ -324,6 +355,15 @@ export default {
       height: 210px;
       &::before {
         background-color: rgb(90, 185, 99);
+      }
+    }
+    &.none {
+      height: 0;
+      .total {
+        display: none;
+      }
+      &::before {
+        display: none;
       }
     }
   }

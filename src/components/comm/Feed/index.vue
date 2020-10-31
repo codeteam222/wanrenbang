@@ -39,7 +39,8 @@ export default {
       default: () => []
     },
     type: {
-      type: String
+      type: String,
+      default: "resouce"
     },
     actions: {
       type: Array,
@@ -67,6 +68,7 @@ export default {
       this.loading = false;
     },
     openDetail(info) {
+      console.log(info);
       this.currentComment = info;
       this.$refs.commentDetail.open();
     },

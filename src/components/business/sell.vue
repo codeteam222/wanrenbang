@@ -9,12 +9,22 @@
   >
     <c-popup-layout title="出售福利卡" @back="visible = false">
       <div class="sell-card">
-        <van-field v-model="sellNum" center clearable :label="'您有' + cardNum + '张福利卡，想要出售'">
+        <van-field
+          v-model="sell_num"
+          center
+          clearable
+          :label="'您有' + userInfo.card_count + '张福利卡，想要出售'"
+        >
           <template #button>张</template>
         </van-field>
       </div>
+      <div class="sell-card default-field">
+        <van-field v-model="card_price" center label="单价：">
+          <template #button>元</template>
+        </van-field>
+      </div>
       <van-field
-        v-model="message"
+        v-model="content"
         rows="5"
         type="textarea"
         label="心情："
@@ -23,7 +33,7 @@
         class="textarea"
       />
       <div class="upload">
-        <van-uploader v-model="fileList" multiple :max-count="3" :after-read="afterRead" />
+        <van-uploader v-model="fileList" :max-count="3" :after-read="afterRead" />
       </div>
       <van-button type="primary" @click="relese">发布</van-button>
     </c-popup-layout>
@@ -36,34 +46,18 @@ export default {
   components: {
     "c-popup-layout": PopupLayout
   },
-  props: {
-    cardNum: {
-      type: Number,
-      default: 0
-    }
-  },
   data() {
     return {
       visible: false,
-      message: "",
-      fileList: [
-        {
-          url: "https://img.yzcdn.cn/vant/leaf.jpg",
-          status: "uploading",
-          message: "上传中..."
-        },
-        {
-          url: "https://img.yzcdn.cn/vant/tree.jpg",
-          status: "failed",
-          message: "上传失败"
-        }
-      ],
-      sellNum: 0
+      content: "",
+      card_price: "",
+      fileList: [],
+      sell_num: 0
     };
   },
   computed: {
-    token() {
-      return this.$store.state.token;
+    userInfo() {
+      return this.$store.state.userInfo;
     }
   },
   methods: {
@@ -72,12 +66,50 @@ export default {
     },
     close() {
       this.visible = false;
+      this.sell_num = 0;
+      this.fileList = [];
+      this.content = "";
     },
-    afterRead(file) {
-      console.log(file);
+    afterRead({ file }, { index }) {
+      this.fileList.splice(index, 1);
+      this.$set(this.fileList, index, {});
+      let formData = new FormData();
+      formData.append("file", file);
+      this.$fetch
+        .post("/Home/Create/upload_ajax_img", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        })
+        .then(({ data }) => {
+          this.fileList.splice(index, 1, {
+            url: data.src,
+            id: data.image_id
+          });
+        })
+        .catch(() => {
+          this.fileList.splice(index, 1, {
+            status: "failed",
+            message: "上传失败"
+          });
+        });
     },
     relese() {
-      this.$emit("relese");
+      this.$fetch
+        .form("/Home/Create/pub_add/mcode/ape5ed661dabd73f", {
+          sell_num: this.sell_num,
+          n_img: this.fileList.map(item => item.id).join(","),
+          content: this.content,
+          card_price: this.card_price,
+          is_card: 1
+        })
+        .then(() => {
+          this.$store.dispatch("GetUserInfo");
+          this.$emit("success");
+          this.$notify({ type: "success", message: "发布成功" });
+          this.close();
+        })
+        .catch(({ msg }) => {
+          this.$notify({ type: "warning", message: msg });
+        });
     }
   }
 };
@@ -117,6 +149,15 @@ export default {
       border: 1px solid rgb(195, 195, 195);
       text-align: center;
       color: #fdb35d;
+    }
+  }
+  .default-field {
+    .van-field__label {
+      flex: 0;
+      width: 50px;
+    }
+    .van-field__body {
+      width: 100px;
     }
   }
   .textarea {

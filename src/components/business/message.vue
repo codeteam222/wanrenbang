@@ -17,7 +17,7 @@
         class="textarea"
       />
       <div class="upload">
-        <van-uploader v-model="fileList" multiple :max-count="3" :after-read="afterRead" />
+        <van-uploader v-model="fileList" :max-count="3" :after-read="afterRead" />
       </div>
       <div class="rule rule-1">
         <div class="stepper">以下内容需要：<van-field v-model="form.coin" />张福利卡解锁</div>

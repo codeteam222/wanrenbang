@@ -2,7 +2,7 @@
   <div class="feed-item">
     <div class="feed-info">
       <div class="message-box">
-        <img class="avatar" :src="data.head_img" />
+        <img class="avatar" :src="data.head_img_src" />
         <div>
           <div class="nickname">
             {{ data.username }}
@@ -16,9 +16,11 @@
       </div>
     </div>
     <div class="feed-content">
-      <slot name="content" v-bind:data="data">
-        <div class="content" @click="openDetail(data)">{{ data.content }}</div>
-      </slot>
+      <div @click="openDetail(data)">
+        <slot name="content" v-bind:data="data">
+          <div class="content">{{ data.content }}</div>
+        </slot>
+      </div>
       <div class="links" v-if="Array.isArray(data.links) && data.links.length">
         <a v-for="(link, linkIndex) in data.links" :key="linkIndex" :href="link.url" target="_blank">{{
           link.text

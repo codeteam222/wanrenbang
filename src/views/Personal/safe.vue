@@ -3,7 +3,7 @@
     <c-popup-layout title="账号安全" @back="$router.push({ name: 'Personal' })">
       <div class="form-box">
         <div class="form-content">
-          <c-form :data="baseInfo" :form="baseInfoForm" label-width="100px"></c-form>
+          <c-form ref="baseForm" :data="baseInfo" :form="baseInfoForm" label-width="100px"></c-form>
         </div>
       </div>
       <div class="form-box">
@@ -38,19 +38,21 @@ export default {
   },
   data() {
     return {
+      fileList: [],
       baseInfo: {
         avatar: "",
-        nickname: ""
+        username: ""
       },
       baseInfoForm: [
         {
           type: "avatar",
-          prop: "avatar"
+          prop: "avatar",
+          upload: this.afterRead
         },
         {
           type: "input",
           label: "修改昵称:",
-          prop: "nickname"
+          prop: "username"
         },
         {
           type: "action",
@@ -65,8 +67,8 @@ export default {
       ],
       loginPwd: {
         password: "",
-        newPassword: "",
-        configrmPassword: ""
+        new_password: "",
+        com_password: ""
       },
       loginPwdForm: [
         {
@@ -77,12 +79,12 @@ export default {
         {
           type: "password",
           label: "新密码:",
-          prop: "newPassword"
+          prop: "new_password"
         },
         {
           type: "password",
           label: "确认密码:",
-          prop: "configrmPassword"
+          prop: "com_password"
         },
         {
           type: "action",
@@ -101,25 +103,25 @@ export default {
         configrmPassword: [{ validator: this.validateLoginPwd, message: "两次密码不一致", trigger: "blur" }]
       },
       payPwd: {
-        password: "",
-        newPassword: "",
-        configrmPassword: ""
+        pay_password: "",
+        new_password: "",
+        com_password: ""
       },
       payPwdForm: [
         {
           type: "password",
           label: "原密码:",
-          prop: "password"
+          prop: "pay_password"
         },
         {
           type: "password",
           label: "新密码:",
-          prop: "newPassword"
+          prop: "new_password"
         },
         {
           type: "password",
           label: "确认密码:",
-          prop: "configrmPassword"
+          prop: "com_password"
         },
         {
           type: "action",
@@ -138,16 +140,16 @@ export default {
         configrmPassword: [{ validator: this.validatePayPwd, message: "两次密码不一致", trigger: "blur" }]
       },
       bankcard: {
-        bank: "",
-        name: "",
-        cardId: "",
-        configrmCardId: ""
+        bank_name: "",
+        bank_user: "",
+        bank_num: "",
+        com_bank_num: ""
       },
       bankcardForm: [
         {
           type: "select",
           label: "开户银行:",
-          prop: "bank",
+          prop: "bank_name",
           data: [
             {
               label: "中国银行",
@@ -162,17 +164,17 @@ export default {
         {
           type: "input",
           label: "持卡人姓名:",
-          prop: "name"
+          prop: "bank_user"
         },
         {
           type: "input",
           label: "银行卡号:",
-          prop: "cardId"
+          prop: "bank_num"
         },
         {
           type: "input",
           label: "确认银行卡号:",
-          prop: "configrmCardId"
+          prop: "com_bank_num"
         },
         {
           type: "action",
@@ -193,14 +195,42 @@ export default {
     };
   },
   methods: {
-    handleLoginPwd(valid) {
-      console.log(valid);
+    afterRead({ file }, { index }) {
+      this.$refs.baseForm.updateField(index, {}, "del");
+      let formData = new FormData();
+      formData.append("file", file);
+      formData.append("is_user", 1);
+      this.$fetch
+        .post("/Home/Create/upload_ajax_img", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        })
+        .then(({ data }) => {
+          this.$refs.baseForm.updateField(index, {
+            url: data.src,
+            id: data.image_id
+          });
+        })
+        .catch(() => {
+          this.$refs.baseForm.updateField(index, {
+            status: "failed",
+            message: "上传失败"
+          });
+        });
     },
-    handlePayPwd(valid) {
-      console.log(valid);
+    handleLoginPwd(valid, value) {
+      if (valid) {
+        this.updateInfo(value, "登录修改成功");
+      }
     },
-    handleBankcardPwd(valid) {
-      console.log(valid);
+    handlePayPwd(valid, value) {
+      if (valid) {
+        this.updateInfo(value, "支付密码修改成功");
+      }
+    },
+    handleBankcardPwd(valid, value) {
+      if (valid) {
+        this.updateInfo(value, "银行卡信息修改成功");
+      }
     },
     validateLoginPwd(rule, value, callback) {
       value !== this.loginPwd.newPassword ? callback(new Error()) : callback();
@@ -211,8 +241,26 @@ export default {
     validateCardId(rule, value, callback) {
       value !== this.bankcard.cardId ? callback(new Error()) : callback();
     },
-    handleBaseInfo(valid) {
-      console.log(valid);
+    handleBaseInfo(valid, value) {
+      if (valid) {
+        this.updateInfo(
+          {
+            username: value.username
+          },
+          "昵称修改成功"
+        );
+      }
+    },
+    updateInfo(value, msg) {
+      this.$fetch
+        .form("/Home/User/upuserinfo", value)
+        .then(() => {
+          this.$store.dispatch("GetUserInfo");
+          this.$notify({ type: "success", message: msg });
+        })
+        .catch(({ msg }) => {
+          this.$notify({ type: "danger", message: msg });
+        });
     }
   }
 };

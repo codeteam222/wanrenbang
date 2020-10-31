@@ -2,7 +2,7 @@
   <div class="project-list">
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <div class="project-item" v-for="(item, index) in data" :key="index">
-        <div class="project-item-info left">
+        <div class="project-item-info left" @click="detail(item)">
           <div class="title">
             <span style="color:#E91E63;">l</span>
             <span style="color:#5AB963;">l</span>{{ item.pr_name }}<span style="color:#FF9900;">l</span>
@@ -15,7 +15,7 @@
         </div>
         <div class="project-item-action">
           <div>
-            <img :src="item.head_img_src" alt="" />
+            <img :src="item.pr_img_src" alt="" />
             <div class="btn">
               <slot name="action" v-bind:data="item" v-bind:index="index"></slot>
             </div>
@@ -23,11 +23,16 @@
         </div>
       </div>
     </van-list>
+    <detail ref="detail"></detail>
   </div>
 </template>
 
 <script>
+import detail from "./detail";
 export default {
+  components: {
+    detail
+  },
   props: {
     data: {
       type: Array,
@@ -48,6 +53,15 @@ export default {
     done(isFinsh = false) {
       this.finished = isFinsh;
       this.loading = false;
+    },
+    detail(item) {
+      this.$refs.detail.open({
+        data: item
+      });
+    },
+    reset() {
+      console.log(123);
+      this.onLoad();
     }
   }
 };

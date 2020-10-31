@@ -3,46 +3,25 @@
     <div class="detail-item plan-id">
       <span style="color:#E91E63;">l</span>
       <span style="color:#FFC107;">l</span>
-      第20200206期
-      <span class="state">正在进行中...</span>
+      第{{ detail.rw_num }}期
+      <span v-show="detail.end_time" class="state">正在进行中...</span>
     </div>
     <div class="detail-item people-num total">
       <span style="color:#FFC107;">l</span>当前参与人数：
-      <span class="num">33542；</span>
+      <span class="num">{{ detail.people_num || 0 }}；</span>
     </div>
     <div class="detail-item gold-num total">
       <span style="color:#E91E63;">l</span>当前金币总数：
-      <span class="num">33542；</span>
+      <span class="num">{{ detail.coin_count || 0 }}；</span>
     </div>
     <div class="detail-item luck-number">
       <div class="detail-item-title">
-        <span style="color:#2892EE;">l</span>本期我获得XX个幸运号码<span style="color:#FFC107;">l</span>
+        <span style="color:#2892EE;">l</span>本期我获得{{
+          detail.num_list ? detail.num_list.length : 0
+        }}个幸运号码<span style="color:#FFC107;">l</span>
       </div>
       <ul class="number-list">
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
-        <li>10000026；</li>
+        <li v-for="(item, index) in detail.num_list" :key="index">{{ item.znum }}；</li>
       </ul>
     </div>
     <div class="detail-item">
@@ -55,7 +34,11 @@
       <p>C=33542；</p>
       <p>
         幸运号码：等待开奖....
-        <c-countdown :remainTime="87000" type="text"></c-countdown>
+        <c-countdown
+          v-if="detail.end_time"
+          :remainTime="detail.end_time ? detail.end_time / 1000 : 0"
+          type="text"
+        ></c-countdown>
       </p>
       <p>幸运锦鲤：等待揭晓....</p>
     </div>
@@ -68,14 +51,14 @@
       <ul class="join-list">
         <li v-for="(person, index) in joinList" :key="index" class="join-item">
           <div class="user-info">
-            <img class="avatar" :src="person.avatar" alt="" />
+            <img class="avatar" :src="person.head_img_src" alt="" />
             <div class="message">
-              <div class="nickname">{{ person.nickname }}</div>
-              <div class="gold">参与{{ person.goldNum }}个商币</div>
+              <div class="nickname">{{ person.username }}</div>
+              <div class="gold">参与{{ person.num_count }}个商币</div>
             </div>
           </div>
           <div class="time">
-            {{ person.time }}
+            {{ person.add_time }}
           </div>
         </li>
       </ul>
@@ -138,10 +121,26 @@ export default {
           goldNum: 10,
           time: "2月11 15：46：32"
         }
-      ]
+      ],
+      detail: {}
     };
   },
+  created() {
+    this.getDetail();
+  },
   methods: {
+    getDetail() {
+      this.$fetch.get("/Home/Api/draw_info").then(({ data }) => {
+        this.detail = data;
+        this.$fetch
+          .get("/Home/List/index/mcode/ape5f8ff70a84c5e.html", {
+            rw_id: data.rw_id
+          })
+          .then(res => {
+            this.joinList = res.data.table_data;
+          });
+      });
+    },
     openPopup(type) {
       this.$refs.history.open({
         type

@@ -20,54 +20,6 @@ export default {
     type: {
       type: String
     }
-  },
-  data() {
-    return {
-      data: [
-        {
-          name: "文化复兴项目",
-          ratio: "0.0007%",
-          desc:
-            "大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个",
-          logo: require("@/assets/img/avatar.jpg")
-        },
-        {
-          name: "文化复兴项目",
-          ratio: "0.0007%",
-          desc:
-            "大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个",
-          logo: require("@/assets/img/avatar.jpg")
-        },
-        {
-          name: "文化复兴项目",
-          ratio: "0.0007%",
-          desc: "大厦离开股价拉升看结果徕卡时间卢卡斯感觉拉克丝借记卡十六个",
-          logo: require("@/assets/img/avatar.jpg")
-        }
-      ]
-    };
-  },
-  watch: {
-    type() {
-      this.getData();
-    }
-  },
-  computed: {},
-  methods: {
-    getAll() {},
-    getJoinProject() {},
-    getData(done) {
-      if (this.type === "all") {
-        this.getAll();
-      } else if (this.type === "ratio") {
-        this.getJoinProject();
-      }
-      if (done) {
-        const copy = [].concat(this.data);
-        this.data = this.data.concat(copy);
-        done();
-      }
-    }
   }
 };
 </script>

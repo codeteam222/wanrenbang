@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { session } from "@/utils/util";
+import fetch from "@/utils/fetch";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -43,15 +44,31 @@ export default new Vuex.Store({
       session.remove("userInfo");
     },
     UpdateInfo({ commit, state }, { token = null, userInfo = {} }) {
+      console.log(userInfo);
       if (token) {
         commit("SET_TOKEN", token);
         session.set("token", token);
       }
       if (Object.keys(userInfo).length) {
         const newData = Object.assign({}, state.userInfo, userInfo);
+        console.log(newData);
         commit("SET_USERINFO", newData);
         session.set("userInfo", newData);
       }
+    },
+    GetUserInfo({ commit, dispatch }) {
+      commit("UPDATE_LOADING", true);
+      fetch
+        .get("Home/User/index")
+        .then(res => {
+          dispatch("UpdateInfo", {
+            userInfo: res.data.data
+          });
+          commit("UPDATE_LOADING", false);
+        })
+        .catch(() => {
+          commit("UPDATE_LOADING", false);
+        });
     }
   },
   modules: {}

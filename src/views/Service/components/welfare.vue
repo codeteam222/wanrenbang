@@ -59,7 +59,7 @@
       :close-on-click-overlay="false"
       round
     >
-      <div class="my-gold">我的余额：4321231</div>
+      <div class="my-gold">我的余额：{{ userInfo.money }}</div>
       <div class="title">
         <span style="color:#E91E63;">l</span><span>福利卡</span><span style="color:#169BD5;">l</span>
       </div>
@@ -162,6 +162,9 @@ export default {
     },
     loading() {
       return this.$store.state.loading;
+    },
+    userInfo() {
+      return this.$store.state.userInfo;
     }
   },
   methods: {
@@ -177,10 +180,20 @@ export default {
     buy() {
       if (this.loading) return;
       this.$store.commit("UPDATE_LOADING", true);
-      setTimeout(() => {
-        this.$store.commit("UPDATE_LOADING", false);
-        this.handleBuyPopup(false);
-      }, 500);
+      this.$fetch
+        .form("/Home/Create/pub_add/mcode/ape5ed8e169c78b4.html", {
+          card_num: this.buyNumber
+        })
+        .then(() => {
+          this.$store.dispatch("GetUserInfo");
+          this.buyPopupVisible = false;
+          this.$notify({ type: "success", message: "购买成功" });
+          this.$store.commit("UPDATE_LOADING", false);
+        })
+        .catch(({ msg }) => {
+          this.$notify({ type: "warning", message: msg });
+          this.$store.commit("UPDATE_LOADING", false);
+        });
     },
     handleyPay(state = true) {
       if (this.loading) return;

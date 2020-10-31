@@ -1,6 +1,6 @@
 <template>
   <div class="b--procejt">
-    <project-list :data="data" @load="getData">
+    <project-list ref="projectList" :data="data" @load="getData">
       <template v-slot:action="{ data, index }">
         <div class="button" @click="openBuyPopup(data, index)">入股</div>
       </template>
@@ -34,15 +34,22 @@
         </div>
       </div>
     </van-popup>
+    <div class="add-message">
+      <img src="@/assets/img/edit-article.png" />
+      <div @click="openRelease">发布</div>
+    </div>
+    <release ref="release" @success="reset"></release>
   </div>
 </template>
 
 <script>
 import ProjectList from "./projectList";
+import release from "./release";
 import { accMul } from "@/utils/util";
 export default {
   components: {
-    "project-list": ProjectList
+    "project-list": ProjectList,
+    release
   },
   data() {
     return {
@@ -80,7 +87,7 @@ export default {
         .then(({ data }) => {
           this.data = this.data.concat(data.table_data);
           this.params.p = p;
-          done(data.totalpages === this.params.p);
+          done(data.totalpages <= this.params.p);
         })
         .catch(() => {
           done(true);
@@ -108,6 +115,13 @@ export default {
         this.$set(this.currentData, "ratio", accMul(this.buyNumber, 0.0007) + "%");
         this.closeBuyPopup();
       }, 500);
+    },
+    openRelease() {
+      this.$refs.release.open();
+    },
+    reset() {
+      this.params.p = 0;
+      this.$refs.projectList.reset();
     }
   }
 };
@@ -199,6 +213,23 @@ export default {
   .van-button--default {
     background-color: #cccccc;
     color: #fff;
+  }
+}
+.add-message {
+  position: fixed;
+  right: 20px;
+  bottom: 50px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: #2892ee;
+  background-color: rgb(255, 193, 7);
+  padding-top: 5px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  img {
+    width: 20px;
   }
 }
 </style>

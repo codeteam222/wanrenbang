@@ -2,10 +2,10 @@
   <div class="feed-item">
     <div class="feed-info">
       <div class="message-box">
-        <img class="avatar" :src="data.avatar" />
+        <img class="avatar" :src="data.head_img_src" />
         <div>
           <div class="nickname">
-            {{ data.nickname }}
+            {{ data.username }}
             <img v-if="data.sex === 0" class="sex" src="@/assets/img/man.png" />
             <img v-if="data.sex === 1" class="sex" src="@/assets/img/women.png" />
           </div>
@@ -19,11 +19,11 @@
     <div class="feed-content koifish-feed">
       <div class="content">
         <p class="weight-bold total">
-          <label>出售：</label>{{ data.total }}张福利卡，{{ data.price }}元一张，快来购买
+          <label>出售：</label>{{ data.sell_num }}张福利卡，{{ data.price }}元一张，快来购买
         </p>
         <p class="weight-bold sale"><label>已售出：</label>{{ data.sale || 0 }}张</p>
         <p class="weight-bold surplus"><label>剩余：</label>{{ data.surplus }}张</p>
-        <p class="mood"><label>心情：</label>{{ data.mood }}</p>
+        <p class="mood"><label>心情：</label>{{ data.mood_content }}</p>
       </div>
       <div class="links">
         <a v-for="(link, linkIndex) in data.links" :key="linkIndex" :href="link.url" target="_blank">{{

@@ -1,7 +1,12 @@
 <template>
   <div class="c-countdown">
     <template v-if="type === 'block'">
-      <span v-for="(num, index) in timeTxt" :key="index" class="item" :class="{ 'is-num': num !== ':', 'is-t': num === ':' }">
+      <span
+        v-for="(num, index) in timeTxt"
+        :key="index"
+        class="item"
+        :class="{ 'is-num': num !== ':', 'is-t': num === ':' }"
+      >
         {{ num }}
       </span>
     </template>
@@ -31,7 +36,6 @@ export default {
       promiseTimer: ""
     };
   },
-
   computed: {
     hourString() {
       return this.formatNum(this.hour);
@@ -52,12 +56,14 @@ export default {
       ];
     }
   },
-  mounted() {
-    if (this.remainTime > 0) {
-      this.hour = Math.floor(this.remainTime / 3600);
-      this.minute = Math.floor((this.remainTime / 60) % 60);
-      this.second = Math.floor(this.remainTime % 60);
-      this.countDowm();
+  watch: {
+    remainTime(now) {
+      if (now > 0) {
+        this.hour = Math.floor(now / 3600);
+        this.minute = Math.floor((now / 60) % 60);
+        this.second = Math.floor(now % 60);
+        this.countDowm();
+      }
     }
   },
   methods: {
@@ -102,7 +108,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.is-t{
+.is-t {
   margin: 0 5px;
 }
 </style>

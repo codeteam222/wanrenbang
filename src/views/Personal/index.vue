@@ -141,7 +141,9 @@ export default {
       return this.$store.state.token;
     }
   },
-  created() {},
+  created() {
+    this.$store.dispatch("GetUserInfo");
+  },
   methods: {
     loginOut() {
       this.$store.dispatch("ClearInfo");

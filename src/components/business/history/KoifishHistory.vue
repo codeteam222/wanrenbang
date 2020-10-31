@@ -1,62 +1,28 @@
 <template>
   <div class="c-join-history">
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getData">
       <div v-for="(item, index) in data" :key="index" class="history-item">
-        <div class="title"><span style="color:#5AB963;">l</span>{{ item.name }}{{ item.state }}</div>
-        <div class="ceil">幸运号码：{{ item.luckNunber || "等待揭晓....." }}</div>
-        <div class="ceil">幸运锦鲤：{{ item.koiFishNumber || "暂未知....." }}；</div>
-        <div class="ceil">获得金币：{{ item.goldNumber || "暂未知....." }}；</div>
+        <div class="title">
+          <span style="color:#5AB963;">l</span>{{ item.rw_num }}{{ item.rw_status ? "已结束" : "正在进行中" }}
+        </div>
+        <div class="ceil">幸运号码：{{ item.rw_status ? item.luck_znum : "等待揭晓....." }}</div>
+        <div class="ceil">幸运锦鲤：{{ item.rw_status ? item.luck_username : "暂未知....." }}；</div>
+        <div class="ceil">获得金币：{{ item.rw_status ? item.wcoin : "暂未知....." }}；</div>
       </div>
     </van-list>
   </div>
 </template>
 
 <script>
+import loadMixin from "@/mixins/load";
 export default {
+  mixins: [loadMixin],
   data() {
     return {
-      finished: false,
-      loading: false,
-      data: [
-        {
-          name: "20200628",
-          state: "进行中",
-          luckNunber: "",
-          koiFishNumber: "li455136",
-          goldNumber: "12452"
-        },
-        {
-          name: "20200628",
-          state: "进行中",
-          luckNunber: "",
-          koiFishNumber: "li455136",
-          goldNumber: "12452"
-        },
-        {
-          name: "20200628",
-          state: "进行中",
-          luckNunber: "",
-          koiFishNumber: "li455136",
-          goldNumber: "12452"
-        }
-      ]
+      listUrl: "/Home/List/index/mcode/ape5f9001e548d20.html"
     };
   },
-  methods: {
-    getData() {
-      const copy = [].concat(this.data);
-      this.data = this.data.concat(copy);
-      this.done();
-    },
-    onLoad() {
-      this.loading = true;
-      this.getData();
-    },
-    done(isFinsh = false) {
-      this.finished = isFinsh;
-      this.loading = false;
-    }
-  }
+  methods: {}
 };
 </script>
 
